@@ -1,0 +1,25 @@
+[
+{
+  "title": "Joblyze - AI Job Posting Analyzer",
+  "category": "AI Project",
+  "tags": ["ai", "nlp", "web"],
+  "description": "An AI-powered job posting analyzer that extracts required skills, compares with resumes, and highlights gaps.",
+  "stack": ["Python", "Streamlit", "LangChain", "OpenAI"],
+  "image": "/assets/joblyze.jpg",
+  "links": {
+    "code": "https://github.com/alihusseini07/joblyze",
+    "live": "https://joblyze.vercel.app"
+  }
+},
+  {
+    "title": "IoT-Enabled Electronic Safe",
+    "category": "Embedded",
+    "tags": ["embedded", "web"],
+    "description": "ESP32 safe with keypad, LEDs, buzzer, temp sensor; web interface mirrors lock state and unlocks class portfolios in real time.",
+    "stack": ["C++", "ESP32", "PlatformIO", "Web"],
+    "image": "assets/esp32-safe.jpg",
+    "links": {
+      "code": "https://github.com/alihusseini07/web-esp32"
+    }
+  }
+]
