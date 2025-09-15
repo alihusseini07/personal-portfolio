@@ -52,7 +52,7 @@ export default function Page() {
   // ---------------- Typing animation
   useEffect(() => {
     const title = "Ali Husseini";
-    const subtitle = "Mechatronics Engineer @ the University of Waterloo";
+    const subtitle = "Mechatronics Engineering @ the University of Waterloo";
 
     let i = 0,
       j = 0;
