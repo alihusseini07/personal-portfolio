@@ -25,7 +25,7 @@
   {
   "title": "Delivery Drone – CAD Prototype",
   "category": "CAD",
-  "tags": ["cad", "fusion360", "3d-printing", "web"],
+  "tags": ["cad", "fusion360", "3d-printing"],
   "description": "Designed and 3D-printed a delivery drone prototype in Fusion 360, iterating propeller arm connectors and custom axles, and assembling a functional scale model.",
   "stack": ["Fusion 360", "3D Printing", "Iteration"],
   "image": "/assets/delivery-drone.jpg",

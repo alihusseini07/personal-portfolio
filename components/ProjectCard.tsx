@@ -38,7 +38,7 @@ transition={{ duration: 0.5 }}
 {p.links?.code && <a className="btn-outline" href={p.links.code} target="_blank" rel="noreferrer">Code ↗</a>}
 {p.links?.live && <a className="btn-outline" href={p.links.live} target="_blank" rel="noreferrer">Live ↗</a>}
 {p.links?.details && <a className="btn-outline" href={p.links.details} target="_blank" rel="noreferrer">Details ↗</a>}
-{p.links?.drive && <a className="link hover:bg-white/10" href={p.links.drive} target="_blank" rel="noreferrer">Drive ↗</a>}
+{p.links?.drive && <a className="btn-outline" href={p.links.drive} target="_blank" rel="noreferrer">Drive ↗</a>}
 </div>
 </div>
 </motion.article>
