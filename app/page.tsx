@@ -17,6 +17,7 @@ export default function Page() {
   const filters = ["all", "AI", "Web", "Embedded", "CAD"] as const;
   type Filter = typeof filters[number];
 
+  // state must use lowercase "all" to match the union type
   const [filter, setFilter] = useState<Filter>("all");
   const [typedTitle, setTypedTitle] = useState("");
   const [typedSubtitle, setTypedSubtitle] = useState("");
@@ -37,7 +38,6 @@ export default function Page() {
     if (f === "all") return true;
     const cat = (p.category || "").toLowerCase();
     const tags = (p.tags || []).map((t) => String(t).toLowerCase());
-
     if (f === "AI") return cat.includes("ai") || tags.includes("ai");
     if (f === "Web") return cat.includes("web") || tags.includes("web");
     if (f === "Embedded") return cat.includes("embedded") || tags.includes("embedded");
@@ -55,8 +55,8 @@ export default function Page() {
     const title = "Ali Husseini";
     const subtitle = "Mechatronics Engineering @ the University of Waterloo";
 
-    let i = 0,
-      j = 0;
+    let i = 0;
+    let j = 0;
     setTypedTitle("");
     setTypedSubtitle("");
 
@@ -64,18 +64,16 @@ export default function Page() {
       setTypedTitle(title.slice(0, ++i));
       if (i >= title.length) {
         clearInterval(ti);
-        startSubtitle();
+        const si = setInterval(() => {
+          setTypedSubtitle(subtitle.slice(0, ++j));
+          if (j >= subtitle.length) clearInterval(si);
+        }, 35);
       }
     }, 80);
 
-    const startSubtitle = () => {
-      const si = setInterval(() => {
-        setTypedSubtitle(subtitle.slice(0, ++j));
-        if (j >= subtitle.length) clearInterval(si);
-      }, 35);
+    return () => {
+      // nothing to clean here
     };
-
-    return () => {};
   }, []);
 
   // ---------------- Parallax blobs (mouse + scroll)
@@ -116,6 +114,7 @@ export default function Page() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [filter]);
 
+  // ---------------- RENDER (no stray characters before return)
   return (
     <main>
       {/* HERO */}
@@ -138,7 +137,7 @@ export default function Page() {
           {/* Headshot on the right */}
           <div className="flex-shrink-0">
             <Image
-              src="/assets/ali-headshot.jpg" // ensure file exists at /public/assets/ali-headshot.jpg
+              src="/assets/ali-headshot.jpg"
               alt="Ali Husseini headshot"
               width={140}
               height={140}
@@ -158,7 +157,7 @@ export default function Page() {
               onClick={() => setFilter(t)}
               className={`chip ${filter === t ? "chip-active" : ""}`}
             >
-              {t}
+              {t === "all" ? "All" : t}
             </button>
           ))}
         </div>
@@ -184,11 +183,17 @@ export default function Page() {
       {/* SKILLS */}
       <Section id="skills" title="Skills, Tools & Certifications">
         <div className="grid grid-cols-12 gap-3">
-          {[{ title: "Skills", items: profile.skills }, { title: "Tools", items: profile.tools }, { title: "Certifications", items: profile.certifications }].map((g, gi) => (
+          {[
+            { title: "Skills", items: profile.skills },
+            { title: "Tools", items: profile.tools },
+            { title: "Certifications", items: profile.certifications },
+          ].map((g, gi) => (
             <div
               key={gi}
               className="col-span-12 md:col-span-4 card p-4 card-hover"
-              style={{ border: "1px solid color-mix(in oklab, var(--teal) 55%, transparent)" }}
+              style={{
+                border: "1px solid color-mix(in oklab, var(--teal) 55%, transparent)",
+              }}
             >
               <h3 className="font-semibold mb-2" style={{ color: "var(--teal)" }}>
                 {g.title}
@@ -200,3 +205,80 @@ export default function Page() {
                   </span>
                 ))}
               </div>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      {/* CONTACT */}
+      <Section id="contact" title="Contact">
+        <div className="flex flex-wrap gap-3 justify-center">
+          <Magnetic>
+            <a className="btn-outline" href={`mailto:${email}`}>
+              <IconEmail /> Email
+            </a>
+          </Magnetic>
+          {profile.linkedin && (
+            <Magnetic>
+              <a className="btn-outline" href={profile.linkedin} target="_blank" rel="noreferrer">
+                <IconLinkedIn /> LinkedIn
+              </a>
+            </Magnetic>
+          )}
+          <Magnetic>
+            <a className="btn-outline" href={github} target="_blank" rel="noreferrer">
+              <IconGitHub /> GitHub
+            </a>
+          </Magnetic>
+        </div>
+      </Section>
+
+      {/* GET IN TOUCH */}
+      <Section id="get-in-touch" title="Get in Touch">
+        <form
+          className="max-w-xl mx-auto card p-6 grid gap-3"
+          style={{
+            border: "1px solid color-mix(in oklab, var(--teal) 55%, transparent)",
+          }}
+          onSubmit={(e) => {
+            e.preventDefault();
+            const data = new FormData(e.currentTarget);
+            const name = String(data.get("name") || "");
+            const mail = String(data.get("email") || email);
+            const message = String(data.get("message") || "");
+            const body = encodeURIComponent(`Name: ${name}\nEmail: ${mail}\n\n${message}`);
+            window.location.href = `mailto:${email}?subject=Portfolio%20Inquiry&body=${body}`;
+          }}
+        >
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <input
+              name="name"
+              placeholder="Your name"
+              required
+              className="btn-outline !justify-start w-full"
+            />
+            <input
+              name="email"
+              type="email"
+              placeholder="Your email"
+              required
+              className="btn-outline !justify-start w-full"
+            />
+          </div>
+          <textarea
+            name="message"
+            placeholder="Your message"
+            rows={6}
+            required
+            className="btn-outline !justify-start w-full"
+          />
+          <div className="flex justify-end">
+            <button type="submit" className="btn btn-primary">
+              Send
+            </button>
+          </div>
+        </form>
+      </Section>
+    </main>
+  );
+}
