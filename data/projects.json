@@ -21,5 +21,17 @@
     "links": {
       "code": "https://github.com/alihusseini07/web-esp32"
     }
+  },
+  {
+  "title": "Delivery Drone – CAD Prototype",
+  "category": "CAD",
+  "tags": ["cad", "fusion360", "3d-printing", "web"],
+  "description": "Designed and 3D-printed a delivery drone prototype in Fusion 360, iterating propeller arm connectors and custom axles, and assembling a functional scale model.",
+  "stack": ["Fusion 360", "3D Printing", "Iteration"],
+  "image": "/assets/delivery-drone.jpg",
+  "links": {
+    "drive": "https://drive.google.com/drive/folders/1SHUE_o_2eRWSIrl6BWkGlvkt_lDGdFTK?usp=drive_link"
   }
+}
+
 ]

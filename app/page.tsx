@@ -30,19 +30,21 @@ export default function Page() {
   const profile = profileData as any;
 
   // ---------------- Filters (fixed set)
-  const filters = ["All", "AI", "Web", "Embedded"] as const;
+  const filters = ["all", "AI", "Web", "Embedded", "CAD"] as const;
   type Filter = typeof filters[number];
 
   // smart matcher: project matches if category OR tags contain the filter keyword
   const matchesFilter = (p: Project, f: Filter) => {
-    if (f === "All") return true;
+    if (f === "all") return true;
     const cat = (p.category || "").toLowerCase();
     const tags = (p.tags || []).map((t) => String(t).toLowerCase());
-    if (f === "AI") return cat.includes("ai") || tags.includes("ai");
-    if (f === "Web") return cat.includes("web") || tags.includes("web");
-    if (f === "Embedded") return cat.includes ("embedded") || tags.includes("embedded");
+
+    if (f === "AI")        return cat.includes("ai")        || tags.includes("ai");
+    if (f === "Web")       return cat.includes("web")       || tags.includes("web");
+    if (f === "Embedded")  return cat.includes("embedded")  || tags.includes("embedded");
+    if (f === "CAD")       return cat.includes("cad")       || tags.includes("cad");
     return false;
-  };
+};
 
   const filtered = useMemo(
     () => projects.filter((p) => matchesFilter(p, filter)),
