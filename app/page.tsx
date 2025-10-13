@@ -13,8 +13,11 @@ import projectsData from "../data/projects.json";
 import experienceData from "../data/experience.json";
 
 export default function Page() {
-  // ---------------- State
-  const [filter, setFilter] = useState<Filter>("All");
+  // ---------------- Filters (fixed set, includes CAD + Embedded)
+  const filters = ["all", "AI", "Web", "Embedded", "CAD"] as const;
+  type Filter = typeof filters[number];
+
+  const [filter, setFilter] = useState<Filter>("all");
   const [typedTitle, setTypedTitle] = useState("");
   const [typedSubtitle, setTypedSubtitle] = useState("");
 
@@ -29,22 +32,18 @@ export default function Page() {
   const experience = experienceData as Experience[];
   const profile = profileData as any;
 
-  // ---------------- Filters (fixed set)
-  const filters = ["all", "AI", "Web", "Embedded", "CAD"] as const;
-  type Filter = typeof filters[number];
-
   // smart matcher: project matches if category OR tags contain the filter keyword
   const matchesFilter = (p: Project, f: Filter) => {
     if (f === "all") return true;
     const cat = (p.category || "").toLowerCase();
     const tags = (p.tags || []).map((t) => String(t).toLowerCase());
 
-    if (f === "AI")        return cat.includes("ai")        || tags.includes("ai");
-    if (f === "Web")       return cat.includes("web")       || tags.includes("web");
-    if (f === "Embedded")  return cat.includes("embedded")  || tags.includes("embedded");
-    if (f === "CAD")       return cat.includes("cad")       || tags.includes("cad");
+    if (f === "AI") return cat.includes("ai") || tags.includes("ai");
+    if (f === "Web") return cat.includes("web") || tags.includes("web");
+    if (f === "Embedded") return cat.includes("embedded") || tags.includes("embedded");
+    if (f === "CAD") return cat.includes("cad") || tags.includes("cad");
     return false;
-};
+  };
 
   const filtered = useMemo(
     () => projects.filter((p) => matchesFilter(p, filter)),
@@ -152,7 +151,6 @@ export default function Page() {
 
       {/* PROJECTS */}
       <Section id="projects" title="Projects">
-        {/* Filters BELOW the title */}
         <div className="flex flex-wrap gap-2 mb-4">
           {filters.map((t) => (
             <button
@@ -186,17 +184,11 @@ export default function Page() {
       {/* SKILLS */}
       <Section id="skills" title="Skills, Tools & Certifications">
         <div className="grid grid-cols-12 gap-3">
-          {[
-            { title: "Skills", items: profile.skills },
-            { title: "Tools", items: profile.tools },
-            { title: "Certifications", items: profile.certifications },
-          ].map((g, gi) => (
+          {[{ title: "Skills", items: profile.skills }, { title: "Tools", items: profile.tools }, { title: "Certifications", items: profile.certifications }].map((g, gi) => (
             <div
               key={gi}
               className="col-span-12 md:col-span-4 card p-4 card-hover"
-              style={{
-                border: "1px solid color-mix(in oklab, var(--teal) 55%, transparent)",
-              }}
+              style={{ border: "1px solid color-mix(in oklab, var(--teal) 55%, transparent)" }}
             >
               <h3 className="font-semibold mb-2" style={{ color: "var(--teal)" }}>
                 {g.title}
@@ -208,85 +200,3 @@ export default function Page() {
                   </span>
                 ))}
               </div>
-            </div>
-          ))}
-        </div>
-      </Section>
-
-      {/* CONTACT */}
-      <Section id="contact" title="Contact">
-        <div className="flex flex-wrap gap-3 justify-center">
-          <Magnetic>
-            <a className="btn-outline" href={`mailto:${email}`}>
-              <IconEmail /> Email
-            </a>
-          </Magnetic>
-          {profile.linkedin && (
-            <Magnetic>
-              <a
-                className="btn-outline"
-                href={profile.linkedin}
-                target="_blank"
-                rel="noreferrer"
-              >
-                <IconLinkedIn /> LinkedIn
-              </a>
-            </Magnetic>
-          )}
-          <Magnetic>
-            <a className="btn-outline" href={github} target="_blank" rel="noreferrer">
-              <IconGitHub /> GitHub
-            </a>
-          </Magnetic>
-        </div>
-      </Section>
-
-      {/* GET IN TOUCH */}
-      <Section id="get-in-touch" title="Get in Touch">
-        <form
-          className="max-w-xl mx-auto card p-6 grid gap-3"
-          style={{
-            border: "1px solid color-mix(in oklab, var(--teal) 55%, transparent)",
-          }}
-          onSubmit={(e) => {
-            e.preventDefault();
-            const data = new FormData(e.currentTarget);
-            const name = String(data.get("name") || "");
-            const mail = String(data.get("email") || email);
-            const message = String(data.get("message") || "");
-            const body = encodeURIComponent(`Name: ${name}\nEmail: ${mail}\n\n${message}`);
-            window.location.href = `mailto:${email}?subject=Portfolio%20Inquiry&body=${body}`;
-          }}
-        >
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <input
-              name="name"
-              placeholder="Your name"
-              required
-              className="btn-outline !justify-start w-full"
-            />
-            <input
-              name="email"
-              type="email"
-              placeholder="Your email"
-              required
-              className="btn-outline !justify-start w-full"
-            />
-          </div>
-          <textarea
-            name="message"
-            placeholder="Your message"
-            rows={6}
-            required
-            className="btn-outline !justify-start w-full"
-          />
-          <div className="flex justify-end">
-            <button type="submit" className="btn btn-primary">
-              Send
-            </button>
-          </div>
-        </form>
-      </Section>
-    </main>
-  );
-}
