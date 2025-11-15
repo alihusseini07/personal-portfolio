@@ -8,7 +8,7 @@
   "image": "/assets/joblyze.jpg",
   "links": {
     "code": "https://github.com/alihusseini07/joblyze",
-    "live": "https://joblyze.vercel.app"
+    "live": "https://joblyze.streamlit.app/"
   }
 },
   {
