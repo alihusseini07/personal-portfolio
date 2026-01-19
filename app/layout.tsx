@@ -3,8 +3,11 @@ import type { Metadata } from "next";
 import Magnetic from "../components/Magnetic";
 
 export const metadata: Metadata = {
-title: "Ali Husseini — Projects",
+title: "Ali | Portfolio",
 description: "Personal portfolio of projects by Ali Husseini.",
+icons: {
+  icon: "/favicon.png",
+},
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
