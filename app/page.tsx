@@ -284,6 +284,30 @@ export default function Page() {
         </div>
       </Section>
 
+      {/* EDUCATION */}
+      <Section id="education" title="Education">
+        <div className="card p-6">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-2xl border border-white/10 bg-white/5 flex items-center justify-center text-sm font-semibold">
+                UW
+              </div>
+              <div>
+                <div className="text-xl font-semibold text-gradient-teal">University of Waterloo</div>
+                <div className="text-muted">
+                  BASc, Mechatronics Engineering • Waterloo, Ontario, Canada
+                </div>
+              </div>
+            </div>
+            <span className="badge">Sept 2025 – Apr 2030</span>
+          </div>
+          <p className="mt-4 text-muted">
+            Relevant coursework: Programming (C++, OOP), Applied Math (Python, Linear Algebra),
+            Engineering Design (AutoCAD, SolidWorks).
+          </p>
+        </div>
+      </Section>
+
       {/* CONTACT */}
       <Section id="contact" title="Contact">
         <form
