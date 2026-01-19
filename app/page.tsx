@@ -268,11 +268,8 @@ export default function Page() {
             <div
               key={gi}
               className="col-span-12 md:col-span-4 card p-4 card-hover"
-              style={{
-                border: "1px solid color-mix(in oklab, var(--teal) 55%, transparent)",
-              }}
             >
-              <h3 className="font-semibold mb-2" style={{ color: "var(--teal)" }}>
+              <h3 className="font-semibold mb-2 text-gradient-teal">
                 {g.title}
               </h3>
               <div className="flex flex-wrap gap-2">
@@ -291,9 +288,6 @@ export default function Page() {
       <Section id="contact" title="Contact">
         <form
           className="max-w-xl mx-auto card p-6 grid gap-3"
-          style={{
-            border: "1px solid color-mix(in oklab, var(--teal) 55%, transparent)",
-          }}
           onSubmit={(e) => {
             e.preventDefault();
             const data = new FormData(e.currentTarget);

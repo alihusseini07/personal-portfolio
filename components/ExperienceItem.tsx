@@ -16,11 +16,10 @@ initial={{ opacity: 0, y: 8 }}
 whileInView={{ opacity: 1, y: 0 }}
 viewport={{ once: true }}
 transition={{ duration: 0.45 }}
-style={{ border: "1px solid color-mix(in oklab, var(--teal) 55%, transparent)" as any }}
 >
 <div className="flex justify-between gap-3">
 <div>
-<div className="font-bold" style={{ color: "var(--teal)" }}>{xp.role}</div>
+<div className="font-bold text-gradient-teal">{xp.role}</div>
 <div className="text-muted text-sm">{xp.org} • {xp.location} • {xp.dates}</div>
 </div>
 </div>

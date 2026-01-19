@@ -26,10 +26,11 @@ body {
 
 /* --- Cards & links --- */
 .card {
-  @apply rounded-2xl border border-white/10;
+  @apply rounded-2xl bg-panel;
+  border: 1px solid transparent;
   background:
-    linear-gradient(135deg, rgba(34,211,238,.14), rgba(52,211,153,.12)),
-    rgba(8,13,20,.9);
+    linear-gradient(#080d14, #080d14) padding-box,
+    linear-gradient(135deg, var(--teal), var(--teal2)) border-box;
 }
 .link { @apply inline-flex items-center gap-1 px-2 py-1 rounded-lg border border-white/10 text-sm; }
 
