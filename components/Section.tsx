@@ -17,7 +17,7 @@ children: React.ReactNode;
 return (
 <section id={id} className="container py-10">
 <motion.h2
-className="text-2xl font-extrabold mb-3"
+className="text-3xl md:text-4xl font-extrabold mb-4 text-center text-gradient-teal"
 initial="hidden"
 whileInView="show"
 viewport={{ once: true, amount: 0.3 }}
