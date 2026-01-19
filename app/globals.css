@@ -17,15 +17,20 @@ html { scroll-behavior: smooth; }
 body {
   @apply bg-bg text-text leading-relaxed;
   background-image:
-    radial-gradient(1200px 900px at 85% -10%, rgba(34,211,238,.18), transparent 45%),
-    radial-gradient(1100px 800px at -10% 10%, rgba(52,211,153,.16), transparent 45%),
-    radial-gradient(900px 700px at 50% 120%, rgba(56,189,248,.12), transparent 55%);
+    radial-gradient(1200px 900px at 85% -10%, rgba(34,211,238,.16), transparent 48%),
+    radial-gradient(1100px 800px at -10% 10%, rgba(52,211,153,.14), transparent 48%),
+    radial-gradient(900px 700px at 50% 120%, rgba(56,189,248,.1), transparent 58%);
 }
 
 .container { @apply max-w-[1100px] mx-auto px-5; }
 
 /* --- Cards & links --- */
-.card { @apply rounded-2xl bg-panel border border-white/10; }
+.card {
+  @apply rounded-2xl border border-white/10;
+  background:
+    linear-gradient(135deg, rgba(34,211,238,.14), rgba(52,211,153,.12)),
+    rgba(8,13,20,.9);
+}
 .link { @apply inline-flex items-center gap-1 px-2 py-1 rounded-lg border border-white/10 text-sm; }
 
 /* --- Buttons --- */
