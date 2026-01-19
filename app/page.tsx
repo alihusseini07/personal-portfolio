@@ -132,21 +132,98 @@ export default function Page() {
               {typedTitle}
             </h1>
             <p className="mt-2 text-lg md:text-xl hero-sub select-none">{typedSubtitle}</p>
+            <div className="mt-4 flex flex-wrap gap-3 justify-center md:justify-start">
+              <Magnetic>
+                <a
+                  className="btn-outline"
+                  href={`mailto:${email}`}
+                  aria-label="Email"
+                  title="Email"
+                >
+                  <IconEmail />
+                </a>
+              </Magnetic>
+              {profile.linkedin && (
+                <Magnetic>
+                  <a
+                    className="btn-outline"
+                    href={profile.linkedin}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="LinkedIn"
+                    title="LinkedIn"
+                  >
+                    <IconLinkedIn />
+                  </a>
+                </Magnetic>
+              )}
+              <Magnetic>
+                <a
+                  className="btn-outline"
+                  href={github}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="GitHub"
+                  title="GitHub"
+                >
+                  <IconGitHub />
+                </a>
+              </Magnetic>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* OVERVIEW */}
+      <Section id="overview" title="Overview">
+        <div className="grid grid-cols-12 gap-6 items-start">
+          <div className="col-span-12 lg:col-span-8 card p-6 overview-card">
+            <div className="grid gap-4">
+              <p className="text-lg leading-relaxed">
+                👋 Hey! I’m Ali, a Mechatronics Engineering student at the University of Waterloo
+                who enjoys turning rough ideas into practical, well thought out systems that
+                actually work in the real world.
+              </p>
+              <ul className="overview-list grid gap-3">
+                <li>
+                  🧩 I’ve worked across software, hardware, and AI driven projects, from building
+                  tools like Joblyze to designing and iterating on robotics systems. I like
+                  breaking down messy problems, structuring them clearly, and shipping something
+                  usable instead of overengineering from the start.
+                </li>
+                <li>
+                  ⚙️ Interests: applied AI, workflow tools, structured problem solving, clean
+                  system design, and improving ideas through iteration rather than settling for the
+                  first solution.
+                </li>
+                <li>
+                  🤝 Outside of coursework, I tutor math and science, which has shaped how I
+                  communicate technical ideas to non technical audiences. I care a lot about
+                  clarity, empathy, and making sure people actually understand what’s being built
+                  and why.
+                </li>
+                <li>
+                  🚀 I’m especially drawn to startup environments and fast moving teams where
+                  learning by doing, ownership, and collaboration matter more than titles or
+                  experience level.
+                </li>
+                <li>📍 Based in Ontario, Canada.</li>
+              </ul>
+            </div>
           </div>
 
-          {/* Headshot on the right */}
-          <div className="flex-shrink-0">
+          <div className="col-span-12 lg:col-span-4 flex justify-center lg:justify-end">
             <Image
               src="/assets/ali-headshot.jpg"
               alt="Ali Husseini headshot"
-              width={140}
-              height={140}
-              className="avatar w-32 h-32"
+              width={240}
+              height={240}
+              className="avatar overview-photo"
               priority
             />
           </div>
         </div>
-      </section>
+      </Section>
 
       {/* PROJECTS */}
       <Section id="projects" title="Projects">
@@ -212,29 +289,6 @@ export default function Page() {
 
       {/* CONTACT */}
       <Section id="contact" title="Contact">
-        <div className="flex flex-wrap gap-3 justify-center">
-          <Magnetic>
-            <a className="btn-outline" href={`mailto:${email}`}>
-              <IconEmail /> Email
-            </a>
-          </Magnetic>
-          {profile.linkedin && (
-            <Magnetic>
-              <a className="btn-outline" href={profile.linkedin} target="_blank" rel="noreferrer">
-                <IconLinkedIn /> LinkedIn
-              </a>
-            </Magnetic>
-          )}
-          <Magnetic>
-            <a className="btn-outline" href={github} target="_blank" rel="noreferrer">
-              <IconGitHub /> GitHub
-            </a>
-          </Magnetic>
-        </div>
-      </Section>
-
-      {/* GET IN TOUCH */}
-      <Section id="get-in-touch" title="Get in Touch">
         <form
           className="max-w-xl mx-auto card p-6 grid gap-3"
           style={{
