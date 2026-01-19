@@ -289,8 +289,14 @@ export default function Page() {
         <div className="card p-6">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-2xl border border-white/10 bg-white/5 flex items-center justify-center text-sm font-semibold">
-                UW
+              <div className="w-12 h-12 rounded-2xl border border-white/10 bg-white/5 overflow-hidden">
+                <Image
+                  src="/assets/uwaterloo.png"
+                  alt="University of Waterloo logo"
+                  width={48}
+                  height={48}
+                  className="w-full h-full object-cover"
+                />
               </div>
               <div>
                 <div className="text-xl font-semibold text-gradient-teal">University of Waterloo</div>
