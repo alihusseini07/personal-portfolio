@@ -1,5 +1,15 @@
 [
   {
+    "role": "Firmware Developer",
+    "org": "University of Waterloo Formula Electric",
+    "location": "Waterloo, ON",
+    "dates": "Sept 2025 - Present",
+    "bullets": [
+      "Developed and tested embedded C/C++ firmware for STM32 ECUs, improving reliability across motor, sensor, and control subsystems.",
+      "Validated CAN/UART signal flow with simulated inputs, reducing communication errors by ~20% and streamlining GitHub-based testing and documentation."
+    ]
+  },
+  {
     "role": "Co-op Student Technician",
     "org": "Volvo Cars Oakville",
     "location": "Oakville, ON",
