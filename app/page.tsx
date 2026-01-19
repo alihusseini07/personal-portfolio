@@ -176,7 +176,7 @@ export default function Page() {
 
       {/* OVERVIEW */}
       <Section id="overview" title="Overview">
-        <div className="grid grid-cols-12 gap-6 items-start">
+        <div className="grid grid-cols-12 gap-6 items-center">
           <div className="col-span-12 lg:col-span-8 card p-6 overview-card">
             <div className="grid gap-4">
               <p className="text-lg leading-relaxed">
@@ -212,7 +212,7 @@ export default function Page() {
             </div>
           </div>
 
-          <div className="col-span-12 lg:col-span-4 flex justify-center lg:justify-end">
+          <div className="col-span-12 lg:col-span-4 flex items-center justify-center">
             <Image
               src="/assets/ali-headshot.jpg"
               alt="Ali Husseini headshot"

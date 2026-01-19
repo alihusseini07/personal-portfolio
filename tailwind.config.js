@@ -6,13 +6,13 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        bg: "#0b0f14",
-        panel: "#0f141b",
-        text: "#e6eef8",
-        muted: "#a8b3c2",
-        primary: "#69a8ff",
-        primary2: "#7c79ff",
-        outline: "rgba(255,255,255,.12)",
+        bg: "#070a0f",
+        panel: "#0b1118",
+        text: "#e8f3ff",
+        muted: "#9fb2c8",
+        primary: "#22d3ee",
+        primary2: "#34d399",
+        outline: "rgba(255,255,255,.1)",
       },
       borderRadius: { xl2: "1.25rem" },
       boxShadow: {

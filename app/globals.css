@@ -6,10 +6,10 @@
 /* --- Theme tokens --- */
 :root { color-scheme: dark; }
 :root {
-  --teal: #14b8a6;   /* teal-500 */
-  --teal2: #22d3ee;  /* cyan-400 */
+  --teal: #22d3ee;   /* cyan-400 */
+  --teal2: #34d399;  /* emerald-400 */
   --outline: rgba(255,255,255,.16);
-  --glow: 0 8px 22px rgba(20,184,166,.25), 0 2px 8px rgba(34,211,238,.18);
+  --glow: 0 10px 26px rgba(34,211,238,.22), 0 3px 10px rgba(52,211,153,.16);
 }
 
 html { scroll-behavior: smooth; }
@@ -17,8 +17,9 @@ html { scroll-behavior: smooth; }
 body {
   @apply bg-bg text-text leading-relaxed;
   background-image:
-    radial-gradient(1200px 800px at 80% -10%, rgba(110,170,255,.2), transparent 40%),
-    radial-gradient(1000px 700px at -10% 10%, rgba(124,121,255,.16), transparent 40%);
+    radial-gradient(1200px 900px at 85% -10%, rgba(34,211,238,.18), transparent 45%),
+    radial-gradient(1100px 800px at -10% 10%, rgba(52,211,153,.16), transparent 45%),
+    radial-gradient(900px 700px at 50% 120%, rgba(56,189,248,.12), transparent 55%);
 }
 
 .container { @apply max-w-[1100px] mx-auto px-5; }
