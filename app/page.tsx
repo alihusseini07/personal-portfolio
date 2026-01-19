@@ -197,10 +197,10 @@ export default function Page() {
                   first solution.
                 </li>
                 <li>
-                  🤝 Outside of coursework, I tutor math and science, which has shaped how I
-                  communicate technical ideas to non technical audiences. I care a lot about
-                  clarity, empathy, and making sure people actually understand what’s being built
-                  and why.
+                  🤝 Outside of coursework, I enjoy staying active with kickboxing and the gym. I've 
+                  tutored math and science, which has shaped how I communicate technical ideas to non 
+                  technical audiences. I care a lot about clarity, empathy, and making sure people actually 
+                  understand what’s being built and why.
                 </li>
                 <li>
                   🚀 I’m especially drawn to startup environments and fast moving teams where
