@@ -172,7 +172,7 @@ export default function Page() {
       </Section>
 
       {/* EXPERIENCE */}
-      <Section id="experience" title="Experience, Volunteering & Clubs">
+      <Section id="experience" title="Experience">
         <div className="grid gap-3">
           {experience.map((xp, i) => (
             <ExperienceItem key={i} xp={xp} />
