@@ -5,9 +5,10 @@ import Image from "next/image";
 import Section from "../components/Section";
 import { type Project } from "../components/ProjectCard";
 import ExperienceItem, { type Experience } from "../components/ExperienceItem";
-import { IconEmail, IconGitHub, IconLinkedIn } from "../components/Icons";
+import { IconGitHub, IconLinkedIn } from "../components/Icons";
 import DisplayCards from "../components/ui/display-cards";
 import { InteractiveHoverButton } from "../components/ui/interactive-hover-button";
+import { SlideButton } from "../components/ui/slide-button";
 import { useShaderBackground } from "../components/ui/animated-shader-hero";
 import { Brain, Cpu, Box, Layers } from "lucide-react";
 
@@ -20,6 +21,38 @@ export default function Page() {
   const filters = ["all", "AI", "Web", "Embedded", "CAD"] as const;
   type Filter = (typeof filters)[number];
   const [filter, setFilter] = useState<Filter>("all");
+  const [formState, setFormState] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [fieldErrors, setFieldErrors] = useState({ name: false, email: false, message: false });
+  const formRef = useRef<HTMLFormElement>(null);
+
+  const validateForm = (): boolean => {
+    if (!formRef.current) return false;
+    const data = new FormData(formRef.current);
+    const errors = {
+      name:    !String(data.get("name")    ?? "").trim(),
+      email:   !String(data.get("email")   ?? "").trim(),
+      message: !String(data.get("message") ?? "").trim(),
+    };
+    setFieldErrors(errors);
+    return !errors.name && !errors.email && !errors.message;
+  };
+
+  const handleSlideSubmit = async (): Promise<boolean> => {
+    try {
+      const res = await fetch("https://formspree.io/f/mojnyvgo", {
+        method: "POST",
+        headers: { Accept: "application/json" },
+        body: new FormData(formRef.current!),
+      });
+      if (res.ok) {
+        setTimeout(() => setFormState("success"), 1200);
+        return true;
+      }
+      return false;
+    } catch {
+      return false;
+    }
+  };
 
   // ── Data ─────────────────────────────────────────────
   const projects   = projectsData   as Project[];
@@ -160,14 +193,15 @@ export default function Page() {
 
               {/* Name */}
               <h1
-                className="hero-el font-display font-bold text-gradient mb-4"
+                className="hero-el font-display font-bold mb-4"
                 style={{
                   fontSize: "clamp(2.8rem, 7vw, 5rem)",
                   letterSpacing: "-0.04em",
                   lineHeight: 1.05,
                 }}
               >
-                Ali Husseini
+                <span style={{ color: "#ffffff" }}>Hi, I&apos;m </span>
+                <span className="text-gradient">Ali</span>
               </h1>
 
               {/* Tagline */}
@@ -179,11 +213,11 @@ export default function Page() {
                 firmware for electric race cars to AI-powered workflow tools.
               </p>
 
-              {/* Primary CTAs */}
-              <div className="hero-el flex flex-wrap gap-3 justify-center lg:justify-start mb-5">
+              {/* CTAs + Social icons */}
+              <div className="hero-el flex flex-wrap gap-3 items-center justify-center lg:justify-start">
                 <InteractiveHoverButton
                   text="Resume"
-                  className="w-32 border-white/10 text-[#e2e8f0]"
+                  className="w-32 border-white/10 text-[#e2e8f0] transition-transform duration-200 ease-out hover:-translate-y-1"
                   onClick={() => {
                     const a = document.createElement("a");
                     a.href = "/assets/Ali-Husseini-Resume.pdf";
@@ -193,32 +227,49 @@ export default function Page() {
                     document.body.removeChild(a);
                   }}
                 />
-              </div>
-
-              {/* Social icons */}
-              <div className="hero-el flex gap-3 justify-center lg:justify-start">
-                <a className="btn-icon" href={`mailto:${email}`} aria-label="Email">
-                  <IconEmail />
-                </a>
                 {profile.linkedin && (
                   <a
-                    className="btn-icon"
+                    className="group relative inline-flex items-center justify-center rounded-xl overflow-hidden cursor-pointer transition-transform duration-200 ease-out hover:-translate-y-1"
                     href={profile.linkedin}
                     target="_blank"
                     rel="noreferrer"
                     aria-label="LinkedIn"
+                    style={{
+                      width: "40px",
+                      height: "40px",
+                      border: "1px solid rgba(255,255,255,.1)",
+                      background: "#060b12",
+                      color: "#e2e8f0",
+                      flexShrink: 0,
+                    }}
                   >
-                    <IconLinkedIn />
+                    <div
+                      className="absolute inset-0 scale-0 rounded-xl transition-all duration-300 group-hover:scale-[2]"
+                      style={{ background: "linear-gradient(135deg, #22d3ee 0%, #34d399 100%)" }}
+                    />
+                    <span className="relative z-10"><IconLinkedIn /></span>
                   </a>
                 )}
                 <a
-                  className="btn-icon"
+                  className="group relative inline-flex items-center justify-center rounded-xl overflow-hidden cursor-pointer transition-transform duration-200 ease-out hover:-translate-y-1"
                   href={github}
                   target="_blank"
                   rel="noreferrer"
                   aria-label="GitHub"
+                  style={{
+                    width: "40px",
+                    height: "40px",
+                    border: "1px solid rgba(255,255,255,.1)",
+                    background: "#060b12",
+                    color: "#e2e8f0",
+                    flexShrink: 0,
+                  }}
                 >
-                  <IconGitHub />
+                  <div
+                    className="absolute inset-0 scale-0 rounded-xl transition-all duration-300 group-hover:scale-[2]"
+                    style={{ background: "linear-gradient(135deg, #22d3ee 0%, #34d399 100%)" }}
+                  />
+                  <span className="relative z-10"><IconGitHub /></span>
                 </a>
               </div>
             </div>
@@ -234,37 +285,6 @@ export default function Page() {
                 priority
               />
 
-              {/* Quick stats */}
-              <div className="flex gap-3 flex-wrap justify-center">
-                {[
-                  { value: "3+",  label: "Projects"   },
-                  { value: "1st", label: "Year"       },
-                  { value: "UW",  label: "Waterloo"   },
-                ].map((s) => (
-                  <div
-                    key={s.label}
-                    className="text-center px-5 py-3 rounded-xl"
-                    style={{
-                      background: "rgba(255,255,255,.04)",
-                      border: "1px solid rgba(255,255,255,.08)",
-                      minWidth: "72px",
-                    }}
-                  >
-                    <div
-                      className="text-gradient font-display font-bold"
-                      style={{ fontSize: "1.35rem", letterSpacing: "-0.03em" }}
-                    >
-                      {s.value}
-                    </div>
-                    <div
-                      className="text-xs mt-0.5"
-                      style={{ color: "var(--muted)" }}
-                    >
-                      {s.label}
-                    </div>
-                  </div>
-                ))}
-              </div>
             </div>
           </div>
 
@@ -442,49 +462,64 @@ export default function Page() {
           get back to you.
         </p>
 
-        <form
-          className="max-w-xl card p-6 md:p-8 grid gap-4"
-          onSubmit={(e) => {
-            e.preventDefault();
-            const data    = new FormData(e.currentTarget);
-            const name    = String(data.get("name")    ?? "");
-            const mail    = String(data.get("email")   ?? email);
-            const message = String(data.get("message") ?? "");
-            const body    = encodeURIComponent(
-              `Name: ${name}\nEmail: ${mail}\n\n${message}`
-            );
-            window.location.href = `mailto:${email}?subject=Portfolio%20Inquiry&body=${body}`;
-          }}
-        >
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <input
-              name="name"
-              placeholder="Your name"
-              required
-              className="form-input"
-            />
-            <input
-              name="email"
-              type="email"
-              placeholder="Your email"
-              required
-              className="form-input"
-            />
-          </div>
-          <textarea
-            name="message"
-            placeholder="Your message"
-            rows={5}
-            required
-            className="form-input"
-            style={{ resize: "vertical" }}
-          />
-          <div className="flex justify-end">
-            <button type="submit" className="btn btn-primary">
-              Send Message
+        {formState === "success" ? (
+          <div
+            className="max-w-xl card p-6 md:p-8 flex flex-col items-center justify-center gap-3 text-center"
+            style={{ minHeight: "200px" }}
+          >
+            <div
+              className="w-12 h-12 rounded-full flex items-center justify-center mb-1"
+              style={{ background: "rgba(34,211,238,.1)", border: "1px solid rgba(34,211,238,.25)" }}
+            >
+              <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+                <path d="M4 11.5l5 5 9-9" stroke="#22d3ee" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </div>
+            <p className="font-display font-semibold text-lg" style={{ color: "var(--text)" }}>Message sent!</p>
+            <p className="text-sm" style={{ color: "var(--muted)" }}>Thanks for reaching out — I'll get back to you soon.</p>
+            <button
+              className="mt-2 text-xs underline underline-offset-4"
+              style={{ color: "var(--muted)" }}
+              onClick={() => setFormState("idle")}
+            >
+              Send another
             </button>
           </div>
-        </form>
+        ) : (
+          <form
+            ref={formRef}
+            noValidate
+            className="max-w-xl card p-6 md:p-8 grid gap-4"
+            onSubmit={(e) => e.preventDefault()}
+          >
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <input
+                name="name"
+                placeholder="Your name"
+                className={`form-input${fieldErrors.name ? " form-input-error" : ""}`}
+                onChange={() => setFieldErrors((e) => ({ ...e, name: false }))}
+              />
+              <input
+                name="email"
+                type="email"
+                placeholder="Your email"
+                className={`form-input${fieldErrors.email ? " form-input-error" : ""}`}
+                onChange={() => setFieldErrors((e) => ({ ...e, email: false }))}
+              />
+            </div>
+            <textarea
+              name="message"
+              placeholder="Your message"
+              rows={5}
+              className={`form-input${fieldErrors.message ? " form-input-error" : ""}`}
+              style={{ resize: "vertical" }}
+              onChange={() => setFieldErrors((e) => ({ ...e, message: false }))}
+            />
+            <div className="flex justify-end pl-2">
+              <SlideButton validate={validateForm} onSlideComplete={handleSlideSubmit} label="Slide to send" />
+            </div>
+          </form>
+        )}
       </Section>
     </main>
   );
