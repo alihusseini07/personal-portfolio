@@ -44,6 +44,12 @@
     "Lambda",
     "Bedrock"
   ],
+  "cad": [
+    "AutoCAD",
+    "Inventor",
+    "Fusion 360",
+    "SolidWorks"
+  ],
   "certifications": [
     "Harvard CS50x",
     "First Aid & CPR-AED",

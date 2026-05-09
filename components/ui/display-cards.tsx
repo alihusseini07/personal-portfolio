@@ -1,6 +1,6 @@
 "use client";
 
-import { Sparkles } from "lucide-react";
+import { Box, Code2, Cpu, FileCode2, Globe, Printer, RotateCw, Sparkles } from "lucide-react";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { IconGitHub } from "../Icons";
@@ -133,6 +133,77 @@ function ProjectLinks({ links }: { links?: DisplayCardProps["links"] }) {
   );
 }
 
+const stackIconUrls: Record<string, string> = {
+  TypeScript: "https://cdn.simpleicons.org/typescript",
+  JavaScript: "https://cdn.simpleicons.org/javascript",
+  "Next.js": "https://cdn.simpleicons.org/nextdotjs/white",
+  Fastify: "https://cdn.simpleicons.org/fastify/white",
+  Prisma: "https://cdn.simpleicons.org/prisma/white",
+  Playwright: "/icons/playwright.svg",
+  SwiftUI: "/icons/swiftui.svg",
+  "Node.js": "https://cdn.simpleicons.org/nodedotjs",
+  Express: "https://cdn.simpleicons.org/express/white",
+  PostgreSQL: "/icons/postgresql.svg",
+  Python: "https://cdn.simpleicons.org/python",
+  Streamlit: "https://cdn.simpleicons.org/streamlit",
+  LangChain: "https://cdn.simpleicons.org/langchain",
+  OpenAI: "https://cdn.simpleicons.org/openai/white",
+  "OpenAI Vision": "https://cdn.simpleicons.org/openai/white",
+  "C++": "https://cdn.simpleicons.org/cplusplus",
+  ESP32: "https://cdn.simpleicons.org/espressif",
+  PlatformIO: "https://cdn.simpleicons.org/platformio",
+  "Fusion 360": "/icons/fusion-360.svg",
+};
+
+function getStackFallbackIcon(stackItem: string) {
+  const normalized = stackItem.toLowerCase();
+
+  if (normalized.includes("web")) return <Globe className="size-3.5 text-[#22d3ee]" />;
+  if (normalized.includes("dom") || normalized.includes("manifest") || normalized.includes("pdf")) {
+    return <FileCode2 className="size-3.5 text-[#34d399]" />;
+  }
+  if (normalized.includes("3d") || normalized.includes("print")) {
+    return <Printer className="size-3.5 text-[#8bd3ff]" />;
+  }
+  if (normalized.includes("iteration")) return <RotateCw className="size-3.5 text-[#34d399]" />;
+  if (normalized.includes("esp") || normalized.includes("embedded")) return <Cpu className="size-3.5 text-[#34d399]" />;
+  if (normalized.includes("cad")) return <Box className="size-3.5 text-[#8bd3ff]" />;
+  return <Code2 className="size-3.5 text-[#22d3ee]" />;
+}
+
+function StackChips({ stack, compact = false }: { stack: string[]; compact?: boolean }) {
+  if (stack.length === 0) return null;
+
+  return (
+    <div className={`flex flex-wrap ${compact ? "gap-1.5" : "gap-2"}`}>
+      {stack.map((s) => {
+        const iconUrl = stackIconUrls[s];
+
+        return (
+          <span
+            key={s}
+            className={`inline-flex items-center gap-1.5 rounded-full font-medium ${compact ? "px-2 py-1 text-[0.65rem]" : "px-2.5 py-1 text-xs"}`}
+            style={{
+              background: "rgba(255,255,255,0.05)",
+              border: "1px solid rgba(255,255,255,0.1)",
+              color: "var(--muted)",
+            }}
+          >
+            <span className="flex size-4 flex-shrink-0 items-center justify-center">
+              {iconUrl ? (
+                <img src={iconUrl} alt="" className="size-3.5 object-contain" />
+              ) : (
+                getStackFallbackIcon(s)
+              )}
+            </span>
+            <span>{s}</span>
+          </span>
+        );
+      })}
+    </div>
+  );
+}
+
 function DisplayCard({
   layoutId,
   icon = <Sparkles className="size-4 text-[#22d3ee]" />,
@@ -209,32 +280,8 @@ function DisplayCard({
         </p>
 
         {stack.length > 0 && (
-          <div className="mb-4 flex flex-wrap gap-1">
-            {stack.slice(0, 4).map((s, i) => (
-              <span
-                key={i}
-                className="rounded-full px-2 py-0.5 text-[0.65rem] font-medium"
-                style={{
-                  background: "rgba(255,255,255,0.04)",
-                  border: "1px solid rgba(255,255,255,0.08)",
-                  color: "var(--muted)",
-                }}
-              >
-                {s}
-              </span>
-            ))}
-            {stack.length > 4 && (
-              <span
-                className="rounded-full px-2 py-0.5 text-[0.65rem] font-medium"
-                style={{
-                  background: "rgba(255,255,255,0.04)",
-                  border: "1px solid rgba(255,255,255,0.08)",
-                  color: "var(--muted)",
-                }}
-              >
-                +{stack.length - 4}
-              </span>
-            )}
+          <div className="mb-4">
+            <StackChips stack={stack} compact />
           </div>
         )}
 
@@ -344,20 +391,8 @@ export default function DisplayCards({ cards }: DisplayCardsProps) {
                   </p>
 
                   {expanded.stack && expanded.stack.length > 0 && (
-                    <div className="mb-4 flex flex-wrap gap-1.5">
-                      {expanded.stack.map((s, i) => (
-                        <span
-                          key={i}
-                          className="rounded-full px-2.5 py-1 text-xs font-medium"
-                          style={{
-                            background: "rgba(255,255,255,0.05)",
-                            border: "1px solid rgba(255,255,255,0.1)",
-                            color: "var(--muted)",
-                          }}
-                        >
-                          {s}
-                        </span>
-                      ))}
+                    <div className="mb-4">
+                      <StackChips stack={expanded.stack} />
                     </div>
                   )}
 

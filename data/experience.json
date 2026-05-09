@@ -4,6 +4,7 @@
     "org": "ATS360/Netdynamic Inc.",
     "location": "Mississauga, ON",
     "dates": "Jan 2026 - Apr 2026",
+    "image": "/assets/ndi-logo.png",
     "bullets": [
       "Architected an end-to-end AI video screening platform using SuiteScript, AWS Lambda, S3, Transcribe, and Bedrock/Claude, shipping a client-requested feature to 30+ enterprise hiring teams.",
       "Designed and shipped four interview scheduling flows plus a centralized Interview Hub with calendar sync and auto timeslot generation, cutting roughly 15 minutes per interview across 30+ client teams.",
@@ -15,6 +16,7 @@
     "org": "University of Waterloo Formula Electric",
     "location": "Waterloo, ON",
     "dates": "Sept 2025 - Dec 2025",
+    "image": "/assets/waterlooformulaelectric_logo.png",
     "bullets": [
       "Developed and tested embedded C/C++ firmware for STM32 ECUs, improving reliability across motor, sensor, and control subsystems.",
       "Validated CAN/UART signal flow with simulated inputs, reducing communication errors by ~20% and streamlining GitHub-based testing and documentation."
@@ -24,7 +26,8 @@
     "role": "Co-op Student Technician",
     "org": "Volvo Cars Oakville",
     "location": "Oakville, ON",
-    "dates": "July â€“ Aug 2024",
+    "dates": "July 2024 - Aug 2024",
+    "image": "/assets/volvo-logo.png",
     "bullets": [
       "Partnered with senior technicians to diagnose and resolve complex system malfunctions using structured root-cause analysis.",
       "Adjusted to different workflows across multiple technicians, contributing to timely completion of critical repairs."
@@ -34,7 +37,8 @@
     "role": "Tutor & Communications Executive",
     "org": "Garth Webb SS Peer Tutoring Club",
     "location": "Oakville, ON",
-    "dates": "Sept 2024 â€“ June 2025",
+    "dates": "Sept 2024 - June 2025",
+    "image": "/assets/garthwebb-logo.png",
     "bullets": [
       "Founded and scaled the club to 200+ students; led announcements, email comms, and coordination with teachers and tutors.",
       "Tutored 50+ students in Math and Science, improving grades by up to 15% via tailored study plans."
@@ -44,7 +48,8 @@
     "role": "Energy, Engineering & Robotics SHSM",
     "org": "Garth Webb SS",
     "location": "Oakville, ON",
-    "dates": "Oct 2023 â€“ June 2025",
+    "dates": "Oct 2023 - June 2025",
+    "image": "/assets/garthwebb-logo.png",
     "bullets": [
       "Completed WHMIS, Worker Health & Safety, and First Aid & CPR certifications.",
       "Designed sustainable-city solutions during ICE training; coordinated project tasks and timelines with spreadsheets."

@@ -61,6 +61,7 @@ export default function Page() {
     languages: string[];
     frameworksLibraries: string[];
     infra: string[];
+    cad: string[];
     personalEmail: string;
     github: string;
     linkedin?: string;
@@ -133,6 +134,58 @@ export default function Page() {
       stack:       p.stack,
       links:       p.links,
     }));
+
+  const skillIcons: Record<string, string> = {
+    Python: "https://cdn.simpleicons.org/python",
+    TypeScript: "https://cdn.simpleicons.org/typescript",
+    JavaScript: "https://cdn.simpleicons.org/javascript",
+    "C++": "https://cdn.simpleicons.org/cplusplus",
+    AutoCAD: "/icons/autocad.svg",
+    Inventor: "/icons/autodesk-inventor.svg",
+    "Fusion 360": "/icons/fusion-360.svg",
+    SolidWorks: "/icons/solidworks.svg",
+    Java: "/icons/java.svg",
+    SQL: "/icons/sql.svg",
+    Swift: "https://cdn.simpleicons.org/swift",
+    Bash: "https://cdn.simpleicons.org/gnubash",
+    HTML: "https://cdn.simpleicons.org/html5",
+    CSS: "https://cdn.simpleicons.org/css",
+    React: "https://cdn.simpleicons.org/react",
+    "Next.js": "https://cdn.simpleicons.org/nextdotjs/white",
+    SwiftUI: "/icons/swiftui.svg",
+    "Tailwind CSS": "https://cdn.simpleicons.org/tailwindcss",
+    "Node.js": "https://cdn.simpleicons.org/nodedotjs",
+    Express: "https://cdn.simpleicons.org/express/white",
+    Fastify: "https://cdn.simpleicons.org/fastify/white",
+    Prisma: "https://cdn.simpleicons.org/prisma/white",
+    NumPy: "https://cdn.simpleicons.org/numpy",
+    Pandas: "https://cdn.simpleicons.org/pandas",
+    Playwright: "/icons/playwright.svg",
+    pytest: "https://cdn.simpleicons.org/pytest",
+    Git: "https://cdn.simpleicons.org/git",
+    GitHub: "https://cdn.simpleicons.org/github/white",
+    Docker: "https://cdn.simpleicons.org/docker",
+    PostgreSQL: "/icons/postgresql.svg",
+    Supabase: "https://cdn.simpleicons.org/supabase",
+    Neon: "https://cdn.simpleicons.org/neon",
+    Railway: "https://cdn.simpleicons.org/railway/white",
+    AWS: "/icons/aws.svg",
+    S3: "/icons/aws-s3.svg",
+    Lambda: "/icons/aws-lambda.svg",
+    Bedrock: "/icons/aws-bedrock.svg",
+    NetSuite: "/icons/netsuite.svg",
+    SuiteCloud: "/icons/suitecloud.svg",
+    SuiteScript: "/icons/suitescript.svg",
+    Notion: "https://cdn.simpleicons.org/notion/white",
+    Excel: "/icons/excel.svg",
+  };
+
+  const skillGroups = [
+    { title: "Languages",              items: profile.languages,              accent: "var(--teal)"  },
+    { title: "Frameworks / Libraries", items: profile.frameworksLibraries,    accent: "var(--teal2)" },
+    { title: "Infra",                  items: profile.infra,                   accent: "var(--teal3)" },
+    { title: "CAD / Design",           items: profile.cad,                     accent: "#8bd3ff" },
+  ];
 
   // Render
   return (
@@ -394,37 +447,65 @@ export default function Page() {
 
       {/* Skills */}
       <Section id="skills" title="Skills">
-        <div className="grid grid-cols-12 gap-3">
-          {[
-            { title: "Languages",              items: profile.languages,              accent: "var(--teal)"  },
-            { title: "Frameworks / Libraries", items: profile.frameworksLibraries,    accent: "var(--teal2)" },
-            { title: "Infra",                  items: profile.infra,                   accent: "var(--teal3)" },
-          ].map((g) => (
-            <div key={g.title} className="col-span-12 md:col-span-4 card p-5">
-              <div className="flex items-center gap-2 mb-3">
-                <span
-                  className="w-1 h-5 rounded-full flex-shrink-0"
-                  style={{ background: g.accent }}
-                />
-                <h3
-                  className="font-display font-semibold text-sm text-gradient"
-                  style={{ letterSpacing: "-0.01em" }}
-                >
-                  {g.title}
-                </h3>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {g.items.map((it, ii) => (
-                  <span key={ii} className="badge">
-                    {it}
-                  </span>
-                ))}
+        <div className="grid gap-4">
+          {skillGroups.map((g) => (
+            <div key={g.title} className="card p-4 md:p-5">
+              <div className="flex flex-col md:flex-row md:items-start gap-4">
+                <div className="md:w-52 flex-shrink-0 flex items-center gap-2">
+                  <span
+                    className="w-1 h-7 rounded-full flex-shrink-0"
+                    style={{ background: g.accent }}
+                  />
+                  <div>
+                    <h3
+                      className="font-display font-semibold text-base text-gradient leading-tight"
+                      style={{ letterSpacing: "-0.01em" }}
+                    >
+                      {g.title}
+                    </h3>
+                    <p className="text-xs mt-0.5" style={{ color: "var(--muted)" }}>
+                      {g.items.length} skills
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex flex-wrap gap-2.5 flex-1">
+                  {g.items.map((it) => (
+                    <div
+                      key={it}
+                      className="flex items-center gap-2.5 min-w-[142px] rounded-xl px-3 py-2"
+                      style={{
+                        border: "1px solid var(--border)",
+                        background: "rgba(255,255,255,.035)",
+                      }}
+                    >
+                      <span
+                        className="w-9 h-9 rounded-lg flex-shrink-0 flex items-center justify-center overflow-hidden"
+                        style={{
+                          border: "1px solid rgba(255,255,255,.08)",
+                          background: "rgba(255,255,255,.06)",
+                        }}
+                      >
+                        <img
+                          src={skillIcons[it]}
+                          alt={`${it} icon`}
+                          className="w-6 h-6 object-contain"
+                        />
+                      </span>
+                      <span
+                        className="text-sm font-medium leading-tight"
+                        style={{ color: "var(--text)" }}
+                      >
+                        {it}
+                      </span>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           ))}
         </div>
       </Section>
-
       {/* Education */}
       <Section id="education" title="Education">
         <div className="card p-6 md:p-8">
