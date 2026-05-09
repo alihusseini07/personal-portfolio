@@ -17,7 +17,7 @@ import projectsData   from "../data/projects.json";
 import experienceData from "../data/experience.json";
 
 export default function Page() {
-  // ── Filters ──────────────────────────────────────────
+  // Filters
   const filters = ["all", "AI", "Web", "Embedded", "CAD"] as const;
   type Filter = (typeof filters)[number];
   const [filter, setFilter] = useState<Filter>("all");
@@ -54,13 +54,13 @@ export default function Page() {
     }
   };
 
-  // ── Data ─────────────────────────────────────────────
+  // Data
   const projects   = projectsData   as Project[];
   const experience = experienceData as Experience[];
   const profile    = profileData    as {
-    skills: string[];
-    tools: string[];
-    certifications: string[];
+    languages: string[];
+    frameworksLibraries: string[];
+    infra: string[];
     personalEmail: string;
     github: string;
     linkedin?: string;
@@ -82,10 +82,10 @@ export default function Page() {
     [projects, filter]
   );
 
-  // ── Shader background ─────────────────────────────────
+  // Shader background
   const shaderCanvasRef = useShaderBackground();
 
-  // ── Hero parallax blobs ───────────────────────────────
+  // Hero parallax blobs
   const heroRef = useRef<HTMLDivElement>(null);
   const l1 = useRef<HTMLSpanElement>(null);
   const l2 = useRef<HTMLSpanElement>(null);
@@ -113,7 +113,7 @@ export default function Page() {
   const email  = profile.personalEmail || "ahusseini007@gmail.com";
   const github = profile.github        || "https://github.com/alihusseini07";
 
-  // ── Display-card helpers ──────────────────────────────
+  // Display-card helpers
   const getCategoryIcon = (category: string) => {
     const c = category.toLowerCase();
     if (c.includes("ai") || c.includes("ml"))        return <Brain  className="size-4 text-[#22d3ee]" />;
@@ -129,14 +129,15 @@ export default function Page() {
       description: p.description,
       date:        p.category,
       image:       p.image,
+      video:       p.video,
       stack:       p.stack,
       links:       p.links,
     }));
 
-  // ── Render ────────────────────────────────────────────
+  // Render
   return (
     <main>
-      {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ HERO ━━━ */}
+      {/* Hero */}
       <section ref={heroRef} className="hero-wrap">
         {/* WebGL shader background */}
         <canvas
@@ -145,7 +146,7 @@ export default function Page() {
           style={{ zIndex: 0, opacity: 0.62 }}
         />
 
-        {/* Bottom fade — blends hero into page background */}
+        {/* Bottom fade blends hero into page background */}
         <div
           className="absolute bottom-0 left-0 right-0 pointer-events-none"
           style={{
@@ -155,7 +156,7 @@ export default function Page() {
           }}
         />
 
-        {/* Parallax blob overlay — teal glow on top of shader */}
+        {/* Parallax blob overlay with teal glow on top of shader */}
         <div className="hero-bg" style={{ zIndex: 1 }}>
           <span ref={l1} className="hero-l1" />
           <span ref={l2} className="hero-l2" />
@@ -169,7 +170,7 @@ export default function Page() {
         >
           <div className="grid grid-cols-12 gap-8 md:gap-12 items-center">
 
-            {/* Left — text column */}
+            {/* Left text column */}
             <div className="col-span-12 lg:col-span-7 text-center lg:text-left flex flex-col items-center lg:items-start">
 
               {/* Intro badge */}
@@ -188,7 +189,7 @@ export default function Page() {
                     animation: "scroll-bounce 2s ease-in-out infinite",
                   }}
                 />
-                Mechatronics Engineering · University of Waterloo
+                Mechatronics Engineering - University of Waterloo
               </div>
 
               {/* Name */}
@@ -209,7 +210,7 @@ export default function Page() {
                 className="hero-el text-base md:text-lg mb-8 max-w-lg"
                 style={{ color: "var(--muted)", lineHeight: 1.7 }}
               >
-                I build things at the intersection of software, hardware, and AI — from
+                I build things at the intersection of software, hardware, and AI - from
                 firmware for electric race cars to AI-powered workflow tools.
               </p>
 
@@ -274,7 +275,7 @@ export default function Page() {
               </div>
             </div>
 
-            {/* Right — headshot + stats */}
+            {/* Right headshot and stats */}
             <div className="col-span-12 lg:col-span-5 hero-right flex flex-col items-center gap-5">
               <Image
                 src="/assets/ali-headshot.jpg"
@@ -304,39 +305,61 @@ export default function Page() {
         </div>
       </section>
 
-      {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ ABOUT ━━━ */}
+      {/* About */}
       <Section id="overview" title="About Me">
         <div className="card p-6 md:p-8">
           <div className="grid gap-4">
-            {[
-              "👋 Hey! I'm Ali, a Mechatronics Engineering student at the University of Waterloo who enjoys turning rough ideas into practical, well-thought-out systems that actually work in the real world.",
-              "🧩 I've worked across software, hardware, and AI-driven projects, from building tools like Joblyze to designing and iterating on robotics systems. I like breaking down messy problems, structuring them clearly, and shipping something usable instead of overengineering from the start.",
-              "⚙️ Interests: applied AI, workflow tools, structured problem solving, clean system design, and improving ideas through iteration rather than settling for the first solution.",
-              "🤝 Outside of coursework, I enjoy staying active with kickboxing and the gym. I've tutored math and science, which has shaped how I communicate technical ideas to non-technical audiences. I care a lot about clarity, empathy, and making sure people actually understand what's being built and why.",
-              "🚀 I'm especially drawn to startup environments and fast-moving teams where learning by doing, ownership, and collaboration matter more than titles or experience level.",
-            ].map((text, i) => (
-              <p key={i} className="text-sm leading-relaxed" style={{ color: i === 0 ? "var(--text)" : "var(--muted)", fontSize: i === 0 ? "1rem" : "0.9rem" }}>
-                {text}
-              </p>
-            ))}
+            <p className="text-base md:text-lg leading-relaxed" style={{ color: "var(--text)" }}>
+              I&apos;m a Mechatronics Engineering student at Waterloo focused on building practical software and AI
+              systems. At <strong style={{ color: "#e2e8f0" }}>ATS360/Netdynamic</strong>, I worked on{" "}
+              <strong style={{ color: "#e2e8f0" }}>AI-powered hiring tools</strong> for video screening,
+              interview scheduling, resume parsing, and scoring workflows used by over 30 enterprise recruiting teams.
+            </p>
 
-            <div className="flex flex-wrap gap-2 pt-1">
-              {["Applied AI", "Embedded Systems", "System Design", "Workflow Tools", "Ontario, Canada"].map(
-                (t) => (
-                  <span key={t} className="badge">
-                    {t}
-                  </span>
-                )
-              )}
+            <p className="text-base md:text-lg leading-relaxed" style={{ color: "var(--muted)" }}>
+              I build mostly across software and AI:{" "}
+              <strong style={{ color: "#e2e8f0" }}>React and Next.js</strong> on the frontend,{" "}
+              <strong style={{ color: "#e2e8f0" }}>Node/Express and JavaScript</strong> on the backend,{" "}
+              <strong style={{ color: "#e2e8f0" }}>PostgreSQL</strong> for data,{" "}
+              <strong style={{ color: "#e2e8f0" }}>AWS</strong> for infrastructure, and{" "}
+              <strong style={{ color: "#e2e8f0" }}>Playwright</strong> for automation. I also work close to hardware
+              through embedded firmware with Waterloo Formula Electric.
+            </p>
+
+            <p className="text-base md:text-lg leading-relaxed" style={{ color: "var(--muted)" }}>
+              I&apos;m looking for software and AI co-ops where I can build real products, solve hard problems,
+              and keep growing quickly.
+            </p>
+
+            <div className="flex flex-wrap gap-6 pt-1">
+              {[
+                ["location", "Ontario, Canada"],
+                ["status", "open to co-ops"],
+              ].map(([label, value]) => (
+                <div key={label}>
+                  <div
+                    className="font-mono text-xs uppercase mb-1"
+                    style={{ color: "var(--muted)", letterSpacing: "0.08em" }}
+                  >
+                    {label}
+                  </div>
+                  <div
+                    className="font-mono text-sm leading-snug"
+                    style={{ color: label === "status" ? "#7ddff3" : "var(--text)" }}
+                  >
+                    {value}
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
       </Section>
 
-      {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ PROJECTS ━━━ */}
+      {/* Projects */}
       <Section id="projects" title="Projects">
         {/* Filter chips */}
-        <div className="flex flex-wrap gap-2 mb-6">
+        <div className="flex flex-wrap gap-2 mb-3">
           {filters.map((t) => (
             <button
               key={t}
@@ -348,9 +371,9 @@ export default function Page() {
           ))}
         </div>
 
-        {/* Stacked display cards */}
+        {/* Project cards */}
         {filtered.length > 0 ? (
-          <div className="flex justify-center py-10 pb-28 pr-36">
+          <div>
             <DisplayCards key={filter} cards={toProjectCards(filtered)} />
           </div>
         ) : (
@@ -360,7 +383,7 @@ export default function Page() {
         )}
       </Section>
 
-      {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ EXPERIENCE ━━━ */}
+      {/* Experience */}
       <Section id="experience" title="Experience">
         <div className="timeline">
           {experience.map((xp, i) => (
@@ -369,16 +392,16 @@ export default function Page() {
         </div>
       </Section>
 
-      {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ SKILLS ━━━ */}
-      <Section id="skills" title="Skills, Tools & Certifications">
-        <div className="grid grid-cols-12 gap-4">
+      {/* Skills */}
+      <Section id="skills" title="Skills">
+        <div className="grid grid-cols-12 gap-3">
           {[
-            { title: "Skills",           items: profile.skills,           accent: "var(--teal)"  },
-            { title: "Tools",            items: profile.tools,            accent: "var(--teal2)" },
-            { title: "Certifications",   items: profile.certifications,   accent: "var(--teal3)" },
+            { title: "Languages",              items: profile.languages,              accent: "var(--teal)"  },
+            { title: "Frameworks / Libraries", items: profile.frameworksLibraries,    accent: "var(--teal2)" },
+            { title: "Infra",                  items: profile.infra,                   accent: "var(--teal3)" },
           ].map((g) => (
             <div key={g.title} className="col-span-12 md:col-span-4 card p-5">
-              <div className="flex items-center gap-2 mb-4">
+              <div className="flex items-center gap-2 mb-3">
                 <span
                   className="w-1 h-5 rounded-full flex-shrink-0"
                   style={{ background: g.accent }}
@@ -402,7 +425,7 @@ export default function Page() {
         </div>
       </Section>
 
-      {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ EDUCATION ━━━ */}
+      {/* Education */}
       <Section id="education" title="Education">
         <div className="card p-6 md:p-8">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -433,12 +456,12 @@ export default function Page() {
                   className="text-sm mt-0.5"
                   style={{ color: "var(--muted)" }}
                 >
-                  BASc, Mechatronics Engineering · Waterloo, Ontario, Canada
+                  BASc, Mechatronics Engineering - Waterloo, Ontario, Canada
                 </div>
               </div>
             </div>
             <span className="badge self-start sm:self-auto whitespace-nowrap" style={{ fontSize: "0.75rem", padding: "4px 12px" }}>
-              Sept 2025 – Apr 2030
+              Sept 2025 - Apr 2030
             </span>
           </div>
 
@@ -452,7 +475,7 @@ export default function Page() {
         </div>
       </Section>
 
-      {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ CONTACT ━━━ */}
+      {/* Contact */}
       <Section id="contact" title="Get in Touch">
         <p
           className="mb-8 text-sm"
@@ -476,7 +499,7 @@ export default function Page() {
               </svg>
             </div>
             <p className="font-display font-semibold text-lg" style={{ color: "var(--text)" }}>Message sent!</p>
-            <p className="text-sm" style={{ color: "var(--muted)" }}>Thanks for reaching out — I'll get back to you soon.</p>
+            <p className="text-sm" style={{ color: "var(--muted)" }}>Thanks for reaching out - I'll get back to you soon.</p>
             <button
               className="mt-2 text-xs underline underline-offset-4"
               style={{ color: "var(--muted)" }}

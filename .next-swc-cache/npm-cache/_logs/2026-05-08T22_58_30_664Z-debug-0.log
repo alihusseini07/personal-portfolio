@@ -1,0 +1,24 @@
+0 verbose cli C:\Program Files\nodejs\node.exe C:\Users\ahuss\AppData\Roaming\npm\node_modules\npm\bin\npm-cli.js
+1 info using npm@11.10.0
+2 info using node@v22.19.0
+3 silly config load:file:C:\Users\ahuss\AppData\Roaming\npm\node_modules\npm\npmrc
+4 silly config load:file:C:\Users\ahuss\Documents\GitHub\personal-portfolio\.npmrc
+5 silly config load:file:C:\Users\ahuss\.npmrc
+6 silly config load:file:C:\Users\ahuss\AppData\Roaming\npm\etc\npmrc
+7 verbose title npm run dev
+8 verbose argv "run" "dev"
+9 verbose logfile logs-max:10 dir:C:\Users\ahuss\Documents\GitHub\personal-portfolio\.next-swc-cache\npm-cache\_logs\2026-05-08T22_58_30_664Z-
+10 verbose logfile C:\Users\ahuss\Documents\GitHub\personal-portfolio\.next-swc-cache\npm-cache\_logs\2026-05-08T22_58_30_664Z-debug-0.log
+11 silly logfile done cleaning log files
+12 http fetch GET 200 https://registry.npmjs.org/npm 315ms
+13 verbose cwd C:\Users\ahuss\Documents\GitHub\personal-portfolio
+14 verbose os Windows_NT 10.0.26200
+15 verbose node v22.19.0
+16 verbose npm  v11.10.0
+17 notice
+17 notice New minor version of npm available! 11.10.0 -> 11.14.1
+17 notice Changelog: https://github.com/npm/cli/releases/tag/v11.14.1
+17 notice To update run: npm install -g npm@11.14.1
+17 notice  { force: true, [Symbol(proc-log.meta)]: true }
+18 verbose exit 0
+19 info ok

@@ -10,10 +10,10 @@ export default function Section({
   children: React.ReactNode;
 }) {
   return (
-    <section id={id} className="container py-16 md:py-24">
+    <section id={id} className="container py-4 md:py-5">
       {/* Section header */}
       <motion.div
-        className="mb-10"
+        className="mb-3"
         initial={{ opacity: 0, y: 12 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.3 }}

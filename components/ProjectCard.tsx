@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { IconGitHub } from "./Icons";
 
 export interface Project {
   title: string;
@@ -8,7 +9,8 @@ export interface Project {
   description: string;
   stack: string[];
   image?: string;
-  links?: { code?: string; live?: string; details?: string; drive?: string };
+  video?: string;
+  links?: { code?: string; demo?: string; live?: string; details?: string; drive?: string };
 }
 
 export default function ProjectCard({ p }: { p: Project }) {
@@ -74,7 +76,7 @@ export default function ProjectCard({ p }: { p: Project }) {
         </div>
 
         {/* Action links */}
-        {(p.links?.code || p.links?.live || p.links?.details || p.links?.drive) && (
+        {(p.links?.code || p.links?.demo || p.links?.live || p.links?.details || p.links?.drive) && (
           <div className="flex gap-2 flex-wrap pt-1 border-t" style={{ borderColor: "var(--border)" }}>
             {p.links?.code && (
               <a
@@ -84,7 +86,19 @@ export default function ProjectCard({ p }: { p: Project }) {
                 target="_blank"
                 rel="noreferrer"
               >
-                Code ↗
+                <IconGitHub />
+                GitHub
+              </a>
+            )}
+            {p.links?.demo && (
+              <a
+                className="btn btn-ghost mt-3"
+                style={{ fontSize: "0.75rem", padding: "6px 12px" }}
+                href={p.links.demo}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Demo ↗
               </a>
             )}
             {p.links?.live && (

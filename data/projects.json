@@ -1,37 +1,77 @@
 [
-{
-  "title": "Joblyze - AI Job Posting Analyzer",
-  "category": "AI Project",
-  "tags": ["ai", "nlp", "web"],
-  "description": "An AI-powered job posting analyzer that extracts required skills, compares with resumes, and highlights gaps.",
-  "stack": ["Python", "Streamlit", "LangChain", "OpenAI"],
-  "image": "/assets/joblyze.jpg",
-  "links": {
-    "code": "https://github.com/alihusseini07/joblyze",
-    "live": ""
-  }
-},
+  {
+    "title": "Clarus",
+    "category": "AI + Web",
+    "tags": ["ai", "web"],
+    "description": "A student dashboard that syncs course data from Brightspace, organizes deadlines and grade weights, and generates AI-ranked study action plans.",
+    "stack": ["TypeScript", "Next.js", "Fastify", "Prisma", "Playwright"],
+    "video": "/assets/clarus-demo.mp4",
+    "links": {
+      "code": "https://github.com/athravseruwam07/clarus",
+      "demo": "/assets/clarus-demo.mp4",
+      "live": "",
+      "details": ""
+    }
+  },
+  {
+    "title": "ChefIt",
+    "category": "AI + Mobile",
+    "tags": ["ai", "web", "mobile"],
+    "description": "A full-stack social cooking app that scans pantry items, matches recipes by ingredient coverage, and supports posts, reviews, and smart shopping lists.",
+    "stack": ["SwiftUI", "Node.js", "Express", "PostgreSQL", "OpenAI Vision"],
+    "image": "/assets/chefit.png",
+    "links": {
+      "code": "https://github.com/MatthewKim07/chef-it",
+      "demo": "https://youtu.be/FiagbJtap8w?si=9v9ugRozeQBy3vfj",
+      "live": "",
+      "details": ""
+    }
+  },
+  {
+    "title": "WaterlooWorks+",
+    "category": "Web Extension",
+    "tags": ["web", "browser-extension"],
+    "description": "A Manifest V3 Chrome extension that parses resumes and job posts, scores candidate fit, and adds dashboards and overlays to streamline co-op job screening.",
+    "stack": ["JavaScript", "Manifest V3", "DOM APIs", "Node.js", "PDF.js"],
+    "image": "/assets/waterlooworksplus.png",
+    "links": {
+      "code": "https://github.com/MatthewKim07/waterloo-works-plus",
+      "live": "",
+      "details": ""
+    }
+  },
+  {
+    "title": "Joblyze - AI Job Posting Analyzer",
+    "category": "AI Project",
+    "tags": ["ai", "nlp", "web"],
+    "description": "An AI-powered job posting analyzer that extracts required skills, compares them with resumes, and highlights gaps for stronger applications.",
+    "stack": ["Python", "Streamlit", "LangChain", "OpenAI"],
+    "image": "/assets/joblyze.jpg",
+    "links": {
+      "code": "https://github.com/alihusseini07/joblyze",
+      "live": ""
+    }
+  },
   {
     "title": "IoT-Enabled Electronic Safe",
     "category": "Embedded",
     "tags": ["embedded", "web"],
-    "description": "ESP32 safe with keypad, LEDs, buzzer, temp sensor; web interface mirrors lock state and unlocks class portfolios in real time.",
+    "description": "ESP32 safe with keypad, LEDs, buzzer, and temperature sensing; the web interface mirrors lock state and controls access in real time.",
     "stack": ["C++", "ESP32", "PlatformIO", "Web"],
-    "image": "assets/esp32-safe.jpg",
+    "image": "/assets/esp32-safe.jpg",
     "links": {
       "code": "https://github.com/alihusseini07/web-esp32"
     }
   },
   {
-  "title": "Delivery Drone – CAD Prototype",
-  "category": "CAD",
-  "tags": ["cad", "fusion360", "3d-printing"],
-  "description": "Designed and 3D-printed a delivery drone prototype in Fusion 360, iterating propeller arm connectors and custom axles, and assembling a functional scale model.",
-  "stack": ["Fusion 360", "3D Printing", "Iteration"],
-  "image": "/assets/delivery-drone.jpg",
-  "links": {
-    "drive": "https://drive.google.com/drive/folders/1SHUE_o_2eRWSIrl6BWkGlvkt_lDGdFTK?usp=drive_link"
+    "title": "Delivery Drone - CAD Prototype",
+    "category": "CAD",
+    "tags": ["cad", "fusion360", "3d-printing"],
+    "description": "Designed and 3D-printed a delivery drone prototype in Fusion 360, iterating propeller arm connectors and custom axles into a functional scale model.",
+    "stack": ["Fusion 360", "3D Printing", "Iteration"],
+    "image": "/assets/delivery-drone.jpg",
+    "links": {
+      "drive": "https://drive.google.com/drive/folders/1SHUE_o_2eRWSIrl6BWkGlvkt_lDGdFTK?usp=drive_link"
+    }
   }
-}
-
 ]

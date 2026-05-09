@@ -19,12 +19,14 @@
     "react-dom": "18.3.1"
   },
   "devDependencies": {
+    "@next/swc-win32-x64-msvc": "^14.2.5",
     "@types/jest": "^29.5.14",
     "@types/react": "19.1.12",
     "autoprefixer": "^10.4.19",
     "jest": "^29.7.0",
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.10",
-    "ts-jest": "^29.4.1"
+    "ts-jest": "^29.4.1",
+    "typescript": "5.9.3"
   }
 }
