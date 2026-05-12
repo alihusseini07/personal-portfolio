@@ -30,15 +30,18 @@ interface ProjectMediaProps {
 
 function ProjectMedia({ title, image, video, expanded = false }: ProjectMediaProps) {
   if (video) {
+    const previewSrc = expanded ? video : `${video}#t=0.001`;
+
     return (
       <video
-        src={video}
+        src={previewSrc}
         className="h-full w-full object-cover"
         muted
         playsInline
         loop={expanded}
         autoPlay={expanded}
         preload={expanded ? "auto" : "metadata"}
+        poster={image}
         aria-label={`${title} preview`}
       />
     );

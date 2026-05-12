@@ -5,6 +5,7 @@
     "tags": ["ai", "web"],
     "description": "A student dashboard that syncs course data from Brightspace, organizes deadlines and grade weights, and generates AI-ranked study action plans.",
     "stack": ["TypeScript", "Next.js", "Fastify", "Prisma", "Playwright"],
+    "image": "/assets/clarus-poster.jpg",
     "video": "/assets/clarus-demo.mp4",
     "links": {
       "code": "https://github.com/athravseruwam07/clarus",
