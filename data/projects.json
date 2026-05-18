@@ -7,7 +7,7 @@
     "stack": ["Python", "FastAPI", "Celery", "Redis", "PostgreSQL", "React", "Vite", "Docker", "Kubernetes"],
     "image": "/assets/compilot.png",
     "links": {
-      "code": "",
+      "code": "https://github.com/alihusseini07/compilot",
       "live": ""
     }
   },
