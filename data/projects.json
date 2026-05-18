@@ -1,5 +1,17 @@
 [
   {
+    "title": "Compilot",
+    "category": "AI + Web",
+    "tags": ["ai", "web"],
+    "description": "Tiered multi-agent platform that tracks and analyzes competitor companies across the web. Runs 3 parallel scraper agents across 6+ sources (GitHub, RSS, job boards, HN) and synthesizes LLM conclusions into daily, weekly, and monthly intelligence reports.",
+    "stack": ["Python", "FastAPI", "Celery", "Redis", "PostgreSQL", "React", "Vite", "Docker", "Kubernetes"],
+    "image": "/assets/compilot.png",
+    "links": {
+      "code": "",
+      "live": ""
+    }
+  },
+  {
     "title": "Clarus",
     "category": "AI + Web",
     "tags": ["ai", "web"],
