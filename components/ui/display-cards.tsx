@@ -156,6 +156,13 @@ const stackIconUrls: Record<string, string> = {
   ESP32: "https://cdn.simpleicons.org/espressif",
   PlatformIO: "https://cdn.simpleicons.org/platformio",
   "Fusion 360": "/icons/fusion-360.svg",
+  FastAPI: "https://cdn.simpleicons.org/fastapi",
+  Celery: "https://cdn.simpleicons.org/celery",
+  Redis: "https://cdn.simpleicons.org/redis",
+  Vite: "https://cdn.simpleicons.org/vite",
+  Kubernetes: "https://cdn.simpleicons.org/kubernetes",
+  Docker: "https://cdn.simpleicons.org/docker",
+  React: "https://cdn.simpleicons.org/react",
 };
 
 function getStackFallbackIcon(stackItem: string) {

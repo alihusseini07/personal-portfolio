@@ -178,6 +178,11 @@ export default function Page() {
     SuiteScript: "/icons/suitescript.svg",
     Notion: "https://cdn.simpleicons.org/notion/white",
     Excel: "/icons/excel.svg",
+    FastAPI: "https://cdn.simpleicons.org/fastapi",
+    Celery: "https://cdn.simpleicons.org/celery",
+    Redis: "https://cdn.simpleicons.org/redis",
+    Vite: "https://cdn.simpleicons.org/vite",
+    Kubernetes: "https://cdn.simpleicons.org/kubernetes",
   };
 
   const skillGroups = [
