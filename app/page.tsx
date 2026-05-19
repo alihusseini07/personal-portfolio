@@ -352,7 +352,7 @@ export default function Page() {
                 </span>
                 <span style={{ color: "rgba(0,245,255,.2)" }}>|</span>
                 <span>
-                  <span style={{ color: "rgba(0,245,255,.4)" }}>UNIV:</span> Waterloo Mechatronics
+                  <span style={{ color: "rgba(0,245,255,.4)" }}>UNIV:</span> Tron @ uWaterloo
                 </span>
               </div>
             </div>
