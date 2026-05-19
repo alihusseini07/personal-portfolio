@@ -92,7 +92,7 @@ export function NavBar({ items, className }: NavBarProps) {
           backdropFilter: "blur(20px)",
           WebkitBackdropFilter: "blur(20px)",
           boxShadow:
-            "0 4px 24px rgba(0,0,0,.5), 0 0 0 1px rgba(34,211,238,.06)",
+            "0 4px 24px rgba(0,0,0,.5), 0 0 0 1px rgba(104,186,127,.06)",
         }}
       >
         {items.map((item) => {
@@ -108,7 +108,7 @@ export function NavBar({ items, className }: NavBarProps) {
                 "relative cursor-pointer text-sm font-semibold px-5 py-2 rounded-full no-underline",
               )}
               style={{
-                color: isActive ? "#22d3ee" : "#7a9ab3",
+                color: isActive ? "#68BA7F" : "#4a7a55",
                 transition: "color 150ms ease",
               }}
             >
@@ -120,7 +120,7 @@ export function NavBar({ items, className }: NavBarProps) {
                 <motion.div
                   layoutId="lamp"
                   className="absolute inset-0 w-full rounded-full -z-10"
-                  style={{ background: "rgba(34,211,238,.07)" }}
+                  style={{ background: "rgba(104,186,127,.07)" }}
                   initial={false}
                   transition={{
                     type: "spring",
@@ -131,20 +131,20 @@ export function NavBar({ items, className }: NavBarProps) {
                   <div
                     className="absolute -top-2 left-1/2 -translate-x-1/2 w-8 h-1 rounded-t-full"
                     style={{
-                      background: "linear-gradient(135deg, #22d3ee, #34d399)",
+                      background: "linear-gradient(135deg, #68BA7F, #4a9960)",
                     }}
                   >
                     <div
                       className="absolute w-12 h-6 rounded-full blur-md -top-2 -left-2"
-                      style={{ background: "rgba(34,211,238,.18)" }}
+                      style={{ background: "rgba(104,186,127,.18)" }}
                     />
                     <div
                       className="absolute w-8 h-6 rounded-full blur-md -top-1"
-                      style={{ background: "rgba(34,211,238,.15)" }}
+                      style={{ background: "rgba(104,186,127,.15)" }}
                     />
                     <div
                       className="absolute w-4 h-4 rounded-full blur-sm top-0 left-2"
-                      style={{ background: "rgba(34,211,238,.12)" }}
+                      style={{ background: "rgba(104,186,127,.12)" }}
                     />
                   </div>
                 </motion.div>

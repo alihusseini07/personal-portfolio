@@ -155,7 +155,7 @@ const SlideButton = forwardRef<HTMLButtonElement, SlideButtonProps>(
           <motion.div
             style={{
               width: fillWidth,
-              background: "linear-gradient(135deg, #22d3ee 0%, #34d399 100%)",
+              background: "linear-gradient(135deg, #68BA7F 0%, #2E6F40 100%)",
             }}
             className="absolute inset-y-0 left-0 z-0 rounded-full"
           />
@@ -184,7 +184,7 @@ const SlideButton = forwardRef<HTMLButtonElement, SlideButtonProps>(
                 size="icon"
                 className={cn(
                   "rounded-full drop-shadow-xl h-10 w-10",
-                  "bg-[linear-gradient(135deg,#22d3ee_0%,#34d399_100%)] text-[#030c14] hover:opacity-95",
+                  "bg-[linear-gradient(135deg,#68BA7F_0%,#2E6F40_100%)] text-[#080d09] hover:opacity-95",
                   isDragging && "scale-105 transition-transform",
                   className
                 )}
@@ -211,7 +211,7 @@ const SlideButton = forwardRef<HTMLButtonElement, SlideButtonProps>(
                 {...props}
                 className={cn(
                   "size-full rounded-full",
-                  "bg-[linear-gradient(135deg,#22d3ee_0%,#34d399_100%)] text-[#030c14]",
+                  "bg-[linear-gradient(135deg,#68BA7F_0%,#2E6F40_100%)] text-[#080d09]",
                   className
                 )}
               >

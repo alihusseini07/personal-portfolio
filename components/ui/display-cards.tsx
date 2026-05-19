@@ -56,7 +56,7 @@ function ProjectMedia({ title, image, video, expanded = false }: ProjectMediaPro
 
   return (
     <div className="flex h-full w-full items-center justify-center bg-[var(--elevated)]">
-      <Sparkles className="size-8 text-[#22d3ee]" />
+      <Sparkles className="size-8 text-[#68BA7F]" />
     </div>
   );
 }
@@ -168,17 +168,17 @@ const stackIconUrls: Record<string, string> = {
 function getStackFallbackIcon(stackItem: string) {
   const normalized = stackItem.toLowerCase();
 
-  if (normalized.includes("web")) return <Globe className="size-3.5 text-[#22d3ee]" />;
+  if (normalized.includes("web")) return <Globe className="size-3.5 text-[#68BA7F]" />;
   if (normalized.includes("dom") || normalized.includes("manifest") || normalized.includes("pdf")) {
-    return <FileCode2 className="size-3.5 text-[#34d399]" />;
+    return <FileCode2 className="size-3.5 text-[#4a9960]" />;
   }
   if (normalized.includes("3d") || normalized.includes("print")) {
-    return <Printer className="size-3.5 text-[#8bd3ff]" />;
+    return <Printer className="size-3.5 text-[#a8dbb8]" />;
   }
-  if (normalized.includes("iteration")) return <RotateCw className="size-3.5 text-[#34d399]" />;
-  if (normalized.includes("esp") || normalized.includes("embedded")) return <Cpu className="size-3.5 text-[#34d399]" />;
-  if (normalized.includes("cad")) return <Box className="size-3.5 text-[#8bd3ff]" />;
-  return <Code2 className="size-3.5 text-[#22d3ee]" />;
+  if (normalized.includes("iteration")) return <RotateCw className="size-3.5 text-[#4a9960]" />;
+  if (normalized.includes("esp") || normalized.includes("embedded")) return <Cpu className="size-3.5 text-[#4a9960]" />;
+  if (normalized.includes("cad")) return <Box className="size-3.5 text-[#a8dbb8]" />;
+  return <Code2 className="size-3.5 text-[#68BA7F]" />;
 }
 
 function StackChips({ stack, compact = false }: { stack: string[]; compact?: boolean }) {
@@ -216,7 +216,7 @@ function StackChips({ stack, compact = false }: { stack: string[]; compact?: boo
 
 function DisplayCard({
   layoutId,
-  icon = <Sparkles className="size-4 text-[#22d3ee]" />,
+  icon = <Sparkles className="size-4 text-[#68BA7F]" />,
   title = "Featured",
   description = "Discover amazing content",
   date = "Just now",
@@ -262,7 +262,7 @@ function DisplayCard({
           <h3
             className="font-display text-sm font-semibold leading-snug"
             style={{
-              background: "linear-gradient(135deg, #22d3ee, #34d399)",
+              background: "linear-gradient(135deg, #68BA7F, #4a9960)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               backgroundClip: "text",
@@ -363,7 +363,7 @@ export default function DisplayCards({ cards }: DisplayCardsProps) {
                     <h3
                       className="font-display text-lg font-bold leading-snug sm:text-xl"
                       style={{
-                        background: "linear-gradient(135deg, #22d3ee, #34d399)",
+                        background: "linear-gradient(135deg, #68BA7F, #4a9960)",
                         WebkitBackgroundClip: "text",
                         WebkitTextFillColor: "transparent",
                         backgroundClip: "text",

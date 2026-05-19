@@ -29,7 +29,7 @@ const InteractiveHoverButton = React.forwardRef<
       </div>
       <div
         className="absolute left-[20%] top-[40%] h-2 w-2 scale-[1] rounded-lg transition-all duration-300 group-hover:left-[0%] group-hover:top-[0%] group-hover:h-full group-hover:w-full group-hover:scale-[1.8]"
-        style={{ background: "linear-gradient(135deg, #22d3ee 0%, #34d399 100%)" }}
+        style={{ background: "linear-gradient(135deg, #68BA7F 0%, #4a9960 100%)" }}
       />
     </button>
   );

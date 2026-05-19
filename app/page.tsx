@@ -97,10 +97,10 @@ export default function Page() {
   // Display-card helpers
   const getCategoryIcon = (category: string) => {
     const c = category.toLowerCase();
-    if (c.includes("ai") || c.includes("ml"))        return <Brain  className="size-4 text-[#00f5ff]" />;
-    if (c.includes("embedded") || c.includes("iot")) return <Cpu    className="size-4 text-[#00ff9f]" />;
-    if (c.includes("cad") || c.includes("3d"))       return <Box    className="size-4 text-[#ff2d78]" />;
-    return <Layers className="size-4 text-[#00f5ff]" />;
+    if (c.includes("ai") || c.includes("ml"))        return <Brain  className="size-4 text-[#68BA7F]" />;
+    if (c.includes("embedded") || c.includes("iot")) return <Cpu    className="size-4 text-[#2E6F40]" />;
+    if (c.includes("cad") || c.includes("3d"))       return <Box    className="size-4 text-[#2E6F40]" />;
+    return <Layers className="size-4 text-[#68BA7F]" />;
   };
 
   const toProjectCards = (list: Project[]) =>
@@ -169,7 +169,7 @@ export default function Page() {
     { title: "// LANGUAGES",              prefix: "LANG",   items: profile.languages,           accent: "var(--cyan)"    },
     { title: "// FRAMEWORKS",             prefix: "FW",     items: profile.frameworksLibraries,  accent: "var(--green)"   },
     { title: "// INFRA",                  prefix: "INFRA",  items: profile.infra,                accent: "var(--magenta)" },
-    { title: "// CAD & DESIGN",           prefix: "CAD",    items: profile.cad,                  accent: "#8bd3ff"        },
+    { title: "// CAD & DESIGN",           prefix: "CAD",    items: profile.cad,                  accent: "#a8dbb8"        },
   ];
 
   return (
@@ -220,7 +220,7 @@ export default function Page() {
                   color: "var(--muted)",
                 }}
               >
-                <span style={{ color: "var(--cyan)", textShadow: "0 0 8px rgba(0,245,255,.7)" }}>$</span>
+                <span style={{ color: "var(--cyan)", textShadow: "0 0 8px rgba(104,186,127,.7)" }}>$</span>
                 <span>STATUS=</span>
                 <span style={{ color: "var(--cyan)" }}>SEEKING_COOP</span>
                 <span
@@ -230,7 +230,7 @@ export default function Page() {
                     width: "8px",
                     height: "14px",
                     background: "var(--cyan)",
-                    boxShadow: "0 0 6px rgba(0,245,255,.8)",
+                    boxShadow: "0 0 6px rgba(104,186,127,.8)",
                     verticalAlign: "middle",
                   }}
                 />
@@ -253,7 +253,7 @@ export default function Page() {
                   data-text="ALI"
                   style={{
                     color: "var(--cyan)",
-                    textShadow: "0 0 20px rgba(0,245,255,.5), 0 0 40px rgba(0,245,255,.2)",
+                    textShadow: "0 0 20px rgba(104,186,127,.5), 0 0 40px rgba(104,186,127,.2)",
                   }}
                 >
                   ALI
@@ -271,7 +271,7 @@ export default function Page() {
                   letterSpacing: "0.02em",
                 }}
               >
-                <span style={{ color: "rgba(0,245,255,.4)" }}>{"//"}</span>{" "}
+                <span style={{ color: "rgba(104,186,127,.4)" }}>{"//"}</span>{" "}
                 Building at the intersection of software, hardware, and AI —
                 from firmware for electric race cars to AI-powered workflow tools.
               </p>
@@ -308,7 +308,7 @@ export default function Page() {
                   >
                     <div
                       className="absolute inset-0 scale-0 rounded-xl transition-all duration-300 group-hover:scale-[2]"
-                      style={{ background: "linear-gradient(135deg, #22d3ee 0%, #34d399 100%)" }}
+                      style={{ background: "linear-gradient(135deg, #68BA7F 0%, #4a9960 100%)" }}
                     />
                     <span className="relative z-10"><IconLinkedIn /></span>
                   </a>
@@ -330,7 +330,7 @@ export default function Page() {
                 >
                   <div
                     className="absolute inset-0 scale-0 rounded-xl transition-all duration-300 group-hover:scale-[2]"
-                    style={{ background: "linear-gradient(135deg, #22d3ee 0%, #34d399 100%)" }}
+                    style={{ background: "linear-gradient(135deg, #68BA7F 0%, #4a9960 100%)" }}
                   />
                   <span className="relative z-10"><IconGitHub /></span>
                 </a>
@@ -348,11 +348,11 @@ export default function Page() {
                 }}
               >
                 <span>
-                  <span style={{ color: "rgba(0,245,255,.4)" }}>SYS:</span> Ontario, Canada
+                  <span style={{ color: "rgba(104,186,127,.4)" }}>SYS:</span> Ontario, Canada
                 </span>
-                <span style={{ color: "rgba(0,245,255,.2)" }}>|</span>
+                <span style={{ color: "rgba(104,186,127,.2)" }}>|</span>
                 <span>
-                  <span style={{ color: "rgba(0,245,255,.4)" }}>UNIV:</span> Tron @ uWaterloo
+                  <span style={{ color: "rgba(104,186,127,.4)" }}>UNIV:</span> Tron @ uWaterloo
                 </span>
               </div>
             </div>
@@ -402,7 +402,7 @@ export default function Page() {
             <span
               className="w-px h-10 block"
               style={{
-                background: "linear-gradient(to bottom, rgba(0,245,255,.4), transparent)",
+                background: "linear-gradient(to bottom, rgba(104,186,127,.4), transparent)",
               }}
             />
           </div>
@@ -446,7 +446,7 @@ export default function Page() {
                   lineHeight: 1.85,
                 }}
               >
-                <span style={{ color: "rgba(0,245,255,.4)" }}>&gt;</span>{" "}
+                <span style={{ color: "rgba(104,186,127,.4)" }}>&gt;</span>{" "}
                 Stack:{" "}
                 <strong style={{ color: "#e2e8f0" }}>React / Next.js</strong> on the frontend,{" "}
                 <strong style={{ color: "#e2e8f0" }}>Node / Express</strong> on the backend,{" "}
@@ -464,7 +464,7 @@ export default function Page() {
                   lineHeight: 1.85,
                 }}
               >
-                <span style={{ color: "rgba(0,245,255,.4)" }}>&gt;</span>{" "}
+                <span style={{ color: "rgba(104,186,127,.4)" }}>&gt;</span>{" "}
                 Looking for software and AI co-ops where I can build real products, solve hard problems, and keep growing fast.
               </p>
 
@@ -488,7 +488,7 @@ export default function Page() {
                       style={{
                         fontSize: "0.82rem",
                         color: cmd.includes("STATUS") ? "var(--cyan)" : "var(--text)",
-                        textShadow: cmd.includes("STATUS") ? "0 0 8px rgba(0,245,255,.4)" : "none",
+                        textShadow: cmd.includes("STATUS") ? "0 0 8px rgba(104,186,127,.4)" : "none",
                         letterSpacing: "0.04em",
                       }}
                     >
@@ -561,7 +561,7 @@ export default function Page() {
                       style={{
                         borderRadius: "4px",
                         border: "1px solid var(--border)",
-                        background: "rgba(0,245,255,.02)",
+                        background: "rgba(104,186,127,.02)",
                       }}
                     >
                       <span
@@ -613,8 +613,8 @@ export default function Page() {
                   className="w-12 h-12 flex-shrink-0 flex items-center justify-center overflow-hidden"
                   style={{
                     borderRadius: "4px",
-                    border: "1px solid rgba(0,245,255,.15)",
-                    background: "rgba(0,245,255,.04)",
+                    border: "1px solid rgba(104,186,127,.15)",
+                    background: "rgba(104,186,127,.04)",
                   }}
                 >
                   <Image
@@ -633,7 +633,7 @@ export default function Page() {
                       letterSpacing: "0.08em",
                       textTransform: "uppercase",
                       color: "var(--cyan)",
-                      textShadow: "0 0 12px rgba(0,245,255,.4)",
+                      textShadow: "0 0 12px rgba(104,186,127,.4)",
                     }}
                   >
                     University of Waterloo
@@ -667,7 +667,7 @@ export default function Page() {
                 paddingTop: "12px",
               }}
             >
-              <span style={{ color: "rgba(0,245,255,.4)" }}>&gt;</span>{" "}
+              <span style={{ color: "rgba(104,186,127,.4)" }}>&gt;</span>{" "}
               Relevant coursework: Programming (C++, OOP), Applied Math (Python, Linear Algebra),
               Engineering Design (AutoCAD, SolidWorks).
             </p>
@@ -711,9 +711,9 @@ export default function Page() {
               <div style={{ color: "var(--muted)" }}>[OK] Recipient notified.</div>
               <div style={{ color: "var(--muted)" }}>[OK] Response queued — expect reply soon.</div>
               <div className="mt-2" style={{ color: "var(--muted)" }}>
-                <span style={{ color: "rgba(0,245,255,.4)" }}>$</span>{" "}
+                <span style={{ color: "rgba(104,186,127,.4)" }}>$</span>{" "}
                 <button
-                  className="underline underline-offset-4 hover:text-cyan-400 transition-colors"
+                  className="underline underline-offset-4 hover:text-yellow-400 transition-colors"
                   style={{ color: "var(--muted)", background: "none", border: "none", cursor: "pointer", fontFamily: "inherit", fontSize: "inherit" }}
                   onClick={() => setFormState("idle")}
                 >

@@ -373,7 +373,7 @@ const Hero: React.FC<HeroProps> = ({
               {trustBadge.icons && (
                 <div className="flex">
                   {trustBadge.icons.map((icon, index) => (
-                    <span key={index} style={{ color: '#22d3ee' }}>{icon}</span>
+                    <span key={index} style={{ color: '#68BA7F' }}>{icon}</span>
                   ))}
                 </div>
               )}
@@ -386,7 +386,7 @@ const Hero: React.FC<HeroProps> = ({
           <div className="space-y-2">
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold animate-fade-in-up animation-delay-200"
               style={{
-                background: 'linear-gradient(135deg, #22d3ee 0%, #34d399 100%)',
+                background: 'linear-gradient(135deg, #68BA7F 0%, #4a9960 100%)',
                 WebkitBackgroundClip: 'text',
                 backgroundClip: 'text',
                 color: 'transparent',
@@ -395,7 +395,7 @@ const Hero: React.FC<HeroProps> = ({
             </h1>
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold animate-fade-in-up animation-delay-400"
               style={{
-                background: 'linear-gradient(135deg, #34d399 0%, #14b8a6 100%)',
+                background: 'linear-gradient(135deg, #4a9960 0%, #3a7a4a 100%)',
                 WebkitBackgroundClip: 'text',
                 backgroundClip: 'text',
                 color: 'transparent',
@@ -418,7 +418,7 @@ const Hero: React.FC<HeroProps> = ({
                   onClick={buttons.primary.onClick}
                   className="px-8 py-4 rounded-full font-semibold text-lg"
                   style={{
-                    background: 'linear-gradient(135deg, #22d3ee, #34d399)',
+                    background: 'linear-gradient(135deg, #68BA7F, #4a9960)',
                     color: '#060b12',
                     transition: 'transform 150ms cubic-bezier(.2,.8,.2,1), box-shadow 150ms ease',
                   }}
@@ -522,12 +522,12 @@ void main(void) {
     uv+=.1*cos(i*vec2(.1+.01*i, .8)+i*i+T*.5+.1*uv.x);
     vec2 p=uv;
     float d=length(p);
-    // teal/cyan phase offsets (was vec3(1,2,3) for orange)
-    col+=.00125/d*(cos(sin(i)*vec3(3.,1.,.5))+1.);
+    // forest green phase offsets — G dominant, R+B recessed → lush green nebula
+    col+=.00125/d*(cos(sin(i)*vec3(2.5,0.5,2.8))+1.);
     float b=noise(i+p+bg*1.731);
     col+=.002*b/length(max(p,vec2(b*p.x*.02,p.y)));
-    // dark teal background (was warm brown vec3(bg*.25,bg*.137,bg*.05))
-    col=mix(col,vec3(bg*.03,bg*.15,bg*.20),d);
+    // dark forest background tint
+    col=mix(col,vec3(bg*.04,bg*.18,bg*.06),d);
   }
   O=vec4(col,1);
 }`;

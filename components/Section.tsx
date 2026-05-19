@@ -24,7 +24,7 @@ export default function Section({
             fontFamily: "var(--font-body, monospace)",
             color: "var(--cyan)",
             fontSize: "0.9rem",
-            textShadow: "0 0 8px rgba(0,245,255,.7)",
+            textShadow: "0 0 8px rgba(104,186,127,.7)",
             flexShrink: 0,
           }}
         >
@@ -46,7 +46,7 @@ export default function Section({
           style={{
             flex: 1,
             height: "1px",
-            background: "linear-gradient(90deg, rgba(0,245,255,.3), transparent)",
+            background: "linear-gradient(90deg, rgba(104,186,127,.3), transparent)",
           }}
         />
       </motion.div>
