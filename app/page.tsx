@@ -414,9 +414,9 @@ export default function Page() {
         <div className="terminal-window">
           {/* Chrome bar */}
           <div className="terminal-chrome">
-            <span className="terminal-dot terminal-dot-red" />
-            <span className="terminal-dot terminal-dot-yellow" />
-            <span className="terminal-dot terminal-dot-green" />
+            
+            
+            
             <span className="terminal-title">[SYSTEM] — about.log</span>
           </div>
           {/* Body */}
@@ -601,9 +601,9 @@ export default function Page() {
       <Section id="education" title="Education">
         <div className="terminal-window">
           <div className="terminal-chrome">
-            <span className="terminal-dot terminal-dot-red" />
-            <span className="terminal-dot terminal-dot-yellow" />
-            <span className="terminal-dot terminal-dot-green" />
+            
+            
+            
             <span className="terminal-title">[ACADEMIC] — credentials.log</span>
           </div>
           <div className="terminal-body">
@@ -656,21 +656,6 @@ export default function Page() {
               </span>
             </div>
 
-            <p
-              className="mt-4"
-              style={{
-                fontFamily: "var(--font-body, monospace)",
-                fontSize: "0.8rem",
-                color: "var(--muted)",
-                lineHeight: 1.8,
-                borderTop: "1px solid var(--border)",
-                paddingTop: "12px",
-              }}
-            >
-              <span style={{ color: "rgba(104,186,127,.4)" }}>&gt;</span>{" "}
-              Relevant coursework: Programming (C++, OOP), Applied Math (Python, Linear Algebra),
-              Engineering Design (AutoCAD, SolidWorks).
-            </p>
           </div>
         </div>
       </Section>
@@ -698,9 +683,9 @@ export default function Page() {
             style={{ minHeight: "200px" }}
           >
             <div className="terminal-chrome">
-              <span className="terminal-dot terminal-dot-red" />
-              <span className="terminal-dot terminal-dot-yellow" />
-              <span className="terminal-dot terminal-dot-green" />
+              
+              
+              
               <span className="terminal-title">[SYSTEM] — message_sent.log</span>
             </div>
             <div
@@ -730,9 +715,9 @@ export default function Page() {
             onSubmit={(e) => e.preventDefault()}
           >
             <div className="terminal-chrome">
-              <span className="terminal-dot terminal-dot-red" />
-              <span className="terminal-dot terminal-dot-yellow" />
-              <span className="terminal-dot terminal-dot-green" />
+              
+              
+              
               <span className="terminal-title">[INPUT] — compose_message.sh</span>
             </div>
             <div className="terminal-body grid gap-4">
