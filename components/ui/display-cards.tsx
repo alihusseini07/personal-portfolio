@@ -252,16 +252,6 @@ function DisplayCard({
               "linear-gradient(to bottom, transparent 30%, rgba(6,11,18,0.88) 100%)",
           }}
         />
-        <span
-          className="absolute right-3 top-3 rounded-full px-2 py-0.5 text-[0.65rem] font-semibold"
-          style={{
-            background: "rgba(34,211,238,0.08)",
-            border: "1px solid rgba(34,211,238,0.22)",
-            color: "#22d3ee",
-          }}
-        >
-          {date}
-        </span>
       </div>
 
       <div className="flex flex-1 flex-col p-4">
@@ -363,16 +353,6 @@ export default function DisplayCards({ cards }: DisplayCardsProps) {
                         "linear-gradient(to bottom, transparent 45%, rgba(6,11,18,0.92) 100%)",
                     }}
                   />
-                  <span
-                    className="absolute right-3 top-3 rounded-full px-2 py-0.5 text-[0.65rem] font-semibold"
-                    style={{
-                      background: "rgba(34,211,238,0.08)",
-                      border: "1px solid rgba(34,211,238,0.22)",
-                      color: "#22d3ee",
-                    }}
-                  >
-                    {expanded.date}
-                  </span>
                 </div>
 
                 <div className="p-5 sm:p-6">
