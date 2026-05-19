@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Section from "../components/Section";
 import { type Project } from "../components/ProjectCard";
@@ -17,10 +17,6 @@ import projectsData   from "../data/projects.json";
 import experienceData from "../data/experience.json";
 
 export default function Page() {
-  // Filters
-  const filters = ["all", "AI", "Web", "Embedded", "CAD"] as const;
-  type Filter = (typeof filters)[number];
-  const [filter, setFilter] = useState<Filter>("all");
   const [formState, setFormState] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [fieldErrors, setFieldErrors] = useState({ name: false, email: false, message: false });
   const formRef = useRef<HTMLFormElement>(null);
@@ -66,22 +62,6 @@ export default function Page() {
     github: string;
     linkedin?: string;
   };
-
-  const matchesFilter = (p: Project, f: Filter) => {
-    if (f === "all") return true;
-    const cat  = (p.category || "").toLowerCase();
-    const tags = (p.tags || []).map((t) => String(t).toLowerCase());
-    if (f === "AI")       return cat.includes("ai")       || tags.includes("ai");
-    if (f === "Web")      return cat.includes("web")      || tags.includes("web");
-    if (f === "Embedded") return cat.includes("embedded") || tags.includes("embedded");
-    if (f === "CAD")      return cat.includes("cad")      || tags.includes("cad");
-    return false;
-  };
-
-  const filtered = useMemo(
-    () => projects.filter((p) => matchesFilter(p, filter)),
-    [projects, filter]
-  );
 
   // Shader background
   const shaderCanvasRef = useShaderBackground();
@@ -416,29 +396,9 @@ export default function Page() {
 
       {/* Projects */}
       <Section id="projects" title="Projects">
-        {/* Filter chips */}
-        <div className="flex flex-wrap gap-2 mb-3">
-          {filters.map((t) => (
-            <button
-              key={t}
-              onClick={() => setFilter(t)}
-              className={`chip ${filter === t ? "chip-active" : ""}`}
-            >
-              {t === "all" ? "All" : t}
-            </button>
-          ))}
+        <div>
+          <DisplayCards cards={toProjectCards(projects)} />
         </div>
-
-        {/* Project cards */}
-        {filtered.length > 0 ? (
-          <div>
-            <DisplayCards key={filter} cards={toProjectCards(filtered)} />
-          </div>
-        ) : (
-          <p className="text-sm py-8" style={{ color: "var(--muted)" }}>
-            No projects found for this filter.
-          </p>
-        )}
       </Section>
 
       {/* Experience */}
