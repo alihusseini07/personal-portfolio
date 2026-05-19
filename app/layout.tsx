@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   title: "Ali Husseini | Portfolio",
   description:
     "Personal portfolio of Ali Husseini — Mechatronics Engineering student at the University of Waterloo.",
-  icons: { icon: "/favicon.png" },
+  icons: { icon: "/favicon.svg" },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
