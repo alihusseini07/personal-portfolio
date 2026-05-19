@@ -187,8 +187,8 @@ export default function Page() {
         <div
           className="absolute bottom-0 left-0 right-0 pointer-events-none"
           style={{
-            height: "280px",
-            background: "linear-gradient(to bottom, transparent, #050a0f)",
+            height: "420px",
+            background: "linear-gradient(to bottom, transparent 0%, #020202 85%)",
             zIndex: 3,
           }}
         />
