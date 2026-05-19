@@ -10,6 +10,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@next/swc-linux-x64-gnu": "^16.2.6",
     "@radix-ui/react-slot": "^1.2.4",
     "class-variance-authority": "^0.7.1",
     "framer-motion": "^11.2.6",

@@ -97,10 +97,10 @@ export default function Page() {
   // Display-card helpers
   const getCategoryIcon = (category: string) => {
     const c = category.toLowerCase();
-    if (c.includes("ai") || c.includes("ml"))        return <Brain  className="size-4 text-[#22d3ee]" />;
-    if (c.includes("embedded") || c.includes("iot")) return <Cpu    className="size-4 text-[#34d399]" />;
-    if (c.includes("cad") || c.includes("3d"))       return <Box    className="size-4 text-[#14b8a6]" />;
-    return <Layers className="size-4 text-[#22d3ee]" />;
+    if (c.includes("ai") || c.includes("ml"))        return <Brain  className="size-4 text-[#00f5ff]" />;
+    if (c.includes("embedded") || c.includes("iot")) return <Cpu    className="size-4 text-[#00ff9f]" />;
+    if (c.includes("cad") || c.includes("3d"))       return <Box    className="size-4 text-[#ff2d78]" />;
+    return <Layers className="size-4 text-[#00f5ff]" />;
   };
 
   const toProjectCards = (list: Project[]) =>
@@ -166,16 +166,15 @@ export default function Page() {
   };
 
   const skillGroups = [
-    { title: "Languages",              items: profile.languages,              accent: "var(--teal)"  },
-    { title: "Frameworks / Libraries", items: profile.frameworksLibraries,    accent: "var(--teal2)" },
-    { title: "Infra",                  items: profile.infra,                   accent: "var(--teal3)" },
-    { title: "CAD / Design",           items: profile.cad,                     accent: "#8bd3ff" },
+    { title: "// LANGUAGES",              prefix: "LANG",   items: profile.languages,           accent: "var(--cyan)"    },
+    { title: "// FRAMEWORKS",             prefix: "FW",     items: profile.frameworksLibraries,  accent: "var(--green)"   },
+    { title: "// INFRA",                  prefix: "INFRA",  items: profile.infra,                accent: "var(--magenta)" },
+    { title: "// CAD & DESIGN",           prefix: "CAD",    items: profile.cad,                  accent: "#8bd3ff"        },
   ];
 
-  // Render
   return (
     <main>
-      {/* Hero */}
+      {/* ── Hero ─────────────────────────────────── */}
       <section ref={heroRef} className="hero-wrap">
         {/* WebGL shader background */}
         <canvas
@@ -189,12 +188,12 @@ export default function Page() {
           className="absolute bottom-0 left-0 right-0 pointer-events-none"
           style={{
             height: "280px",
-            background: "linear-gradient(to bottom, transparent, #060b12)",
+            background: "linear-gradient(to bottom, transparent, #050a0f)",
             zIndex: 3,
           }}
         />
 
-        {/* Parallax blob overlay with teal glow on top of shader */}
+        {/* Parallax blob overlay */}
         <div className="hero-bg" style={{ zIndex: 1 }}>
           <span ref={l1} className="hero-l1" />
           <span ref={l2} className="hero-l2" />
@@ -211,45 +210,70 @@ export default function Page() {
             {/* Left text column */}
             <div className="col-span-12 lg:col-span-7 text-center lg:text-left flex flex-col items-center lg:items-start">
 
-              {/* Intro badge */}
+              {/* Terminal status prompt */}
               <div
-                className="hero-el inline-flex items-center gap-2 px-3.5 py-1.5 mb-5 rounded-full text-xs font-semibold"
+                className="hero-el mb-5 flex items-center gap-2"
                 style={{
-                  background: "rgba(34,211,238,.08)",
-                  border: "1px solid rgba(34,211,238,.22)",
-                  color: "#22d3ee",
+                  fontFamily: "var(--font-body, monospace)",
+                  fontSize: "0.78rem",
+                  letterSpacing: "0.06em",
+                  color: "var(--muted)",
                 }}
               >
+                <span style={{ color: "var(--cyan)", textShadow: "0 0 8px rgba(0,245,255,.7)" }}>$</span>
+                <span>STATUS=</span>
+                <span style={{ color: "var(--cyan)" }}>SEEKING_COOP</span>
                 <span
-                  className="w-1.5 h-1.5 rounded-full flex-shrink-0"
+                  className="cursor-blink"
                   style={{
-                    background: "#22d3ee",
-                    animation: "scroll-bounce 2s ease-in-out infinite",
+                    display: "inline-block",
+                    width: "8px",
+                    height: "14px",
+                    background: "var(--cyan)",
+                    boxShadow: "0 0 6px rgba(0,245,255,.8)",
+                    verticalAlign: "middle",
                   }}
                 />
-                Mechatronics Engineering - University of Waterloo
               </div>
 
-              {/* Name */}
+              {/* Name with glitch effect */}
               <h1
-                className="hero-el font-display font-bold mb-4"
+                className="hero-el mb-4"
                 style={{
                   fontSize: "clamp(2.8rem, 7vw, 5rem)",
-                  letterSpacing: "-0.04em",
+                  letterSpacing: "-0.02em",
                   lineHeight: 1.05,
+                  fontFamily: "var(--font-display, monospace)",
+                  textTransform: "uppercase",
                 }}
               >
-                <span style={{ color: "#ffffff" }}>Hi, I&apos;m </span>
-                <span className="text-gradient">Ali</span>
+                <span style={{ color: "#c8e0e8" }}>Hi, I&apos;m{" "}</span>
+                <span
+                  className="glitch-text"
+                  data-text="ALI"
+                  style={{
+                    color: "var(--cyan)",
+                    textShadow: "0 0 20px rgba(0,245,255,.5), 0 0 40px rgba(0,245,255,.2)",
+                  }}
+                >
+                  ALI
+                </span>
               </h1>
 
               {/* Tagline */}
               <p
-                className="hero-el text-base md:text-lg mb-8 max-w-lg"
-                style={{ color: "var(--muted)", lineHeight: 1.7 }}
+                className="hero-el mb-8 max-w-lg"
+                style={{
+                  fontFamily: "var(--font-body, monospace)",
+                  fontSize: "0.88rem",
+                  color: "var(--muted)",
+                  lineHeight: 1.8,
+                  letterSpacing: "0.02em",
+                }}
               >
-                I build things at the intersection of software, hardware, and AI - from
-                firmware for electric race cars to AI-powered workflow tools.
+                <span style={{ color: "rgba(0,245,255,.4)" }}>{"//"}</span>{" "}
+                Building at the intersection of software, hardware, and AI —
+                from firmware for electric race cars to AI-powered workflow tools.
               </p>
 
               {/* CTAs + Social icons */}
@@ -311,9 +335,29 @@ export default function Page() {
                   <span className="relative z-10"><IconGitHub /></span>
                 </a>
               </div>
+
+              {/* System info line */}
+              <div
+                className="hero-el mt-6 flex items-center gap-4"
+                style={{
+                  fontFamily: "var(--font-body, monospace)",
+                  fontSize: "0.68rem",
+                  color: "var(--muted)",
+                  letterSpacing: "0.06em",
+                  opacity: 0.7,
+                }}
+              >
+                <span>
+                  <span style={{ color: "rgba(0,245,255,.4)" }}>SYS:</span> Ontario, Canada
+                </span>
+                <span style={{ color: "rgba(0,245,255,.2)" }}>|</span>
+                <span>
+                  <span style={{ color: "rgba(0,245,255,.4)" }}>UNIV:</span> Waterloo Mechatronics
+                </span>
+              </div>
             </div>
 
-            {/* Right headshot and stats */}
+            {/* Right — avatar */}
             <div className="col-span-12 lg:col-span-5 hero-right flex flex-col items-center gap-5">
               <Image
                 src="/assets/ali-headshot.jpg"
@@ -324,84 +368,148 @@ export default function Page() {
                 priority
               />
 
+              {/* Scan label below avatar */}
+              <div
+                style={{
+                  fontFamily: "var(--font-body, monospace)",
+                  fontSize: "0.65rem",
+                  color: "var(--muted)",
+                  letterSpacing: "0.12em",
+                  textTransform: "uppercase",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "8px",
+                }}
+              >
+                <span style={{ color: "var(--cyan)", animation: "cursor-blink 2s step-end infinite" }}>●</span>
+                IDENTITY VERIFIED
+                <span style={{ color: "var(--cyan)", animation: "cursor-blink 2s step-end infinite 1s" }}>●</span>
+              </div>
             </div>
           </div>
 
           {/* Scroll hint */}
           <div
             className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-            style={{ color: "var(--muted)", fontSize: "0.7rem", letterSpacing: "0.08em" }}
+            style={{
+              fontFamily: "var(--font-body, monospace)",
+              color: "var(--muted)",
+              fontSize: "0.62rem",
+              letterSpacing: "0.12em",
+            }}
           >
             <span className="uppercase tracking-widest text-xs opacity-60">scroll</span>
             <span
               className="w-px h-10 block"
               style={{
-                background: "linear-gradient(to bottom, rgba(122,154,179,.5), transparent)",
+                background: "linear-gradient(to bottom, rgba(0,245,255,.4), transparent)",
               }}
             />
           </div>
         </div>
       </section>
 
-      {/* About */}
+      {/* ── About ────────────────────────────────── */}
       <Section id="overview" title="About Me">
-        <div className="card p-6 md:p-8">
-          <div className="grid gap-4">
-            <p className="text-base md:text-lg leading-relaxed" style={{ color: "var(--text)" }}>
-              I&apos;m a Mechatronics Engineering student at Waterloo focused on building practical software and AI
-              systems. At <strong style={{ color: "#e2e8f0" }}>ATS360/Netdynamic</strong>, I worked on{" "}
-              <strong style={{ color: "#e2e8f0" }}>AI-powered hiring tools</strong> for video screening,
-              interview scheduling, resume parsing, and scoring workflows used by over 30 enterprise recruiting teams.
-            </p>
+        <div className="terminal-window">
+          {/* Chrome bar */}
+          <div className="terminal-chrome">
+            <span className="terminal-dot terminal-dot-red" />
+            <span className="terminal-dot terminal-dot-yellow" />
+            <span className="terminal-dot terminal-dot-green" />
+            <span className="terminal-title">[SYSTEM] — about.log</span>
+          </div>
+          {/* Body */}
+          <div className="terminal-body">
+            <div className="grid gap-4">
+              <p
+                style={{
+                  fontFamily: "var(--font-body, monospace)",
+                  fontSize: "0.88rem",
+                  color: "var(--text)",
+                  lineHeight: 1.85,
+                }}
+              >
+                <span style={{ color: "var(--cyan)" }}>&gt;</span>{" "}
+                Mechatronics Engineering student at Waterloo focused on practical software and AI.
+                At{" "}
+                <strong style={{ color: "#e2e8f0" }}>ATS360 / Netdynamic</strong>, shipped{" "}
+                <strong style={{ color: "#e2e8f0" }}>AI-powered hiring tools</strong>{" "}
+                for video screening, interview scheduling, resume parsing, and scoring, used by 30+ enterprise recruiting teams.
+              </p>
 
-            <p className="text-base md:text-lg leading-relaxed" style={{ color: "var(--muted)" }}>
-              I build mostly across software and AI:{" "}
-              <strong style={{ color: "#e2e8f0" }}>React and Next.js</strong> on the frontend,{" "}
-              <strong style={{ color: "#e2e8f0" }}>Node/Express and JavaScript</strong> on the backend,{" "}
-              <strong style={{ color: "#e2e8f0" }}>PostgreSQL</strong> for data,{" "}
-              <strong style={{ color: "#e2e8f0" }}>AWS</strong> for infrastructure, and{" "}
-              <strong style={{ color: "#e2e8f0" }}>Playwright</strong> for automation. I also work close to hardware
-              through embedded firmware with Waterloo Formula Electric.
-            </p>
+              <p
+                style={{
+                  fontFamily: "var(--font-body, monospace)",
+                  fontSize: "0.88rem",
+                  color: "var(--muted)",
+                  lineHeight: 1.85,
+                }}
+              >
+                <span style={{ color: "rgba(0,245,255,.4)" }}>&gt;</span>{" "}
+                Stack:{" "}
+                <strong style={{ color: "#e2e8f0" }}>React / Next.js</strong> on the frontend,{" "}
+                <strong style={{ color: "#e2e8f0" }}>Node / Express</strong> on the backend,{" "}
+                <strong style={{ color: "#e2e8f0" }}>PostgreSQL</strong> for data,{" "}
+                <strong style={{ color: "#e2e8f0" }}>AWS</strong> for infra,{" "}
+                <strong style={{ color: "#e2e8f0" }}>Playwright</strong> for automation.
+                Also close to hardware through embedded firmware with Waterloo Formula Electric.
+              </p>
 
-            <p className="text-base md:text-lg leading-relaxed" style={{ color: "var(--muted)" }}>
-              I&apos;m looking for software and AI co-ops where I can build real products, solve hard problems,
-              and keep growing quickly.
-            </p>
+              <p
+                style={{
+                  fontFamily: "var(--font-body, monospace)",
+                  fontSize: "0.88rem",
+                  color: "var(--muted)",
+                  lineHeight: 1.85,
+                }}
+              >
+                <span style={{ color: "rgba(0,245,255,.4)" }}>&gt;</span>{" "}
+                Looking for software and AI co-ops where I can build real products, solve hard problems, and keep growing fast.
+              </p>
 
-            <div className="flex flex-wrap gap-6 pt-1">
-              {[
-                ["location", "Ontario, Canada"],
-                ["status", "open to co-ops"],
-              ].map(([label, value]) => (
-                <div key={label}>
-                  <div
-                    className="font-mono text-xs uppercase mb-1"
-                    style={{ color: "var(--muted)", letterSpacing: "0.08em" }}
-                  >
-                    {label}
+              <div className="flex flex-wrap gap-6 pt-2" style={{ borderTop: "1px solid var(--border)" }}>
+                {[
+                  ["$ echo $LOCATION", "Ontario, Canada"],
+                  ["$ echo $STATUS",   "OPEN_TO_COOPS"],
+                ].map(([cmd, value]) => (
+                  <div key={cmd} style={{ fontFamily: "var(--font-body, monospace)" }}>
+                    <div
+                      style={{
+                        fontSize: "0.68rem",
+                        color: "var(--muted)",
+                        letterSpacing: "0.06em",
+                        marginBottom: "4px",
+                      }}
+                    >
+                      {cmd}
+                    </div>
+                    <div
+                      style={{
+                        fontSize: "0.82rem",
+                        color: cmd.includes("STATUS") ? "var(--cyan)" : "var(--text)",
+                        textShadow: cmd.includes("STATUS") ? "0 0 8px rgba(0,245,255,.4)" : "none",
+                        letterSpacing: "0.04em",
+                      }}
+                    >
+                      {value}
+                    </div>
                   </div>
-                  <div
-                    className="font-mono text-sm leading-snug"
-                    style={{ color: label === "status" ? "#7ddff3" : "var(--text)" }}
-                  >
-                    {value}
-                  </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
         </div>
       </Section>
 
-      {/* Projects */}
+      {/* ── Projects ─────────────────────────────── */}
       <Section id="projects" title="Projects">
         <div>
           <DisplayCards cards={toProjectCards(projects)} />
         </div>
       </Section>
 
-      {/* Experience */}
+      {/* ── Experience ───────────────────────────── */}
       <Section id="experience" title="Experience">
         <div className="timeline">
           {experience.map((xp, i) => (
@@ -410,56 +518,73 @@ export default function Page() {
         </div>
       </Section>
 
-      {/* Skills */}
+      {/* ── Skills ───────────────────────────────── */}
       <Section id="skills" title="Skills">
-        <div className="grid gap-4">
+        <div className="grid gap-3">
           {skillGroups.map((g) => (
-            <div key={g.title} className="card p-4 md:p-5">
+            <div
+              key={g.title}
+              className="card p-4 md:p-5"
+              style={{ borderLeft: `2px solid ${g.accent}` }}
+            >
               <div className="flex flex-col md:flex-row md:items-start gap-4">
-                <div className="md:w-52 flex-shrink-0 flex items-center gap-2">
-                  <span
-                    className="w-1 h-7 rounded-full flex-shrink-0"
-                    style={{ background: g.accent }}
-                  />
-                  <div>
-                    <h3
-                      className="font-display font-semibold text-base text-gradient leading-tight"
-                      style={{ letterSpacing: "-0.01em" }}
-                    >
-                      {g.title}
-                    </h3>
-                    <p className="text-xs mt-0.5" style={{ color: "var(--muted)" }}>
-                      {g.items.length} skills
-                    </p>
-                  </div>
+                <div className="md:w-48 flex-shrink-0">
+                  <h3
+                    style={{
+                      fontFamily: "var(--font-body, monospace)",
+                      fontSize: "0.75rem",
+                      letterSpacing: "0.1em",
+                      color: g.accent,
+                      textShadow: `0 0 8px ${g.accent}66`,
+                      marginBottom: "4px",
+                    }}
+                  >
+                    {g.title}
+                  </h3>
+                  <p
+                    style={{
+                      fontFamily: "var(--font-body, monospace)",
+                      fontSize: "0.65rem",
+                      color: "var(--muted)",
+                      letterSpacing: "0.06em",
+                    }}
+                  >
+                    [{g.items.length} modules loaded]
+                  </p>
                 </div>
 
-                <div className="flex flex-wrap gap-2.5 flex-1">
+                <div className="flex flex-wrap gap-2 flex-1">
                   {g.items.map((it) => (
                     <div
                       key={it}
-                      className="flex items-center gap-2.5 min-w-[142px] rounded-xl px-3 py-2"
+                      className="skill-tile flex items-center gap-2 min-w-[130px] px-3 py-2"
                       style={{
+                        borderRadius: "4px",
                         border: "1px solid var(--border)",
-                        background: "rgba(255,255,255,.035)",
+                        background: "rgba(0,245,255,.02)",
                       }}
                     >
                       <span
-                        className="w-9 h-9 rounded-lg flex-shrink-0 flex items-center justify-center overflow-hidden"
+                        className="w-7 h-7 flex-shrink-0 flex items-center justify-center overflow-hidden"
                         style={{
-                          border: "1px solid rgba(255,255,255,.08)",
-                          background: "rgba(255,255,255,.06)",
+                          borderRadius: "3px",
+                          border: "1px solid rgba(255,255,255,.06)",
+                          background: "rgba(255,255,255,.04)",
                         }}
                       >
                         <img
                           src={skillIcons[it]}
                           alt={`${it} icon`}
-                          className="w-6 h-6 object-contain"
+                          className="w-5 h-5 object-contain"
                         />
                       </span>
                       <span
-                        className="text-sm font-medium leading-tight"
-                        style={{ color: "var(--text)" }}
+                        style={{
+                          fontFamily: "var(--font-body, monospace)",
+                          fontSize: "0.78rem",
+                          color: "var(--text)",
+                          letterSpacing: "0.02em",
+                        }}
                       >
                         {it}
                       </span>
@@ -471,121 +596,172 @@ export default function Page() {
           ))}
         </div>
       </Section>
-      {/* Education */}
-      <Section id="education" title="Education">
-        <div className="card p-6 md:p-8">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <div className="flex items-center gap-4">
-              <div
-                className="w-14 h-14 rounded-2xl overflow-hidden flex-shrink-0 flex items-center justify-center"
-                style={{
-                  border: "1px solid rgba(255,255,255,.1)",
-                  background: "rgba(255,255,255,.06)",
-                }}
-              >
-                <Image
-                  src="/assets/uwaterloo.png"
-                  alt="University of Waterloo"
-                  width={56}
-                  height={56}
-                  className="w-full h-full object-contain"
-                />
-              </div>
-              <div>
-                <div
-                  className="font-display font-bold text-xl text-gradient"
-                  style={{ letterSpacing: "-0.02em" }}
-                >
-                  University of Waterloo
-                </div>
-                <div
-                  className="text-sm mt-0.5"
-                  style={{ color: "var(--muted)" }}
-                >
-                  BASc, Mechatronics Engineering - Waterloo, Ontario, Canada
-                </div>
-              </div>
-            </div>
-            <span className="badge self-start sm:self-auto whitespace-nowrap" style={{ fontSize: "0.75rem", padding: "4px 12px" }}>
-              Sept 2025 - Apr 2030
-            </span>
-          </div>
 
-          <p
-            className="mt-5 text-sm leading-relaxed"
-            style={{ color: "var(--muted)" }}
-          >
-            Relevant coursework: Programming (C++, OOP), Applied Math (Python, Linear Algebra),
-            Engineering Design (AutoCAD, SolidWorks).
-          </p>
+      {/* ── Education ────────────────────────────── */}
+      <Section id="education" title="Education">
+        <div className="terminal-window">
+          <div className="terminal-chrome">
+            <span className="terminal-dot terminal-dot-red" />
+            <span className="terminal-dot terminal-dot-yellow" />
+            <span className="terminal-dot terminal-dot-green" />
+            <span className="terminal-title">[ACADEMIC] — credentials.log</span>
+          </div>
+          <div className="terminal-body">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <div className="flex items-center gap-4">
+                <div
+                  className="w-12 h-12 flex-shrink-0 flex items-center justify-center overflow-hidden"
+                  style={{
+                    borderRadius: "4px",
+                    border: "1px solid rgba(0,245,255,.15)",
+                    background: "rgba(0,245,255,.04)",
+                  }}
+                >
+                  <Image
+                    src="/assets/uwaterloo.png"
+                    alt="University of Waterloo"
+                    width={48}
+                    height={48}
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+                <div>
+                  <div
+                    style={{
+                      fontFamily: "var(--font-display, monospace)",
+                      fontSize: "1rem",
+                      letterSpacing: "0.08em",
+                      textTransform: "uppercase",
+                      color: "var(--cyan)",
+                      textShadow: "0 0 12px rgba(0,245,255,.4)",
+                    }}
+                  >
+                    University of Waterloo
+                  </div>
+                  <div
+                    style={{
+                      fontFamily: "var(--font-body, monospace)",
+                      fontSize: "0.8rem",
+                      color: "var(--muted)",
+                      marginTop: "2px",
+                      letterSpacing: "0.02em",
+                    }}
+                  >
+                    BASc, Mechatronics Engineering · Waterloo, Ontario
+                  </div>
+                </div>
+              </div>
+              <span className="badge self-start sm:self-auto whitespace-nowrap" style={{ fontSize: "0.68rem" }}>
+                Sept 2025 – Apr 2030
+              </span>
+            </div>
+
+            <p
+              className="mt-4"
+              style={{
+                fontFamily: "var(--font-body, monospace)",
+                fontSize: "0.8rem",
+                color: "var(--muted)",
+                lineHeight: 1.8,
+                borderTop: "1px solid var(--border)",
+                paddingTop: "12px",
+              }}
+            >
+              <span style={{ color: "rgba(0,245,255,.4)" }}>&gt;</span>{" "}
+              Relevant coursework: Programming (C++, OOP), Applied Math (Python, Linear Algebra),
+              Engineering Design (AutoCAD, SolidWorks).
+            </p>
+          </div>
         </div>
       </Section>
 
-      {/* Contact */}
+      {/* ── Contact ──────────────────────────────── */}
       <Section id="contact" title="Get in Touch">
         <p
-          className="mb-8 text-sm"
-          style={{ color: "var(--muted)", maxWidth: "480px" }}
+          className="mb-6"
+          style={{
+            fontFamily: "var(--font-body, monospace)",
+            fontSize: "0.82rem",
+            color: "var(--muted)",
+            maxWidth: "480px",
+            letterSpacing: "0.02em",
+          }}
         >
-          Have a project, opportunity, or just want to say hi? Drop me a line and I'll
-          get back to you.
+          <span style={{ color: "var(--cyan)" }}>&gt;</span>{" "}
+          AWAITING_INPUT — have a project, opportunity, or just want to say hi?
+          Drop a message and I&apos;ll get back to you.
         </p>
 
         {formState === "success" ? (
           <div
-            className="max-w-xl card p-6 md:p-8 flex flex-col items-center justify-center gap-3 text-center"
+            className="max-w-xl terminal-window"
             style={{ minHeight: "200px" }}
           >
-            <div
-              className="w-12 h-12 rounded-full flex items-center justify-center mb-1"
-              style={{ background: "rgba(34,211,238,.1)", border: "1px solid rgba(34,211,238,.25)" }}
-            >
-              <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-                <path d="M4 11.5l5 5 9-9" stroke="#22d3ee" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
+            <div className="terminal-chrome">
+              <span className="terminal-dot terminal-dot-red" />
+              <span className="terminal-dot terminal-dot-yellow" />
+              <span className="terminal-dot terminal-dot-green" />
+              <span className="terminal-title">[SYSTEM] — message_sent.log</span>
             </div>
-            <p className="font-display font-semibold text-lg" style={{ color: "var(--text)" }}>Message sent!</p>
-            <p className="text-sm" style={{ color: "var(--muted)" }}>Thanks for reaching out - I'll get back to you soon.</p>
-            <button
-              className="mt-2 text-xs underline underline-offset-4"
-              style={{ color: "var(--muted)" }}
-              onClick={() => setFormState("idle")}
+            <div
+              className="terminal-body flex flex-col gap-2"
+              style={{ fontFamily: "var(--font-body, monospace)", fontSize: "0.82rem" }}
             >
-              Send another
-            </button>
+              <div style={{ color: "var(--green)" }}>[OK] Message transmitted successfully.</div>
+              <div style={{ color: "var(--muted)" }}>[OK] Recipient notified.</div>
+              <div style={{ color: "var(--muted)" }}>[OK] Response queued — expect reply soon.</div>
+              <div className="mt-2" style={{ color: "var(--muted)" }}>
+                <span style={{ color: "rgba(0,245,255,.4)" }}>$</span>{" "}
+                <button
+                  className="underline underline-offset-4 hover:text-cyan-400 transition-colors"
+                  style={{ color: "var(--muted)", background: "none", border: "none", cursor: "pointer", fontFamily: "inherit", fontSize: "inherit" }}
+                  onClick={() => setFormState("idle")}
+                >
+                  send_another
+                </button>
+              </div>
+            </div>
           </div>
         ) : (
           <form
             ref={formRef}
             noValidate
-            className="max-w-xl card p-6 md:p-8 grid gap-4"
+            className="max-w-xl terminal-window grid gap-0"
             onSubmit={(e) => e.preventDefault()}
           >
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <input
-                name="name"
-                placeholder="Your name"
-                className={`form-input${fieldErrors.name ? " form-input-error" : ""}`}
-                onChange={() => setFieldErrors((e) => ({ ...e, name: false }))}
-              />
-              <input
-                name="email"
-                type="email"
-                placeholder="Your email"
-                className={`form-input${fieldErrors.email ? " form-input-error" : ""}`}
-                onChange={() => setFieldErrors((e) => ({ ...e, email: false }))}
-              />
+            <div className="terminal-chrome">
+              <span className="terminal-dot terminal-dot-red" />
+              <span className="terminal-dot terminal-dot-yellow" />
+              <span className="terminal-dot terminal-dot-green" />
+              <span className="terminal-title">[INPUT] — compose_message.sh</span>
             </div>
-            <textarea
-              name="message"
-              placeholder="Your message"
-              rows={5}
-              className={`form-input${fieldErrors.message ? " form-input-error" : ""}`}
-              style={{ resize: "vertical" }}
-              onChange={() => setFieldErrors((e) => ({ ...e, message: false }))}
-            />
-            <div className="flex justify-end pl-2">
-              <SlideButton validate={validateForm} onSlideComplete={handleSlideSubmit} label="Slide to send" />
+            <div className="terminal-body grid gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <input
+                  name="name"
+                  placeholder="> your_name"
+                  className={`form-input${fieldErrors.name ? " form-input-error" : ""}`}
+                  onChange={() => setFieldErrors((e) => ({ ...e, name: false }))}
+                />
+                <input
+                  name="email"
+                  type="email"
+                  placeholder="> your_email"
+                  className={`form-input${fieldErrors.email ? " form-input-error" : ""}`}
+                  onChange={() => setFieldErrors((e) => ({ ...e, email: false }))}
+                />
+              </div>
+              <textarea
+                name="message"
+                placeholder="> your_message..."
+                rows={5}
+                className={`form-input${fieldErrors.message ? " form-input-error" : ""}`}
+                style={{ resize: "vertical" }}
+                onChange={() => setFieldErrors((e) => ({ ...e, message: false }))}
+              />
+              <div className="flex justify-end pl-2">
+                <SlideButton validate={validateForm} onSlideComplete={handleSlideSubmit} label="Slide to send" />
+              </div>
             </div>
           </form>
         )}

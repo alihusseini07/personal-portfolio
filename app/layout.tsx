@@ -1,19 +1,19 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Space_Grotesk, Inter } from "next/font/google";
+import { Orbitron, Space_Mono } from "next/font/google";
 import Navbar from "../components/Navbar";
 
-const spaceGrotesk = Space_Grotesk({
+const orbitron = Orbitron({
   subsets: ["latin"],
   variable: "--font-display",
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700", "800", "900"],
   display: "swap",
 });
 
-const inter = Inter({
+const spaceMono = Space_Mono({
   subsets: ["latin"],
   variable: "--font-body",
-  weight: ["400", "500", "600"],
+  weight: ["400", "700"],
   display: "swap",
 });
 
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${spaceGrotesk.variable} ${inter.variable}`}>
+    <html lang="en" className={`${orbitron.variable} ${spaceMono.variable}`}>
       <body>
         <Navbar />
         {children}
