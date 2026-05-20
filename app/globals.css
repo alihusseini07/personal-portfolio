@@ -433,23 +433,105 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ── Avatar ───────────────────────────────────── */
-.avatar {
-  @apply object-cover;
+/* ── Avatar TV wrapper ────────────────────────── */
+.avatar-tv-wrapper {
+  position: relative;
   border-radius: 8px;
+  overflow: hidden;
   border: 1px solid rgba(104,186,127,.3);
   box-shadow:
     0 0 0 1px rgba(104,186,127,.08),
     0 0 20px rgba(104,186,127,.15),
     0 24px 64px rgba(0,0,0,.7);
-  transition: transform 220ms ease, box-shadow 220ms ease;
   animation: neon-pulse 3s ease-in-out infinite;
+  transition: transform 220ms ease, box-shadow 220ms ease;
 }
-.avatar:hover {
+.avatar-tv-wrapper:hover {
   transform: translateY(-4px);
   box-shadow:
     0 0 0 1px rgba(104,186,127,.2),
     0 0 30px rgba(104,186,127,.25),
     0 32px 72px rgba(0,0,0,.75);
+}
+
+.avatar {
+  @apply object-cover;
+  border-radius: 0;
+  border: none;
+  box-shadow: none;
+  animation: tv-signal-drift 8s ease-in-out infinite;
+}
+
+/* animated noise layer */
+.tv-static-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  mix-blend-mode: screen;
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* classic CRT scanlines */
+.tv-scanlines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent 0px,
+    transparent 2px,
+    rgba(0, 0, 0, 0.12) 2px,
+    rgba(0, 0, 0, 0.12) 4px
+  );
+  pointer-events: none;
+  z-index: 3;
+  animation: scanline-scroll 8s linear infinite;
+}
+
+/* CRT vignette + slight green phosphor tint */
+.tv-vignette {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.55) 100%),
+    linear-gradient(0deg, rgba(104,186,127,0.04) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 4;
+}
+
+/* horizontal glitch band that sweeps occasionally */
+.tv-glitch-h {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+  animation: glitch-sweep 7s ease-in-out infinite;
+}
+
+@keyframes scanline-scroll {
+  0%   { background-position: 0 0; }
+  100% { background-position: 0 280px; }
+}
+
+@keyframes tv-signal-drift {
+  0%,100% { transform: translate(0,0); filter: brightness(1) contrast(1.02); }
+  15%      { transform: translate(-1px, 0); filter: brightness(1.04) contrast(1.05); }
+  30%      { transform: translate(0, 0); filter: brightness(0.97) contrast(1); }
+  50%      { transform: translate(1px, 0); filter: brightness(1.02) contrast(1.03); }
+  65%      { transform: translate(0, 1px); filter: brightness(1) contrast(1.02); }
+  80%      { transform: translate(-1px, 0); filter: brightness(0.98) contrast(1.01); }
+}
+
+@keyframes glitch-sweep {
+  0%,100%     { background: none; }
+  /* quick horizontal bar glitch at ~40% into cycle */
+  40%         { background: none; }
+  41%         { background: linear-gradient(0deg, transparent calc(var(--gh,40%) - 3px), rgba(180,220,180,0.08) var(--gh,40%), transparent calc(var(--gh,40%) + 10px)); }
+  42%         { background: none; }
+  43%         { background: linear-gradient(0deg, transparent calc(var(--gh,60%) - 5px), rgba(104,186,127,0.06) var(--gh,60%), transparent calc(var(--gh,60%) + 16px)); }
+  44%         { background: none; }
 }
 
 /* ── Experience timeline ──────────────────────── */

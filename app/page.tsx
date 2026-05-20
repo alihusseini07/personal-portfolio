@@ -20,6 +20,48 @@ export default function Page() {
   const [formState, setFormState] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [fieldErrors, setFieldErrors] = useState({ name: false, email: false, message: false });
   const formRef = useRef<HTMLFormElement>(null);
+  const staticCanvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = staticCanvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+    canvas.width = 280;
+    canvas.height = 280;
+
+    let animId: number;
+    let frame = 0;
+
+    function drawStatic() {
+      frame++;
+      // draw full noise every frame
+      const imageData = ctx!.createImageData(canvas!.width, canvas!.height);
+      const d = imageData.data;
+      for (let i = 0; i < d.length; i += 4) {
+        const v = Math.random() * 255;
+        d[i] = v; d[i + 1] = v; d[i + 2] = v; d[i + 3] = 255;
+      }
+      ctx!.putImageData(imageData, 0, 0);
+
+      // occasional horizontal band of heavier static every ~90 frames
+      if (frame % 90 < 4) {
+        const bandY = Math.random() * canvas!.height;
+        const bandH = 8 + Math.random() * 20;
+        const band = ctx!.createImageData(canvas!.width, Math.ceil(bandH));
+        for (let i = 0; i < band.data.length; i += 4) {
+          const v = Math.random() * 255;
+          band.data[i] = v; band.data[i + 1] = v; band.data[i + 2] = v; band.data[i + 3] = 255;
+        }
+        ctx!.putImageData(band, 0, bandY);
+      }
+
+      animId = requestAnimationFrame(drawStatic);
+    }
+
+    drawStatic();
+    return () => cancelAnimationFrame(animId);
+  }, []);
 
   const validateForm = (): boolean => {
     if (!formRef.current) return false;
@@ -359,14 +401,20 @@ export default function Page() {
 
             {/* Right — avatar */}
             <div className="col-span-12 lg:col-span-5 hero-right flex flex-col items-center gap-5">
-              <Image
-                src="/assets/ali-headshot.jpg"
-                alt="Ali Husseini"
-                width={280}
-                height={280}
-                className="avatar"
-                priority
-              />
+              <div className="avatar-tv-wrapper">
+                <Image
+                  src="/assets/ali-headshot.jpg"
+                  alt="Ali Husseini"
+                  width={280}
+                  height={280}
+                  className="avatar"
+                  priority
+                />
+                <canvas ref={staticCanvasRef} className="tv-static-overlay" />
+                <div className="tv-scanlines" />
+                <div className="tv-vignette" />
+                <div className="tv-glitch-h" />
+              </div>
 
               {/* Scan label below avatar */}
               <div
