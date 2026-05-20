@@ -18,7 +18,7 @@ const spaceMono = Space_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Ali Husseini | Portfolio",
+  title: "Ali Husseini",
   description:
     "Personal portfolio of Ali Husseini — Mechatronics Engineering student at the University of Waterloo.",
   icons: { icon: "/favicon.svg" },
