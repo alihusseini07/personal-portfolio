@@ -79,26 +79,20 @@ export default function ExperienceItem({ xp }: { xp: Experience }) {
               </span>
             </div>
 
-            <ul className="grid gap-2">
+            <div className="grid gap-2">
               {xp.bullets.map((b, i) => (
-                <li
+                <p
                   key={i}
-                  className="flex items-start gap-2.5 text-sm leading-relaxed"
+                  className="text-sm leading-relaxed"
                   style={{
                     fontFamily: "var(--font-body, monospace)",
                     color: "var(--muted)",
                   }}
                 >
-                  <span
-                    className="mt-[5px] flex-shrink-0 text-xs"
-                    style={{ color: "rgba(104,186,127,.5)" }}
-                  >
-                    &gt;
-                  </span>
                   {b}
-                </li>
+                </p>
               ))}
-            </ul>
+            </div>
           </div>
         </div>
       </div>

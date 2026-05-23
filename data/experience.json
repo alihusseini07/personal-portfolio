@@ -6,9 +6,7 @@
     "dates": "Jan 2026 - Apr 2026",
     "image": "/assets/ndi-logo.png",
     "bullets": [
-      "Architected an end-to-end AI video screening platform using SuiteScript, AWS Lambda, S3, Transcribe, and Bedrock/Claude, shipping a client-requested feature to 30+ enterprise hiring teams.",
-      "Designed and shipped four interview scheduling flows plus a centralized Interview Hub with calendar sync and auto timeslot generation, cutting roughly 15 minutes per interview across 30+ client teams.",
-      "Performed QA for resume parsing and AI scoring accuracy across 100+ resumes and authored 3 developer handoff guides to support clean engineering onboarding."
+      "Built an end-to-end AI video screening platform using AWS Lambda, S3, Transcribe, and Bedrock/Claude — covering four interview scheduling flows, calendar sync, and a centralized Interview Hub deployed to 30+ enterprise hiring teams. Also handled QA across 100+ resumes and wrote developer handoff documentation."
     ]
   },
   {
@@ -18,8 +16,7 @@
     "dates": "Sept 2025 - Dec 2025",
     "image": "/assets/waterlooformulaelectric_logo.png",
     "bullets": [
-      "Developed and tested embedded C/C++ firmware for STM32 ECUs, improving reliability across motor, sensor, and control subsystems.",
-      "Validated CAN/UART signal flow with simulated inputs, reducing communication errors by ~20% and streamlining GitHub-based testing and documentation."
+      "Wrote and tested embedded C/C++ firmware for STM32 ECUs across motor, sensor, and control subsystems. Validated CAN/UART signal integrity using simulated inputs, reducing communication errors by ~20%."
     ]
   },
   {
@@ -29,8 +26,7 @@
     "dates": "July 2024 - Aug 2024",
     "image": "/assets/volvo-logo.png",
     "bullets": [
-      "Partnered with senior technicians to diagnose and resolve complex system malfunctions using structured root-cause analysis.",
-      "Adjusted to different workflows across multiple technicians, contributing to timely completion of critical repairs."
+      "Worked alongside senior technicians diagnosing complex vehicle malfunctions using structured root-cause analysis, adapting to different workflows to support timely completion of critical repairs."
     ]
   },
   {
@@ -40,8 +36,7 @@
     "dates": "Sept 2024 - June 2025",
     "image": "/assets/garthwebb-logo.png",
     "bullets": [
-      "Founded and scaled the club to 200+ students; led announcements, email comms, and coordination with teachers and tutors.",
-      "Tutored 50+ students in Math and Science, improving grades by up to 15% via tailored study plans."
+      "Founded and grew a peer tutoring club to 200+ students, managing announcements, teacher coordination, and club communications. Personally tutored 50+ students in Math and Science, with grade improvements of up to 15% through tailored study plans."
     ]
   },
   {
@@ -51,8 +46,7 @@
     "dates": "Oct 2023 - June 2025",
     "image": "/assets/garthwebb-logo.png",
     "bullets": [
-      "Completed WHMIS, Worker Health & Safety, and First Aid & CPR certifications.",
-      "Designed sustainable-city solutions during ICE training; coordinated project tasks and timelines with spreadsheets."
+      "Completed WHMIS, Worker Health & Safety, and First Aid/CPR certifications. Designed sustainable-city solutions during ICE training and coordinated project tasks and timelines across the program."
     ]
   }
 ]
