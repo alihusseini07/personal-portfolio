@@ -292,8 +292,8 @@ export default function Page() {
                   className="w-32 border-white/10 text-[#e2e8f0] transition-transform duration-200 ease-out hover:-translate-y-1"
                   onClick={() => {
                     const a = document.createElement("a");
-                    a.href = "/assets/Ali-Husseini-Resume.pdf";
-                    a.download = "Ali-Husseini-Resume.pdf";
+                    a.href = "/assets/Ali_Husseini_Resume.pdf";
+                    a.download = "Ali_Husseini_Resume.pdf";
                     document.body.appendChild(a);
                     a.click();
                     document.body.removeChild(a);
@@ -708,11 +708,11 @@ export default function Page() {
               <span className="contact-row-addr">{email}</span>
               <span className="badge contact-row-badge" style={{ fontSize: "0.62rem" }}>→ send message</span>
             </a>
-            <a href="/assets/Ali-Husseini-Resume.pdf" download className="contact-row" style={{ borderBottom: "none" }}>
+            <a href="/assets/Ali_Husseini_Resume.pdf" download className="contact-row" style={{ borderBottom: "none" }}>
               <span className="contact-row-idx">04</span>
               <span className="contact-row-icon"><FileText size={15} /></span>
               <span className="contact-row-label">Resume</span>
-              <span className="contact-row-addr">Ali-Husseini-Resume.pdf</span>
+              <span className="contact-row-addr">Ali_Husseini_Resume.pdf</span>
               <span className="badge contact-row-badge" style={{ fontSize: "0.62rem" }}>↓ download</span>
             </a>
           </div>

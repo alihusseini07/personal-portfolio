@@ -14,3 +14,5 @@
  ○ Compiling /_not-found ...
  ✓ Compiled /_not-found in 1255ms (1294 modules)
  GET /.well-known/appspecific/com.chrome.devtools.json 404 in 1887ms
+ GET / 200 in 125ms
+ GET /assets/Ali-Husseini-Resume.pdf 404 in 61ms
