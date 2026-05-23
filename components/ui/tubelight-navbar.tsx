@@ -20,9 +20,10 @@ interface NavBarProps {
 
 export function NavBar({ items, className }: NavBarProps) {
   const [activeTab, setActiveTab] = useState(items[0].name)
-  const [docked, setDocked] = useState<Edge>("bottom")
+  const [docked, setDocked] = useState<Edge>("top")
   const [isMobile, setIsMobile] = useState(false)
-  const pendingEdgeRef = useRef<Edge>("bottom")
+  const [isReady, setIsReady] = useState(false)
+  const pendingEdgeRef = useRef<Edge>("top")
   const navRef = useRef<HTMLDivElement>(null)
   const scrollingToRef = useRef<string | null>(null)
   const scrollTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -58,12 +59,15 @@ export function NavBar({ items, className }: NavBarProps) {
     [x, y],
   )
 
-  // Initial desktop position
+  // Initial desktop position — instant (no spring) so it never slides from top-left
   useEffect(() => {
-    if (isMobile) return
-    const t = setTimeout(() => doSnap("bottom"), 60)
-    return () => clearTimeout(t)
-  }, [isMobile, doSnap])
+    if (isMobile || !navRef.current) return
+    const vw = window.innerWidth
+    const w = navRef.current.offsetWidth
+    x.set((vw - w) / 2)
+    y.set(16)
+    setIsReady(true)
+  }, [isMobile, x, y])
 
   // Re-snap after docked state changes (layout updated, new size)
   const [snapSeq, setSnapSeq] = useState(0)
@@ -76,10 +80,13 @@ export function NavBar({ items, className }: NavBarProps) {
   // Re-snap on resize (desktop only)
   useEffect(() => {
     if (isMobile) return
-    const onResize = () => doSnap(pendingEdgeRef.current)
+    const onResize = () => {
+      if (!isReady) return
+      doSnap(pendingEdgeRef.current)
+    }
     window.addEventListener("resize", onResize)
     return () => window.removeEventListener("resize", onResize)
-  }, [isMobile, doSnap])
+  }, [isMobile, isReady, doSnap])
 
   // Scroll spy
   useEffect(() => {
@@ -147,7 +154,7 @@ export function NavBar({ items, className }: NavBarProps) {
     }
     if (isMobile || docked === "bottom")
       return { ...base, top: "-8px", left: "50%", transform: "translateX(-50%)", width: "32px", height: "4px", borderRadius: "4px 4px 0 0" }
-    if (docked === "top")
+    if (docked === "top")  // lamp points down toward content
       return { ...base, bottom: "-8px", left: "50%", transform: "translateX(-50%)", width: "32px", height: "4px", borderRadius: "0 0 4px 4px" }
     if (docked === "left")
       return { ...base, right: "-8px", top: "50%", transform: "translateY(-50%)", width: "4px", height: "24px", borderRadius: "0 4px 4px 0" }
@@ -258,7 +265,7 @@ export function NavBar({ items, className }: NavBarProps) {
       drag
       dragMomentum={false}
       onDragEnd={handleDragEnd}
-      style={{ x, y, position: "fixed", top: 0, left: 0, zIndex: 50, touchAction: "none" }}
+      style={{ x, y, position: "fixed", top: 0, left: 0, zIndex: 50, touchAction: "none", visibility: isReady ? "visible" : "hidden" }}
       whileDrag={{ scale: 1.04, opacity: 0.88 }}
       className={cn("cursor-grab select-none active:cursor-grabbing", className)}
     >

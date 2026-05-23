@@ -6,13 +6,10 @@
   - Local:        http://localhost:3000
 
  ✓ Starting...
- ✓ Ready in 45.4s
+ ✓ Ready in 40.9s
  ○ Compiling / ...
- ✓ Compiled / in 27.5s (1291 modules)
- GET / 200 in 29082ms
- GET / 200 in 182ms
- ○ Compiling /_not-found ...
- ✓ Compiled /_not-found in 1255ms (1294 modules)
- GET /.well-known/appspecific/com.chrome.devtools.json 404 in 1887ms
- GET / 200 in 125ms
- GET /assets/Ali-Husseini-Resume.pdf 404 in 61ms
+ ✓ Compiled / in 23.5s (1291 modules)
+ GET / 200 in 24977ms
+ GET / 200 in 200ms
+ GET / 200 in 94ms
+ GET / 200 in 85ms
