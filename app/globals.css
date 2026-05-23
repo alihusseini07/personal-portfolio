@@ -454,6 +454,37 @@ h1, h2, h3, h4, h5, h6 {
     0 32px 72px rgba(0,0,0,.75);
 }
 
+/* ── Project carousel arrows ──────────────────── */
+.carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(104,186,127,0.35);
+  background: rgba(6,11,18,0.85);
+  color: #68BA7F;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 180ms ease, border-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+  backdrop-filter: blur(6px);
+}
+.carousel-arrow:hover {
+  background: rgba(104,186,127,0.15);
+  border-color: rgba(104,186,127,0.65);
+  box-shadow: 0 0 12px rgba(104,186,127,0.25);
+  transform: translateY(-50%) scale(1.08);
+}
+.carousel-arrow:active {
+  transform: translateY(-50%) scale(0.93);
+}
+.carousel-arrow-left  { left: -52px; }
+.carousel-arrow-right { right: -52px; }
+
 .avatar {
   @apply object-cover;
   border-radius: 0;

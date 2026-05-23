@@ -1,7 +1,7 @@
 "use client";
 
 import { Box, Code2, Cpu, FileCode2, Globe, Printer, RotateCw, Sparkles } from "lucide-react";
-import { useState } from "react";
+import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { IconGitHub } from "../Icons";
 
@@ -296,25 +296,185 @@ interface DisplayCardsProps {
 }
 
 export default function DisplayCards({ cards }: DisplayCardsProps) {
-  const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
   const allCards = cards ?? [];
-  const expanded = expandedIndex !== null ? allCards[expandedIndex] : null;
+  const n = allCards.length;
+
+  // tripled array for infinite loop buffer
+  const tripled = useMemo(
+    () => [...allCards, ...allCards, ...allCards],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [n]
+  );
+  const totalCards = tripled.length; // 3n
+
+  // expandedKey is index into tripled array so layoutId matches
+  const [expandedKey, setExpandedKey] = useState<number | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
+
+  const expandedOriginalIndex = expandedKey !== null ? expandedKey % n : null;
+  const expanded = expandedOriginalIndex !== null ? allCards[expandedOriginalIndex] : null;
+
+  const viewportRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const posRef = useRef(n); // start at index n (first card of middle set)
+  const isAnimatingRef = useRef(false);
+  const dragStartXRef = useRef<number | null>(null);
+  const didDragRef = useRef(false);
+
+  const getCardWidth = useCallback(
+    () => (viewportRef.current?.clientWidth ?? 0) / 3,
+    []
+  );
+
+  const applyTransform = useCallback(
+    (pos: number, animated: boolean, extraPx = 0) => {
+      if (!trackRef.current) return;
+      const cardW = getCardWidth();
+      trackRef.current.style.transition = animated
+        ? "transform 380ms cubic-bezier(0.25, 0.46, 0.45, 0.94)"
+        : "none";
+      trackRef.current.style.transform = `translateX(${-pos * cardW + extraPx}px)`;
+    },
+    [getCardWidth]
+  );
+
+  // Set initial position without animation on mount
+  useEffect(() => {
+    applyTransform(posRef.current, false);
+  }, [applyTransform]);
+
+  // Re-apply on resize
+  useEffect(() => {
+    const onResize = () => applyTransform(posRef.current, false);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, [applyTransform]);
+
+  const navigate = useCallback(
+    (direction: 1 | -1) => {
+      if (isAnimatingRef.current) return;
+      isAnimatingRef.current = true;
+      posRef.current += direction;
+      applyTransform(posRef.current, true);
+    },
+    [applyTransform]
+  );
+
+  const handleTransitionEnd = useCallback(() => {
+    isAnimatingRef.current = false;
+    // Silently wrap when we drift out of the middle set
+    const pos = posRef.current;
+    if (pos >= 2 * n) {
+      posRef.current = pos - n;
+      applyTransform(posRef.current, false);
+    } else if (pos < n) {
+      posRef.current = pos + n;
+      applyTransform(posRef.current, false);
+    }
+  }, [n, applyTransform]);
+
+  // Global mouse handlers for drag
+  useEffect(() => {
+    const onMouseMove = (e: MouseEvent) => {
+      if (dragStartXRef.current === null) return;
+      const delta = e.clientX - dragStartXRef.current;
+      if (Math.abs(delta) > 5) didDragRef.current = true;
+      applyTransform(posRef.current, false, delta);
+    };
+
+    const onMouseUp = (e: MouseEvent) => {
+      if (dragStartXRef.current === null) return;
+      const delta = e.clientX - dragStartXRef.current;
+      dragStartXRef.current = null;
+      setIsDragging(false);
+
+      if (Math.abs(delta) > 60) {
+        navigate(delta < 0 ? 1 : -1);
+      } else {
+        applyTransform(posRef.current, true);
+      }
+    };
+
+    window.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("mouseup", onMouseUp);
+    return () => {
+      window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("mouseup", onMouseUp);
+    };
+  }, [applyTransform, navigate]);
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if ((e.target as HTMLElement).closest("a, button")) return;
+    dragStartXRef.current = e.clientX;
+    didDragRef.current = false;
+    setIsDragging(true);
+  };
 
   return (
     <>
-      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {allCards.map((cardProps, index) => (
-          <DisplayCard
-            key={`${cardProps.title}-${index}`}
-            {...cardProps}
-            layoutId={`display-card-${index}`}
-            onClick={() => setExpandedIndex(index)}
-          />
-        ))}
+      <div className="relative">
+        {/* Left arrow — sits outside the viewport at -52px */}
+        <button
+          className="carousel-arrow carousel-arrow-left"
+          onClick={() => navigate(-1)}
+          aria-label="Previous project"
+        >
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+            <path d="M11 3L5 9L11 15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </button>
+
+        {/* Right arrow — sits outside the viewport at -52px */}
+        <button
+          className="carousel-arrow carousel-arrow-right"
+          onClick={() => navigate(1)}
+          aria-label="Next project"
+        >
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+            <path d="M7 3L13 9L7 15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </button>
+
+        {/* Viewport — clips the track */}
+        <div ref={viewportRef} style={{ overflow: "hidden" }}>
+          {/* Track — full tripled width, slid by transform */}
+          <div
+            ref={trackRef}
+            className="flex"
+            style={{
+              width: `${n * 100}%`,
+              userSelect: "none",
+              cursor: isDragging ? "grabbing" : "grab",
+            }}
+            onMouseDown={handleMouseDown}
+            onTransitionEnd={handleTransitionEnd}
+          >
+            {tripled.map((cardProps, i) => (
+              <div
+                key={i}
+                style={{
+                  width: `${100 / totalCards}%`,
+                  padding: "0 10px",
+                  boxSizing: "border-box",
+                  flexShrink: 0,
+                }}
+              >
+                <DisplayCard
+                  {...cardProps}
+                  layoutId={`display-card-${i}`}
+                  onClick={() => {
+                    if (!didDragRef.current) setExpandedKey(i);
+                  }}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
 
+      {/* Expanded modal — unchanged */}
       <AnimatePresence>
-        {expanded && (
+        {expanded && expandedKey !== null && (
           <>
             <motion.div
               className="fixed inset-0 z-40 backdrop-blur-md"
@@ -323,21 +483,20 @@ export default function DisplayCards({ cards }: DisplayCardsProps) {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.25 }}
-              onClick={() => setExpandedIndex(null)}
+              onClick={() => setExpandedKey(null)}
             />
 
             <div className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none">
               <motion.div
-                layoutId={`display-card-${expandedIndex}`}
+                layoutId={`display-card-${expandedKey}`}
                 transition={{ type: "spring", stiffness: 280, damping: 26 }}
                 className="relative max-h-[92vh] w-[760px] max-w-[94vw] cursor-pointer overflow-y-auto rounded-2xl pointer-events-auto"
                 style={{
                   background: "var(--panel)",
                   border: "1px solid rgba(34,211,238,0.25)",
-                  boxShadow:
-                    "0 30px 90px rgba(0,0,0,0.75), 0 0 0 1px rgba(34,211,238,0.08)",
+                  boxShadow: "0 30px 90px rgba(0,0,0,0.75), 0 0 0 1px rgba(34,211,238,0.08)",
                 }}
-                onClick={() => setExpandedIndex(null)}
+                onClick={() => setExpandedKey(null)}
               >
                 <div className="relative h-[260px] overflow-hidden sm:h-[340px]">
                   <ProjectMedia
@@ -349,8 +508,7 @@ export default function DisplayCards({ cards }: DisplayCardsProps) {
                   <div
                     className="absolute inset-0"
                     style={{
-                      background:
-                        "linear-gradient(to bottom, transparent 45%, rgba(6,11,18,0.92) 100%)",
+                      background: "linear-gradient(to bottom, transparent 45%, rgba(6,11,18,0.92) 100%)",
                     }}
                   />
                 </div>
@@ -373,10 +531,7 @@ export default function DisplayCards({ cards }: DisplayCardsProps) {
                     </h3>
                   </div>
 
-                  <p
-                    className="mb-4 text-sm leading-relaxed"
-                    style={{ color: "var(--muted)" }}
-                  >
+                  <p className="mb-4 text-sm leading-relaxed" style={{ color: "var(--muted)" }}>
                     {expanded.description}
                   </p>
 
@@ -388,10 +543,7 @@ export default function DisplayCards({ cards }: DisplayCardsProps) {
 
                   <ProjectLinks links={expanded.links} />
 
-                  <p
-                    className="mt-4 text-center text-xs"
-                    style={{ color: "var(--muted)", opacity: 0.4 }}
-                  >
+                  <p className="mt-4 text-center text-xs" style={{ color: "var(--muted)", opacity: 0.4 }}>
                     Click to close
                   </p>
                 </div>
