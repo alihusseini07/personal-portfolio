@@ -269,21 +269,6 @@ export default function Page() {
                 </span>
               </h1>
 
-              {/* Tagline */}
-              <p
-                className="hero-el mb-8 max-w-lg"
-                style={{
-                  fontFamily: "var(--font-body, monospace)",
-                  fontSize: "0.88rem",
-                  color: "var(--muted)",
-                  lineHeight: 1.8,
-                  letterSpacing: "0.02em",
-                }}
-              >
-                <span style={{ color: "rgba(104,186,127,.4)" }}>{"//"}</span>{" "}
-                Building at the intersection of software, hardware, and AI —
-                from firmware for electric race cars to AI-powered workflow tools.
-              </p>
 
               {/* CTAs + Social icons */}
               <div className="hero-el flex flex-wrap gap-3 items-center justify-center lg:justify-start">
@@ -383,23 +368,6 @@ export default function Page() {
                 <div className="tv-glitch-h" />
               </div>
 
-              {/* Scan label below avatar */}
-              <div
-                style={{
-                  fontFamily: "var(--font-body, monospace)",
-                  fontSize: "0.65rem",
-                  color: "var(--muted)",
-                  letterSpacing: "0.12em",
-                  textTransform: "uppercase",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "8px",
-                }}
-              >
-                <span style={{ color: "var(--cyan)", animation: "cursor-blink 2s step-end infinite" }}>●</span>
-                IDENTITY VERIFIED
-                <span style={{ color: "var(--cyan)", animation: "cursor-blink 2s step-end infinite 1s" }}>●</span>
-              </div>
             </div>
           </div>
 
