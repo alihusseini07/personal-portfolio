@@ -30,7 +30,6 @@ export function NavBar({ items, className }: NavBarProps) {
   const x = useMotionValue(0)
   const y = useMotionValue(0)
 
-  // Detect mobile (<768px) — disable drag on mobile
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768)
     check()
@@ -45,13 +44,12 @@ export function NavBar({ items, className }: NavBarProps) {
       const vh = window.innerHeight
       const w = navRef.current.offsetWidth
       const h = navRef.current.offsetHeight
-
       let tx = 0, ty = 0
       switch (edge) {
-        case "top":    tx = (vw - w) / 2; ty = 16;           break
-        case "bottom": tx = (vw - w) / 2; ty = vh - h - 24;  break
-        case "left":   tx = 16;            ty = (vh - h) / 2; break
-        case "right":  tx = vw - w - 16;  ty = (vh - h) / 2; break
+        case "top":    tx = (vw - w) / 2; ty = 20;           break
+        case "bottom": tx = (vw - w) / 2; ty = vh - h - 20;  break
+        case "left":   tx = 20;            ty = (vh - h) / 2; break
+        case "right":  tx = vw - w - 20;  ty = (vh - h) / 2; break
       }
       animate(x, tx, { type: "spring", stiffness: 420, damping: 36 })
       animate(y, ty, { type: "spring", stiffness: 420, damping: 36 })
@@ -59,17 +57,16 @@ export function NavBar({ items, className }: NavBarProps) {
     [x, y],
   )
 
-  // Initial desktop position — instant (no spring) so it never slides from top-left
+  // Initial desktop position — instant, no spring flash
   useEffect(() => {
     if (isMobile || !navRef.current) return
     const vw = window.innerWidth
     const w = navRef.current.offsetWidth
     x.set((vw - w) / 2)
-    y.set(16)
+    y.set(20)
     setIsReady(true)
   }, [isMobile, x, y])
 
-  // Re-snap after docked state changes (layout updated, new size)
   const [snapSeq, setSnapSeq] = useState(0)
   useEffect(() => {
     if (snapSeq === 0 || isMobile) return
@@ -77,18 +74,13 @@ export function NavBar({ items, className }: NavBarProps) {
     return () => cancelAnimationFrame(raf)
   }, [snapSeq, doSnap, isMobile])
 
-  // Re-snap on resize (desktop only)
   useEffect(() => {
     if (isMobile) return
-    const onResize = () => {
-      if (!isReady) return
-      doSnap(pendingEdgeRef.current)
-    }
+    const onResize = () => { if (isReady) doSnap(pendingEdgeRef.current) }
     window.addEventListener("resize", onResize)
     return () => window.removeEventListener("resize", onResize)
   }, [isMobile, isReady, doSnap])
 
-  // Scroll spy
   useEffect(() => {
     const onScroll = () => {
       const byDistance = items
@@ -97,7 +89,6 @@ export function NavBar({ items, className }: NavBarProps) {
           return { name: item.name, top: el ? Math.abs(el.getBoundingClientRect().top) : Infinity }
         })
         .sort((a, b) => a.top - b.top)
-
       const nearest = byDistance[0]?.name
       if (!nearest) return
       if (scrollingToRef.current) {
@@ -133,13 +124,8 @@ export function NavBar({ items, className }: NavBarProps) {
     const cy = rect.top + rect.height / 2
     const vw = window.innerWidth
     const vh = window.innerHeight
-
-    const dists: Record<Edge, number> = {
-      top: cy, bottom: vh - cy, left: cx, right: vw - cx,
-    }
-    const nearest = (Object.entries(dists) as [Edge, number][])
-      .reduce((a, b) => a[1] < b[1] ? a : b)[0]
-
+    const dists: Record<Edge, number> = { top: cy, bottom: vh - cy, left: cx, right: vw - cx }
+    const nearest = (Object.entries(dists) as [Edge, number][]).reduce((a, b) => a[1] < b[1] ? a : b)[0]
     pendingEdgeRef.current = nearest
     setDocked(nearest)
     setSnapSeq((s) => s + 1)
@@ -147,112 +133,173 @@ export function NavBar({ items, className }: NavBarProps) {
 
   const isVertical = !isMobile && (docked === "left" || docked === "right")
 
-  const getLampStyle = (): React.CSSProperties => {
-    const base: React.CSSProperties = {
-      position: "absolute",
-      background: "linear-gradient(135deg, #68BA7F, #4a9960)",
-    }
+  // Indicator line: 2px green bar on the content-facing edge of the active item
+  const getIndicatorStyle = (): React.CSSProperties => {
+    const glow = "0 0 8px rgba(104,186,127,.75)"
+    const bar = { position: "absolute" as const, background: "#68BA7F", boxShadow: glow }
     if (isMobile || docked === "bottom")
-      return { ...base, top: "-8px", left: "50%", transform: "translateX(-50%)", width: "32px", height: "4px", borderRadius: "4px 4px 0 0" }
-    if (docked === "top")  // lamp points down toward content
-      return { ...base, bottom: "-8px", left: "50%", transform: "translateX(-50%)", width: "32px", height: "4px", borderRadius: "0 0 4px 4px" }
+      return { ...bar, top: 0,    left: "15%", right: "15%", height: "2px" }
+    if (docked === "top")
+      return { ...bar, bottom: 0, left: "15%", right: "15%", height: "2px" }
     if (docked === "left")
-      return { ...base, right: "-8px", top: "50%", transform: "translateY(-50%)", width: "4px", height: "24px", borderRadius: "0 4px 4px 0" }
-    return   { ...base, left: "-8px", top: "50%", transform: "translateY(-50%)", width: "4px", height: "24px", borderRadius: "4px 0 0 4px" }
+      return { ...bar, right: 0,  top: "15%",  bottom: "15%", width: "2px" }
+    return   { ...bar, left: 0,   top: "15%",  bottom: "15%", width: "2px" }
   }
 
-  // Shared pill content
+  // Shared pill content — terminal status bar aesthetic
   const pillContent = (
     <div
       style={{
         display: "flex",
         flexDirection: isVertical ? "column" : "row",
         alignItems: "center",
-        gap: "4px",
-        padding: "4px",
-        background: "rgba(6,11,18,.88)",
-        border: "1px solid rgba(255,255,255,.08)",
-        backdropFilter: "blur(20px)",
-        WebkitBackdropFilter: "blur(20px)",
-        borderRadius: isVertical ? "18px" : "9999px",
-        boxShadow: "0 4px 24px rgba(0,0,0,.55), 0 0 0 1px rgba(104,186,127,.07)",
+        position: "relative",
+        background: "rgba(6,11,18,.94)",
+        border: "1px solid rgba(104,186,127,.22)",
+        borderRadius: "2px",
+        boxShadow: "0 0 0 1px rgba(104,186,127,.04), 0 8px 32px rgba(0,0,0,.7)",
       }}
     >
+      {/* Corner bracket decorations — top-left and bottom-right */}
+      <span style={{
+        position: "absolute", top: -1, left: -1,
+        width: 8, height: 8,
+        borderTop: "2px solid rgba(104,186,127,.6)",
+        borderLeft: "2px solid rgba(104,186,127,.6)",
+        pointerEvents: "none",
+      }} />
+      <span style={{
+        position: "absolute", bottom: -1, right: -1,
+        width: 8, height: 8,
+        borderBottom: "2px solid rgba(104,186,127,.6)",
+        borderRight: "2px solid rgba(104,186,127,.6)",
+        pointerEvents: "none",
+      }} />
+
       {/* Drag grip — desktop only */}
       {!isMobile && (
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(2, 3px)",
-            gap: "3px",
-            padding: isVertical ? "6px 10px" : "10px 6px",
-            opacity: 0.22,
-            flexShrink: 0,
-          }}
-        >
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(2, 3px)",
+          gap: "3px",
+          padding: isVertical ? "8px 10px" : "10px 8px",
+          opacity: 0.2,
+          flexShrink: 0,
+          cursor: "grab",
+        }}>
           {Array.from({ length: 6 }).map((_, i) => (
             <div key={i} style={{ width: "3px", height: "3px", borderRadius: "50%", background: "#68BA7F" }} />
           ))}
         </div>
       )}
 
-      {items.map((item) => {
+      {/* Separator after grip */}
+      {!isMobile && (
+        <div style={isVertical ? {
+          width: "calc(100% - 12px)",
+          height: "1px",
+          background: "rgba(104,186,127,.12)",
+          flexShrink: 0,
+          margin: "2px 6px",
+        } : {
+          width: "1px",
+          alignSelf: "stretch",
+          background: "rgba(104,186,127,.12)",
+          flexShrink: 0,
+          margin: "6px 0",
+        }} />
+      )}
+
+      {items.map((item, idx) => {
         const Icon = item.icon
         const isActive = activeTab === item.name
 
         return (
-          <a
-            key={item.name}
-            href={item.url}
-            onClick={(e) => smoothTo(e, item.url, item.name)}
-            className={cn(
-              "relative text-sm font-semibold no-underline flex items-center justify-center",
-              isVertical ? "rounded-xl" : "rounded-full",
+          <React.Fragment key={item.name}>
+            {/* Separator between items */}
+            {idx > 0 && !isVertical && (
+              <span style={{
+                width: "1px", height: "14px",
+                background: "rgba(104,186,127,.1)",
+                flexShrink: 0,
+              }} />
             )}
-            style={{
-              padding: isVertical ? "10px 14px" : "8px 20px",
-              color: isActive ? "#68BA7F" : "#4a7a55",
-              transition: "color 150ms ease",
-              cursor: "pointer",
-            }}
-          >
-            {!isVertical && (
-              <>
-                <span className="hidden md:inline">{item.name}</span>
-                <span className="md:hidden"><Icon size={18} strokeWidth={2.5} /></span>
-              </>
-            )}
-            {isVertical && <Icon size={18} strokeWidth={2.5} />}
 
-            {isActive && (
-              <motion.div
-                layoutId="lamp"
-                className="absolute inset-0 -z-10"
-                style={{ borderRadius: "inherit", background: "rgba(104,186,127,.07)" }}
-                initial={false}
-                transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              >
-                <div style={getLampStyle()}>
-                  <div style={{
-                    position: "absolute", width: "48px", height: "20px",
-                    borderRadius: "50%", filter: "blur(10px)",
-                    top: "-4px", left: "-8px", background: "rgba(104,186,127,.2)",
-                  }} />
-                </div>
-              </motion.div>
-            )}
-          </a>
+            <a
+              href={item.url}
+              onClick={(e) => smoothTo(e, item.url, item.name)}
+              style={{
+                position: "relative",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                padding: isVertical ? "11px 14px" : "9px 16px",
+                textDecoration: "none",
+                fontFamily: "var(--font-body, monospace)",
+                fontSize: "0.7rem",
+                fontWeight: 600,
+                letterSpacing: "0.12em",
+                textTransform: "uppercase",
+                color: isActive ? "#68BA7F" : "rgba(104,186,127,.38)",
+                transition: "color 150ms ease",
+                cursor: "pointer",
+                userSelect: "none",
+                borderRadius: "1px",
+                whiteSpace: "nowrap",
+              }}
+            >
+              {/* Active glow bg */}
+              {isActive && (
+                <motion.span
+                  layoutId="nav-bg"
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    background: "rgba(104,186,127,.05)",
+                    borderRadius: "1px",
+                    zIndex: 0,
+                  }}
+                  initial={false}
+                  transition={{ type: "spring", stiffness: 320, damping: 32 }}
+                />
+              )}
+
+              {/* Indicator line */}
+              {isActive && (
+                <motion.span
+                  layoutId="nav-line"
+                  style={getIndicatorStyle()}
+                  initial={false}
+                  transition={{ type: "spring", stiffness: 320, damping: 32 }}
+                />
+              )}
+
+              {/* Label */}
+              <span style={{ position: "relative", zIndex: 1 }}>
+                {isVertical ? (
+                  <Icon size={16} strokeWidth={2} />
+                ) : (
+                  <>
+                    <span className="hidden md:inline">
+                      {isActive ? `[${item.name}]` : item.name}
+                    </span>
+                    <span className="md:hidden">
+                      <Icon size={16} strokeWidth={2} />
+                    </span>
+                  </>
+                )}
+              </span>
+            </a>
+          </React.Fragment>
         )
       })}
     </div>
   )
 
-  // Mobile: static, fixed at bottom center — no drag
+  // Mobile: static, fixed at bottom center
   if (isMobile) {
     return (
-      <div
-        className={cn("fixed bottom-0 left-1/2 -translate-x-1/2 z-50 mb-6", className)}
-      >
+      <div className={cn("fixed bottom-0 left-1/2 -translate-x-1/2 z-50 mb-6", className)}>
         {pillContent}
       </div>
     )
@@ -265,8 +312,16 @@ export function NavBar({ items, className }: NavBarProps) {
       drag
       dragMomentum={false}
       onDragEnd={handleDragEnd}
-      style={{ x, y, position: "fixed", top: 0, left: 0, zIndex: 50, touchAction: "none", visibility: isReady ? "visible" : "hidden" }}
-      whileDrag={{ scale: 1.04, opacity: 0.88 }}
+      style={{
+        x, y,
+        position: "fixed",
+        top: 0,
+        left: 0,
+        zIndex: 50,
+        touchAction: "none",
+        visibility: isReady ? "visible" : "hidden",
+      }}
+      whileDrag={{ scale: 1.03, opacity: 0.85 }}
       className={cn("cursor-grab select-none active:cursor-grabbing", className)}
     >
       {pillContent}
