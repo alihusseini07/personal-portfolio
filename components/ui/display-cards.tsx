@@ -379,7 +379,9 @@ export default function DisplayCards({ cards }: DisplayCardsProps) {
       if (dragStartXRef.current === null) return;
       const delta = e.clientX - dragStartXRef.current;
       if (Math.abs(delta) > 5) didDragRef.current = true;
-      applyTransform(posRef.current, false, delta);
+      const cardW = getCardWidth();
+      const clamped = Math.max(-cardW, Math.min(cardW, delta));
+      applyTransform(posRef.current, false, clamped);
     };
 
     const onMouseUp = (e: MouseEvent) => {
