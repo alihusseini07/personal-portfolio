@@ -6,8 +6,11 @@
   - Local:        http://localhost:3000
 
  ✓ Starting...
- ✓ Ready in 43.6s
+ ✓ Ready in 45.4s
  ○ Compiling / ...
- ✓ Compiled / in 25.1s (1291 modules)
- GET / 200 in 26558ms
- GET / 200 in 218ms
+ ✓ Compiled / in 27.5s (1291 modules)
+ GET / 200 in 29082ms
+ GET / 200 in 182ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 1255ms (1294 modules)
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 1887ms
