@@ -351,10 +351,10 @@ export default function DisplayCards({ cards }: DisplayCardsProps) {
   }, [applyTransform]);
 
   const navigate = useCallback(
-    (direction: 1 | -1) => {
+    (direction: 1 | -1, steps = 1) => {
       if (isAnimatingRef.current) return;
       isAnimatingRef.current = true;
-      posRef.current += direction;
+      posRef.current += direction * steps;
       applyTransform(posRef.current, true);
     },
     [applyTransform]
@@ -380,7 +380,7 @@ export default function DisplayCards({ cards }: DisplayCardsProps) {
       const delta = e.clientX - dragStartXRef.current;
       if (Math.abs(delta) > 5) didDragRef.current = true;
       const cardW = getCardWidth();
-      const clamped = Math.max(-cardW, Math.min(cardW, delta));
+      const clamped = Math.max(-cardW * 2, Math.min(cardW * 2, delta));
       applyTransform(posRef.current, false, clamped);
     };
 
@@ -390,8 +390,12 @@ export default function DisplayCards({ cards }: DisplayCardsProps) {
       dragStartXRef.current = null;
       setIsDragging(false);
 
-      if (Math.abs(delta) > 60) {
-        navigate(delta < 0 ? 1 : -1);
+      const cardW = getCardWidth();
+      const dir = delta < 0 ? 1 : -1;
+      if (Math.abs(delta) > cardW * 1.5) {
+        navigate(dir, 2);
+      } else if (Math.abs(delta) > 60) {
+        navigate(dir, 1);
       } else {
         applyTransform(posRef.current, true);
       }
