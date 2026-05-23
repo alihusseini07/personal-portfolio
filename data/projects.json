@@ -54,7 +54,7 @@
     }
   },
   {
-    "title": "Joblyze - AI Job Posting Analyzer",
+    "title": "Joblyze",
     "category": "AI Project",
     "tags": ["ai", "nlp", "web"],
     "description": "An AI-powered job posting analyzer that extracts required skills, compares them with resumes, and highlights gaps for stronger applications.",
@@ -77,7 +77,7 @@
     }
   },
   {
-    "title": "Delivery Drone - CAD Prototype",
+    "title": "Dynamic Delivery Drone",
     "category": "CAD",
     "tags": ["cad", "fusion360", "3d-printing"],
     "description": "Designed and 3D-printed a delivery drone prototype in Fusion 360, iterating propeller arm connectors and custom axles into a functional scale model.",
