@@ -330,8 +330,12 @@ export default function DisplayCards({ cards }: DisplayCardsProps) {
   const dragStartXRef = useRef<number | null>(null);
   const didDragRef = useRef(false);
 
+  // Responsive: 1 card on mobile (<640px), 3 on desktop
+  const cardsPerViewRef = useRef(3);
+  const [cardsPerView, setCardsPerView] = useState(3);
+
   const getCardWidth = useCallback(
-    () => (viewportRef.current?.clientWidth ?? 0) / 3,
+    () => (viewportRef.current?.clientWidth ?? 0) / cardsPerViewRef.current,
     []
   );
 
@@ -347,17 +351,22 @@ export default function DisplayCards({ cards }: DisplayCardsProps) {
     [getCardWidth]
   );
 
-  // Set initial position without animation on mount
+  // Set initial position without animation on mount + handle responsive breakpoint
+  useEffect(() => {
+    const update = () => {
+      const cpv = window.innerWidth < 640 ? 1 : 3;
+      cardsPerViewRef.current = cpv;
+      setCardsPerView(cpv);
+    };
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
+  // Re-apply transform whenever cardsPerView changes or on mount
   useEffect(() => {
     applyTransform(posRef.current, false);
-  }, [applyTransform]);
-
-  // Re-apply on resize
-  useEffect(() => {
-    const onResize = () => applyTransform(posRef.current, false);
-    window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
-  }, [applyTransform]);
+  }, [cardsPerView, applyTransform]);
 
   const navigate = useCallback(
     (direction: 1 | -1, steps = 1) => {
@@ -425,6 +434,34 @@ export default function DisplayCards({ cards }: DisplayCardsProps) {
     setIsDragging(true);
   };
 
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if ((e.target as HTMLElement).closest("a, button")) return;
+    dragStartXRef.current = e.touches[0].clientX;
+    didDragRef.current = false;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (dragStartXRef.current === null) return;
+    const delta = e.touches[0].clientX - dragStartXRef.current;
+    if (Math.abs(delta) > 5) didDragRef.current = true;
+    const cardW = getCardWidth();
+    const clamped = Math.max(-cardW * 1.2, Math.min(cardW * 1.2, delta));
+    applyTransform(posRef.current, false, clamped);
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (dragStartXRef.current === null) return;
+    const delta = e.changedTouches[0].clientX - dragStartXRef.current;
+    dragStartXRef.current = null;
+    const cardW = getCardWidth();
+    const dir = delta < 0 ? 1 : -1;
+    if (Math.abs(delta) > cardW * 0.35) {
+      navigate(dir, 1);
+    } else {
+      applyTransform(posRef.current, true);
+    }
+  };
+
   return (
     <>
       <div className="relative">
@@ -453,11 +490,14 @@ export default function DisplayCards({ cards }: DisplayCardsProps) {
             ref={trackRef}
             className="flex"
             style={{
-              width: `${n * 100}%`,
+              width: `${n * 300 / cardsPerView}%`,
               userSelect: "none",
               cursor: isDragging ? "grabbing" : "grab",
             }}
             onMouseDown={handleMouseDown}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
             onTransitionEnd={handleTransitionEnd}
           >
             {tripled.map((cardProps, i) => (

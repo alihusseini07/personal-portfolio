@@ -40,9 +40,10 @@
 }
 
 /* ── Reset / base ─────────────────────────────── */
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
 
 body {
+  overflow-x: hidden;
   font-family: var(--font-body, monospace);
   background-color: var(--bg);
   color: var(--text);
@@ -498,6 +499,19 @@ h1, h2, h3, h4, h5, h6 {
 }
 .carousel-arrow-left  { left: -48px; }
 .carousel-arrow-right { right: -48px; }
+
+@media (max-width: 639px) {
+  .carousel-arrow {
+    width: 28px;
+    height: 40px;
+    font-size: 1.1rem;
+    /* Overlay on card edges, inside viewport */
+    background: rgba(8,14,22,0.75);
+    z-index: 20;
+  }
+  .carousel-arrow-left  { left: 6px; }
+  .carousel-arrow-right { right: 6px; }
+}
 
 .avatar {
   @apply object-cover;

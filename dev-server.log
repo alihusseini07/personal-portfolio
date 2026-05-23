@@ -6,8 +6,11 @@
   - Local:        http://localhost:3000
 
  ✓ Starting...
- ✓ Ready in 49.9s
+ ✓ Ready in 45.6s
  ○ Compiling / ...
- ✓ Compiled / in 28.6s (1311 modules)
- GET / 200 in 30121ms
- GET / 200 in 220ms
+ ✓ Compiled / in 34.2s (1314 modules)
+ GET /_next/static/css/app/layout.css?v=1779565122128 404 in 31443ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 31604ms
+ GET / 200 in 31725ms
+ GET / 200 in 112ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 121ms
