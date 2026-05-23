@@ -25,10 +25,17 @@ export function NavBar({ items, className }: NavBarProps) {
   const [isReady, setIsReady] = useState(false)
   const pendingEdgeRef = useRef<Edge>("top")
   const navRef = useRef<HTMLDivElement>(null)
+  const pillRef = useRef<HTMLDivElement>(null)
+  const itemRefs = useRef<(HTMLAnchorElement | null)[]>([])
   const scrollingToRef = useRef<string | null>(null)
   const scrollTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const x = useMotionValue(0)
   const y = useMotionValue(0)
+
+  // Single indicator: animate target values
+  const [indicatorKey, setIndicatorKey] = useState<"h" | "v">("h") // remount on orientation flip
+  const [indicatorAnimate, setIndicatorAnimate] = useState<Record<string, number>>({ x: 0, width: 0 })
+  const [indicatorBaseStyle, setIndicatorBaseStyle] = useState<React.CSSProperties>({})
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768)
@@ -57,7 +64,6 @@ export function NavBar({ items, className }: NavBarProps) {
     [x, y],
   )
 
-  // Initial desktop position — instant, no spring flash
   useEffect(() => {
     if (isMobile || !navRef.current) return
     const vw = window.innerWidth
@@ -105,6 +111,66 @@ export function NavBar({ items, className }: NavBarProps) {
     return () => window.removeEventListener("scroll", onScroll)
   }, [items])
 
+  const isVertical = !isMobile && (docked === "left" || docked === "right")
+
+  const measureIndicator = useCallback(() => {
+    const activeIndex = items.findIndex(item => item.name === activeTab)
+    const activeEl = itemRefs.current[activeIndex]
+    const containerEl = pillRef.current
+    if (!activeEl || !containerEl) return
+
+    const containerRect = containerEl.getBoundingClientRect()
+    const itemRect = activeEl.getBoundingClientRect()
+    const glow = "0 0 8px rgba(104,186,127,.75)"
+
+    const curDocked = pendingEdgeRef.current
+    const vertical = !isMobile && (curDocked === "left" || curDocked === "right")
+
+    if (vertical) {
+      setIndicatorKey("v")
+      setIndicatorBaseStyle({
+        position: "absolute",
+        background: "#68BA7F",
+        boxShadow: glow,
+        width: 2,
+        top: 0,
+        pointerEvents: "none",
+        ...(curDocked === "left" ? { right: 0 } : { left: 0 }),
+      })
+      setIndicatorAnimate({
+        y: itemRect.top - containerRect.top + 4,
+        height: itemRect.height - 8,
+      })
+    } else {
+      setIndicatorKey("h")
+      setIndicatorBaseStyle({
+        position: "absolute",
+        background: "#68BA7F",
+        boxShadow: glow,
+        height: 2,
+        left: 0,
+        pointerEvents: "none",
+        ...(isMobile || curDocked === "bottom" ? { top: 0 } : { bottom: 0 }),
+      })
+      setIndicatorAnimate({
+        x: itemRect.left - containerRect.left + 6,
+        width: itemRect.width - 12,
+      })
+    }
+  }, [activeTab, items, isMobile])
+
+  // Re-measure after every render that could shift the indicator
+  useEffect(() => {
+    const raf = requestAnimationFrame(measureIndicator)
+    return () => cancelAnimationFrame(raf)
+  }, [measureIndicator])
+
+  // Also re-measure after docked changes (orientation might flip)
+  useEffect(() => {
+    const raf = requestAnimationFrame(measureIndicator)
+    return () => cancelAnimationFrame(raf)
+  }, [docked, measureIndicator])
+
   const smoothTo = (e: React.MouseEvent<HTMLAnchorElement>, url: string, name: string) => {
     const el = document.querySelector(url)
     if (!el) return
@@ -131,24 +197,9 @@ export function NavBar({ items, className }: NavBarProps) {
     setSnapSeq((s) => s + 1)
   }
 
-  const isVertical = !isMobile && (docked === "left" || docked === "right")
-
-  // Indicator line: 2px green bar on the content-facing edge of the active item
-  const getIndicatorStyle = (): React.CSSProperties => {
-    const glow = "0 0 8px rgba(104,186,127,.75)"
-    const bar = { position: "absolute" as const, background: "#68BA7F", boxShadow: glow }
-    if (isMobile || docked === "bottom")
-      return { ...bar, top: 0,    left: "15%", right: "15%", height: "2px" }
-    if (docked === "top")
-      return { ...bar, bottom: 0, left: "15%", right: "15%", height: "2px" }
-    if (docked === "left")
-      return { ...bar, right: 0,  top: "15%",  bottom: "15%", width: "2px" }
-    return   { ...bar, left: 0,   top: "15%",  bottom: "15%", width: "2px" }
-  }
-
-  // Shared pill content — terminal status bar aesthetic
   const pillContent = (
     <div
+      ref={pillRef}
       style={{
         display: "flex",
         flexDirection: isVertical ? "column" : "row",
@@ -160,7 +211,7 @@ export function NavBar({ items, className }: NavBarProps) {
         boxShadow: "0 0 0 1px rgba(104,186,127,.04), 0 8px 32px rgba(0,0,0,.7)",
       }}
     >
-      {/* Corner bracket decorations — top-left and bottom-right */}
+      {/* Corner bracket decorations */}
       <span style={{
         position: "absolute", top: -1, left: -1,
         width: 8, height: 8,
@@ -176,7 +227,16 @@ export function NavBar({ items, className }: NavBarProps) {
         pointerEvents: "none",
       }} />
 
-      {/* Drag grip — desktop only */}
+      {/* Single sliding indicator — remounts on orientation flip to reset transform axis */}
+      <motion.span
+        key={indicatorKey}
+        style={indicatorBaseStyle}
+        animate={indicatorAnimate}
+        initial={false}
+        transition={{ type: "spring", stiffness: 320, damping: 32 }}
+      />
+
+      {/* Drag grip */}
       {!isMobile && (
         <div style={{
           display: "grid",
@@ -216,7 +276,6 @@ export function NavBar({ items, className }: NavBarProps) {
 
         return (
           <React.Fragment key={item.name}>
-            {/* Separator between items */}
             {idx > 0 && !isVertical && (
               <span style={{
                 width: "1px", height: "14px",
@@ -226,6 +285,7 @@ export function NavBar({ items, className }: NavBarProps) {
             )}
 
             <a
+              ref={el => { itemRefs.current[idx] = el }}
               href={item.url}
               onClick={(e) => smoothTo(e, item.url, item.name)}
               style={{
@@ -264,24 +324,17 @@ export function NavBar({ items, className }: NavBarProps) {
                 />
               )}
 
-              {/* Indicator line */}
-              {isActive && (
-                <motion.span
-                  layoutId="nav-line"
-                  style={getIndicatorStyle()}
-                  initial={false}
-                  transition={{ type: "spring", stiffness: 320, damping: 32 }}
-                />
-              )}
-
-              {/* Label */}
+              {/* Label — ghost text reserves space so width never changes on active toggle */}
               <span style={{ position: "relative", zIndex: 1 }}>
                 {isVertical ? (
                   <Icon size={16} strokeWidth={2} />
                 ) : (
                   <>
-                    <span className="hidden md:inline">
-                      {isActive ? `[${item.name}]` : item.name}
+                    <span className="hidden md:inline" style={{ position: "relative", display: "inline-block" }}>
+                      <span style={{ visibility: "hidden", pointerEvents: "none" }}>[{item.name}]</span>
+                      <span style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                        {isActive ? `[${item.name}]` : item.name}
+                      </span>
                     </span>
                     <span className="md:hidden">
                       <Icon size={16} strokeWidth={2} />
@@ -296,7 +349,6 @@ export function NavBar({ items, className }: NavBarProps) {
     </div>
   )
 
-  // Mobile: static, fixed at bottom center
   if (isMobile) {
     return (
       <div className={cn("fixed bottom-0 left-1/2 -translate-x-1/2 z-50 mb-6", className)}>
@@ -305,7 +357,6 @@ export function NavBar({ items, className }: NavBarProps) {
     )
   }
 
-  // Desktop: draggable with edge snap
   return (
     <motion.div
       ref={navRef}
