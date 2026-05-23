@@ -38,7 +38,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             borderTop: "1px solid rgba(255,255,255,.06)",
           }}
         >
-          <p>© {new Date().getFullYear()} Ali Husseini · Built with Next.js & Tailwind CSS</p>
+          <p>© {new Date().getFullYear()} Ali Husseini</p>
         </footer>
       </body>
     </html>

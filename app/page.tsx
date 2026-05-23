@@ -1,25 +1,21 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import Image from "next/image";
 import Section from "../components/Section";
 import { type Project } from "../components/ProjectCard";
 import ExperienceItem, { type Experience } from "../components/ExperienceItem";
-import { IconGitHub, IconLinkedIn } from "../components/Icons";
+import { IconGitHub, IconLinkedIn, IconEmail } from "../components/Icons";
 import DisplayCards from "../components/ui/display-cards";
 import { InteractiveHoverButton } from "../components/ui/interactive-hover-button";
-import { SlideButton } from "../components/ui/slide-button";
 import { useShaderBackground } from "../components/ui/animated-shader-hero";
-import { Brain, Cpu, Box, Layers } from "lucide-react";
+import { Brain, Cpu, Box, Layers, FileText } from "lucide-react";
 
 import profileData    from "../data/profile.json";
 import projectsData   from "../data/projects.json";
 import experienceData from "../data/experience.json";
 
 export default function Page() {
-  const [formState, setFormState] = useState<"idle" | "submitting" | "success" | "error">("idle");
-  const [fieldErrors, setFieldErrors] = useState({ name: false, email: false, message: false });
-  const formRef = useRef<HTMLFormElement>(null);
   const staticCanvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -62,35 +58,6 @@ export default function Page() {
     drawStatic();
     return () => cancelAnimationFrame(animId);
   }, []);
-
-  const validateForm = (): boolean => {
-    if (!formRef.current) return false;
-    const data = new FormData(formRef.current);
-    const errors = {
-      name:    !String(data.get("name")    ?? "").trim(),
-      email:   !String(data.get("email")   ?? "").trim(),
-      message: !String(data.get("message") ?? "").trim(),
-    };
-    setFieldErrors(errors);
-    return !errors.name && !errors.email && !errors.message;
-  };
-
-  const handleSlideSubmit = async (): Promise<boolean> => {
-    try {
-      const res = await fetch("https://formspree.io/f/mojnyvgo", {
-        method: "POST",
-        headers: { Accept: "application/json" },
-        body: new FormData(formRef.current!),
-      });
-      if (res.ok) {
-        setTimeout(() => setFormState("success"), 1200);
-        return true;
-      }
-      return false;
-    } catch {
-      return false;
-    }
-  };
 
   // Data
   const projects   = projectsData   as Project[];
@@ -709,95 +676,61 @@ export default function Page() {
       </Section>
 
       {/* ── Contact ──────────────────────────────── */}
-      <Section id="contact" title="Get in Touch">
-        <p
-          className="mb-6"
-          style={{
-            fontFamily: "var(--font-body, monospace)",
-            fontSize: "0.82rem",
-            color: "var(--muted)",
-            maxWidth: "480px",
-            letterSpacing: "0.02em",
-          }}
-        >
-          <span style={{ color: "var(--cyan)" }}>&gt;</span>{" "}
-          AWAITING_INPUT — have a project, opportunity, or just want to say hi?
-          Drop a message and I&apos;ll get back to you.
-        </p>
-
-        {formState === "success" ? (
-          <div
-            className="max-w-xl terminal-window"
-            style={{ minHeight: "200px" }}
-          >
-            <div className="terminal-chrome">
-              
-              
-              
-              <span className="terminal-title">[SYSTEM] — message_sent.log</span>
-            </div>
-            <div
-              className="terminal-body flex flex-col gap-2"
-              style={{ fontFamily: "var(--font-body, monospace)", fontSize: "0.82rem" }}
-            >
-              <div style={{ color: "var(--green)" }}>[OK] Message transmitted successfully.</div>
-              <div style={{ color: "var(--muted)" }}>[OK] Recipient notified.</div>
-              <div style={{ color: "var(--muted)" }}>[OK] Response queued — expect reply soon.</div>
-              <div className="mt-2" style={{ color: "var(--muted)" }}>
-                <span style={{ color: "rgba(104,186,127,.4)" }}>$</span>{" "}
-                <button
-                  className="underline underline-offset-4 hover:text-yellow-400 transition-colors"
-                  style={{ color: "var(--muted)", background: "none", border: "none", cursor: "pointer", fontFamily: "inherit", fontSize: "inherit" }}
-                  onClick={() => setFormState("idle")}
-                >
-                  send_another
-                </button>
-              </div>
-            </div>
+      <Section id="contact" title="Contact">
+        <div className="terminal-window w-full">
+          {/* Chrome bar */}
+          <div className="terminal-chrome">
+            <span className="terminal-title">[ENDPOINTS] — contact.cfg</span>
           </div>
-        ) : (
-          <form
-            ref={formRef}
-            noValidate
-            className="max-w-xl terminal-window grid gap-0"
-            onSubmit={(e) => e.preventDefault()}
+
+          {/* Rows */}
+          <div>
+            {profile.linkedin && (
+              <a href={profile.linkedin} target="_blank" rel="noreferrer" className="contact-row">
+                <span className="contact-row-idx">01</span>
+                <span className="contact-row-icon"><IconLinkedIn /></span>
+                <span className="contact-row-label">LinkedIn</span>
+                <span className="contact-row-addr">/in/ahusseini-profile</span>
+                <span className="badge contact-row-badge" style={{ fontSize: "0.62rem" }}>→ connect</span>
+              </a>
+            )}
+            <a href={github} target="_blank" rel="noreferrer" className="contact-row">
+              <span className="contact-row-idx">02</span>
+              <span className="contact-row-icon"><IconGitHub /></span>
+              <span className="contact-row-label">GitHub</span>
+              <span className="contact-row-addr">github.com/alihusseini07</span>
+              <span className="badge contact-row-badge" style={{ fontSize: "0.62rem" }}>→ view repos</span>
+            </a>
+            <a href={`mailto:${email}`} className="contact-row">
+              <span className="contact-row-idx">03</span>
+              <span className="contact-row-icon"><IconEmail /></span>
+              <span className="contact-row-label">Email</span>
+              <span className="contact-row-addr">{email}</span>
+              <span className="badge contact-row-badge" style={{ fontSize: "0.62rem" }}>→ send message</span>
+            </a>
+            <a href="/assets/Ali-Husseini-Resume.pdf" download className="contact-row" style={{ borderBottom: "none" }}>
+              <span className="contact-row-idx">04</span>
+              <span className="contact-row-icon"><FileText size={15} /></span>
+              <span className="contact-row-label">Resume</span>
+              <span className="contact-row-addr">Ali-Husseini-Resume.pdf</span>
+              <span className="badge contact-row-badge" style={{ fontSize: "0.62rem" }}>↓ download</span>
+            </a>
+          </div>
+
+          {/* Cursor footer */}
+          <div
+            style={{
+              padding: "14px 24px",
+              borderTop: "1px solid var(--border)",
+              fontFamily: "var(--font-body, monospace)",
+              fontSize: "0.78rem",
+              color: "rgba(104,186,127,.35)",
+            }}
           >
-            <div className="terminal-chrome">
-              
-              
-              
-              <span className="terminal-title">[INPUT] — compose_message.sh</span>
-            </div>
-            <div className="terminal-body grid gap-4">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <input
-                  name="name"
-                  placeholder="> your_name"
-                  className={`form-input${fieldErrors.name ? " form-input-error" : ""}`}
-                  onChange={() => setFieldErrors((e) => ({ ...e, name: false }))}
-                />
-                <input
-                  name="email"
-                  type="email"
-                  placeholder="> your_email"
-                  className={`form-input${fieldErrors.email ? " form-input-error" : ""}`}
-                  onChange={() => setFieldErrors((e) => ({ ...e, email: false }))}
-                />
-              </div>
-              <textarea
-                name="message"
-                placeholder="> your_message..."
-                rows={5}
-                className={`form-input${fieldErrors.message ? " form-input-error" : ""}`}
-                style={{ resize: "vertical" }}
-                onChange={() => setFieldErrors((e) => ({ ...e, message: false }))}
-              />
-              <div className="flex justify-end pl-2">
-                <SlideButton validate={validateForm} onSlideComplete={handleSlideSubmit} label="Slide to send" />
-              </div>
-            </div>
-          </form>
-        )}
+            <span style={{ color: "rgba(104,186,127,.5)" }}>$</span>{" "}
+            <span className="cursor-blink" style={{ color: "var(--cyan)" }}>▋</span>
+          </div>
+        </div>
       </Section>
     </main>
   );
