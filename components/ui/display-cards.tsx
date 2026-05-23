@@ -181,27 +181,28 @@ function getStackFallbackIcon(stackItem: string) {
   return <Code2 className="size-3.5 text-[#68BA7F]" />;
 }
 
+const COMPACT_LIMIT = 4;
+
 function StackChips({ stack, compact = false }: { stack: string[]; compact?: boolean }) {
   if (stack.length === 0) return null;
 
+  const visible = compact ? stack.slice(0, COMPACT_LIMIT) : stack;
+  const overflow = compact ? stack.length - COMPACT_LIMIT : 0;
+
   return (
-    <div className={`flex flex-wrap ${compact ? "gap-1.5" : "gap-2"}`}>
-      {stack.map((s) => {
+    <div className={`flex flex-wrap ${compact ? "gap-1" : "gap-2"}`}>
+      {visible.map((s) => {
         const iconUrl = stackIconUrls[s];
 
         return (
           <span
             key={s}
-            className={`inline-flex items-center gap-1.5 rounded-full font-medium ${compact ? "px-2 py-1 text-[0.65rem]" : "px-2.5 py-1 text-xs"}`}
-            style={{
-              background: "rgba(255,255,255,0.05)",
-              border: "1px solid rgba(255,255,255,0.1)",
-              color: "var(--muted)",
-            }}
+            className="badge inline-flex items-center gap-1"
+            style={{ fontSize: compact ? "0.6rem" : "0.7rem", padding: compact ? "1px 5px" : "2px 8px" }}
           >
-            <span className="flex size-4 flex-shrink-0 items-center justify-center">
+            <span className="flex size-3.5 flex-shrink-0 items-center justify-center">
               {iconUrl ? (
-                <img src={iconUrl} alt="" className="size-3.5 object-contain" />
+                <img src={iconUrl} alt="" className="size-3 object-contain" />
               ) : (
                 getStackFallbackIcon(s)
               )}
@@ -210,6 +211,14 @@ function StackChips({ stack, compact = false }: { stack: string[]; compact?: boo
           </span>
         );
       })}
+      {overflow > 0 && (
+        <span
+          className="badge inline-flex items-center"
+          style={{ fontSize: "0.6rem", padding: "1px 5px", opacity: 0.65 }}
+        >
+          +{overflow}
+        </span>
+      )}
     </div>
   );
 }
@@ -425,9 +434,7 @@ export default function DisplayCards({ cards }: DisplayCardsProps) {
           onClick={() => navigate(-1)}
           aria-label="Previous project"
         >
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-            <path d="M11 3L5 9L11 15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
+          ‹
         </button>
 
         {/* Right arrow — sits outside the viewport at -52px */}
@@ -436,9 +443,7 @@ export default function DisplayCards({ cards }: DisplayCardsProps) {
           onClick={() => navigate(1)}
           aria-label="Next project"
         >
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-            <path d="M7 3L13 9L7 15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
+          ›
         </button>
 
         {/* Viewport — clips the track */}
