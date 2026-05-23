@@ -11,3 +11,19 @@
  ✓ Compiled / in 22.7s (1291 modules)
  GET / 200 in 21333ms
  GET / 200 in 195ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 1157ms (1294 modules)
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 1686ms
+ GET / 200 in 110ms
+ GET / 200 in 97ms
+ GET / 200 in 90ms
+ GET / 200 in 414ms
+ GET / 200 in 128ms
+ GET / 200 in 92ms
+ GET / 200 in 96ms
+ GET / 200 in 115ms
+ GET / 200 in 90ms
+ GET / 200 in 90ms
+ GET / 200 in 75ms
+ GET / 200 in 109ms
+ GET / 200 in 92ms
