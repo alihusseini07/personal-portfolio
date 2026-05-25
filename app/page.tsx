@@ -219,32 +219,6 @@ export default function Page() {
             {/* Left text column */}
             <div className="col-span-12 lg:col-span-7 text-center lg:text-left flex flex-col items-center lg:items-start">
 
-              {/* Terminal status prompt */}
-              <div
-                className="hero-el mb-5 flex items-center gap-2"
-                style={{
-                  fontFamily: "var(--font-body, monospace)",
-                  fontSize: "0.78rem",
-                  letterSpacing: "0.06em",
-                  color: "var(--muted)",
-                }}
-              >
-                <span style={{ color: "var(--cyan)", textShadow: "0 0 8px rgba(104,186,127,.7)" }}>$</span>
-                <span>STATUS=</span>
-                <span style={{ color: "var(--cyan)" }}>SEEKING_COOP</span>
-                <span
-                  className="cursor-blink"
-                  style={{
-                    display: "inline-block",
-                    width: "8px",
-                    height: "14px",
-                    background: "var(--cyan)",
-                    boxShadow: "0 0 6px rgba(104,186,127,.8)",
-                    verticalAlign: "middle",
-                  }}
-                />
-              </div>
-
               {/* Name with glitch effect */}
               <h1
                 className="hero-el mb-4"
@@ -330,25 +304,6 @@ export default function Page() {
                 </a>
               </div>
 
-              {/* System info line */}
-              <div
-                className="hero-el mt-6 flex items-center gap-4"
-                style={{
-                  fontFamily: "var(--font-body, monospace)",
-                  fontSize: "0.68rem",
-                  color: "var(--muted)",
-                  letterSpacing: "0.06em",
-                  opacity: 0.7,
-                }}
-              >
-                <span>
-                  <span style={{ color: "rgba(104,186,127,.4)" }}>SYS:</span> Ontario, Canada
-                </span>
-                <span style={{ color: "rgba(104,186,127,.2)" }}>|</span>
-                <span>
-                  <span style={{ color: "rgba(104,186,127,.4)" }}>UNIV:</span> Tron @ uWaterloo
-                </span>
-              </div>
             </div>
 
             {/* Right — avatar */}
@@ -453,6 +408,7 @@ export default function Page() {
 
               <div className="flex flex-wrap gap-6 pt-2" style={{ borderTop: "1px solid var(--border)" }}>
                 {[
+                  ["$ echo $UNIV",     "Tron @ uWaterloo"],
                   ["$ echo $LOCATION", "Ontario, Canada"],
                   ["$ echo $STATUS",   "OPEN_TO_COOPS"],
                 ].map(([cmd, value]) => (
