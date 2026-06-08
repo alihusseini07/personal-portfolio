@@ -1,14 +1,5 @@
-
-> ali-portfolio@1.0.0 dev
-> next dev -p 3000
-
   ▲ Next.js 14.2.5
   - Local:        http://localhost:3000
 
  ✓ Starting...
- ✓ Ready in 36.8s
- ○ Compiling / ...
- ✓ Compiled / in 20.9s (1291 modules)
- GET / 200 in 22234ms
- GET / 200 in 188ms
- GET / 200 in 106ms
+ ✓ Ready in 32.6s
