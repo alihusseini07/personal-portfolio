@@ -33,9 +33,10 @@
     "description": "A full-stack social cooking app that scans pantry items, matches recipes by ingredient coverage, and supports posts, reviews, and smart shopping lists.",
     "stack": ["SwiftUI", "Node.js", "Express", "PostgreSQL", "OpenAI Vision"],
     "image": "/assets/chefit.png",
+    "video": "/assets/chef-it-demo.mp4",
     "links": {
       "code": "https://github.com/MatthewKim07/chef-it",
-      "demo": "https://youtu.be/FiagbJtap8w?si=9v9ugRozeQBy3vfj",
+      "demo": "/assets/chef-it-demo.mp4",
       "live": "",
       "details": ""
     }
@@ -47,8 +48,10 @@
     "description": "A Manifest V3 Chrome extension that parses resumes and job posts, scores candidate fit, and adds dashboards and overlays to streamline co-op job screening.",
     "stack": ["JavaScript", "Manifest V3", "DOM APIs", "Node.js", "PDF.js"],
     "image": "/assets/waterlooworksplus.png",
+    "video": "/assets/waterloo-works-plus-demo.mp4",
     "links": {
       "code": "https://github.com/MatthewKim07/waterloo-works-plus",
+      "demo": "/assets/waterloo-works-plus-demo.mp4",
       "live": "",
       "details": ""
     }
