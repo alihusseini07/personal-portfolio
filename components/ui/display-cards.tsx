@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Code2, Cpu, FileCode2, Globe, Printer, RotateCw, Sparkles } from "lucide-react";
+import { Box, Code2, Cpu, FileCode2, Globe, Printer, RotateCw, Sparkles, Volume2, VolumeX } from "lucide-react";
 import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { IconGitHub } from "../Icons";
@@ -26,15 +26,16 @@ interface ProjectMediaProps {
   image?: string;
   video?: string;
   expanded?: boolean;
+  muted?: boolean;
 }
 
-function ProjectMedia({ title, image, video, expanded = false }: ProjectMediaProps) {
+function ProjectMedia({ title, image, video, expanded = false, muted = true }: ProjectMediaProps) {
   if (video) {
     return (
       <video
         src={video}
         className="h-full w-full object-cover"
-        muted
+        muted={muted}
         playsInline
         loop
         autoPlay
@@ -317,6 +318,7 @@ export default function DisplayCards({ cards }: DisplayCardsProps) {
   // expandedKey is index into tripled array so layoutId matches
   const [expandedKey, setExpandedKey] = useState<number | null>(null);
   const [isDragging, setIsDragging] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
 
   const expandedOriginalIndex = expandedKey !== null ? expandedKey % n : null;
   const expanded = expandedOriginalIndex !== null ? allCards[expandedOriginalIndex] : null;
@@ -532,7 +534,7 @@ export default function DisplayCards({ cards }: DisplayCardsProps) {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.25 }}
-              onClick={() => setExpandedKey(null)}
+              onClick={() => { setExpandedKey(null); setIsMuted(true); }}
             />
 
             <div className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none">
@@ -545,7 +547,7 @@ export default function DisplayCards({ cards }: DisplayCardsProps) {
                   border: "1px solid rgba(34,211,238,0.25)",
                   boxShadow: "0 30px 90px rgba(0,0,0,0.75), 0 0 0 1px rgba(34,211,238,0.08)",
                 }}
-                onClick={() => setExpandedKey(null)}
+                onClick={() => { setExpandedKey(null); setIsMuted(true); }}
               >
                 <div className="relative h-[260px] overflow-hidden sm:h-[340px]">
                   <ProjectMedia
@@ -553,6 +555,7 @@ export default function DisplayCards({ cards }: DisplayCardsProps) {
                     image={expanded.image}
                     video={expanded.video}
                     expanded
+                    muted={isMuted}
                   />
                   <div
                     className="absolute inset-0"
@@ -560,6 +563,16 @@ export default function DisplayCards({ cards }: DisplayCardsProps) {
                       background: "linear-gradient(to bottom, transparent 45%, rgba(6,11,18,0.92) 100%)",
                     }}
                   />
+                  {expanded.video && (
+                    <button
+                      className="absolute bottom-3 right-3 flex items-center justify-center rounded-full p-2 transition-opacity hover:opacity-100"
+                      style={{ background: "rgba(0,0,0,0.55)", opacity: 0.8, backdropFilter: "blur(4px)" }}
+                      onClick={(e) => { e.stopPropagation(); setIsMuted((m) => !m); }}
+                      aria-label={isMuted ? "Unmute video" : "Mute video"}
+                    >
+                      {isMuted ? <VolumeX className="size-4 text-white" /> : <Volume2 className="size-4 text-white" />}
+                    </button>
+                  )}
                 </div>
 
                 <div className="p-5 sm:p-6">
